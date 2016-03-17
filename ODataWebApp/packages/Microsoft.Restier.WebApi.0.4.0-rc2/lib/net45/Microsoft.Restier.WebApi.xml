@@ -1,0 +1,780 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Restier.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:System.Linq.Expressions.ExpressionHelpers.StripPagingOperators``1(System.Linq.IQueryable{``0})">
+            <summary>
+            Remove paging methods for given IQueryable
+            </summary>
+            <typeparam name="TElement">The type parameter for IQueryable</typeparam>
+            <param name="query">The input query.</param>
+            <returns>The proceed query.</returns>
+        </member>
+        <member name="M:System.TypeExtensions.FindGenericType(System.Type,System.Type)">
+            <summary>
+            Find a base type or implemented interface which has a generic definition
+            represented by the parameter, <c>definition</c>.
+            </summary>
+            <param name="type">
+            The subject type.
+            </param>
+            <param name="definition">
+            The generic definition to check with.
+            </param>
+            <returns>
+            The base type or the interface found; otherwise, <c>null</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Batch.RestierBatchHandler">
+            <summary>
+            Default implementation of <see cref="T:System.Web.OData.Batch.ODataBatchHandler"/> in RESTier.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierBatchHandler.#ctor(System.Web.Http.HttpServer,System.Func{Microsoft.Restier.Core.IApi})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Batch.RestierBatchHandler"/> class.
+            </summary>
+            <param name="httpServer">The HTTP server instance.</param>
+            <param name="apiFactory">Gets or sets the callback to create API.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierBatchHandler.ParseBatchRequestsAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously parses the batch requests.
+            </summary>
+            <param name="request">The HTTP request that contains the batch requests.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that represents this asynchronous operation.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierBatchHandler.CreateChangeSetRequestItem(System.Collections.Generic.IList{System.Net.Http.HttpRequestMessage})">
+            <summary>
+            Creates the <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem"/> instance.
+            </summary>
+            <param name="changeSetRequests">The list of changeset requests.</param>
+            <returns>The created <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem"/> instance.</returns>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Batch.RestierBatchHandler.ApiFactory">
+            <summary>
+            Gets or sets the callback to create API.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty">
+            <summary>
+            Represents an API <see cref="P:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty.ChangeSet"/> property.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty.#ctor(Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty"/> class.
+            </summary>
+            <param name="changeSetRequestItem">The changeset request item.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty.OnChangeSetCompleted">
+            <summary>
+            The callback to execute when the changeset is completed.
+            </summary>
+            <returns>The task object that represents this callback execution.</returns>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty.ChangeSet">
+            <summary>
+            Gets or sets the changeset.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem">
+            <summary>
+            Represents an API <see cref="T:Microsoft.Restier.Core.Submit.ChangeSet"/> request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem.#ctor(System.Collections.Generic.IEnumerable{System.Net.Http.HttpRequestMessage},System.Func{Microsoft.Restier.Core.IApi})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem"/> class.
+            </summary>
+            <param name="requests">The request messages.</param>
+            <param name="apiFactory">Gets or sets the callback to create API.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Batch.RestierChangeSetRequestItem.SendRequestAsync(System.Net.Http.HttpMessageInvoker,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously sends the request.
+            </summary>
+            <param name="invoker">The invoker.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the batch response.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Deserialization.DefaultRestierDeserializerProvider">
+            <summary>
+            The default serializer provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Deserialization.DefaultRestierDeserializerProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Deserialization.DefaultRestierDeserializerProvider"/> class.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Deserialization.RestierEnumDeserializer">
+            <summary>
+            The serializer for enum result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Deserialization.RestierEnumDeserializer.Read(Microsoft.OData.Core.ODataMessageReader,System.Type,System.Web.OData.Formatter.Deserialization.ODataDeserializerContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Deserialization.RestierEnumDeserializer.ReadInline(System.Object,Microsoft.OData.Edm.IEdmTypeReference,System.Web.OData.Formatter.Deserialization.ODataDeserializerContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.DefaultRestierSerializerProvider">
+            <summary>
+            The default serializer provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.DefaultRestierSerializerProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Serialization.DefaultRestierSerializerProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.DefaultRestierSerializerProvider.GetODataPayloadSerializer(Microsoft.OData.Edm.IEdmModel,System.Type,System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Gets the serializer for the given result type.
+            </summary>
+            <param name="model">The EDM model.</param>
+            <param name="type">The type of result to serialize.</param>
+            <param name="request">The HTTP request.</param>
+            <returns>The serializer instance.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.DefaultRestierSerializerProvider.GetEdmTypeSerializer(Microsoft.OData.Edm.IEdmTypeReference)">
+            <summary>
+            Gets the serializer for the given EDM type reference.
+            </summary>
+            <param name="edmType">The EDM type reference involved in the serializer.</param>
+            <returns>The serializer instance.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierCollectionSerializer">
+            <summary>
+            The serializer for collection result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierCollectionSerializer.#ctor(System.Web.OData.Formatter.Serialization.ODataSerializerProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierCollectionSerializer"/> class.
+            </summary>
+            <param name="provider">The serializer provider.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierCollectionSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the complex result to the response message.
+            </summary>
+            <param name="graph">The collection result to write.</param>
+            <param name="type">The type of the collection.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEnumSerializer">
+            <summary>
+            The serializer for enum result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEnumSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the enum result to the response message.
+            </summary>
+            <param name="graph">The enum result to write.</param>
+            <param name="type">The type of the enum.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierComplexTypeSerializer">
+            <summary>
+            The serializer for complex result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierComplexTypeSerializer.#ctor(System.Web.OData.Formatter.Serialization.ODataSerializerProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierComplexTypeSerializer"/> class.
+            </summary>
+            <param name="provider">The serializer provider.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierComplexTypeSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the complex result to the response message.
+            </summary>
+            <param name="graph">The complex result to write.</param>
+            <param name="type">The type of the complex.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierRawSerializer">
+            <summary>
+            The serializer for raw result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierRawSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the entity result to the response message.
+            </summary>
+            <param name="graph">The entity result to write.</param>
+            <param name="type">The type of the entity.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierPrimitiveSerializer">
+            <summary>
+            The serializer for primitive result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierPrimitiveSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the entity result to the response message.
+            </summary>
+            <param name="graph">The entity result to write.</param>
+            <param name="type">The type of the entity.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEntityTypeSerializer">
+            <summary>
+            The serializer for entity result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEntityTypeSerializer.#ctor(System.Web.OData.Formatter.Serialization.ODataSerializerProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEntityTypeSerializer"/> class.
+            </summary>
+            <param name="provider">The serializer provider.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEntityTypeSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the entity result to the response message.
+            </summary>
+            <param name="graph">The entity result to write.</param>
+            <param name="type">The type of the entity.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierEntityTypeSerializer.CreateETag(System.Web.OData.EntityInstanceContext)">
+            <summary>
+            Creates ETag for the entity instance.
+            </summary>
+            <param name="entityInstanceContext">The context that contains the entity instance.</param>
+            <returns>The ETag created.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierFeedSerializer">
+            <summary>
+            The serializer for entity collection result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierFeedSerializer.#ctor(System.Web.OData.Formatter.Serialization.ODataSerializerProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Formatter.Serialization.RestierFeedSerializer"/> class.
+            </summary>
+            <param name="provider">The serializer provider.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Formatter.Serialization.RestierFeedSerializer.WriteObject(System.Object,System.Type,Microsoft.OData.Core.ODataMessageWriter,System.Web.OData.Formatter.Serialization.ODataSerializerContext)">
+            <summary>
+            Writes the entity collection results to the response message.
+            </summary>
+            <param name="graph">The entity collection results.</param>
+            <param name="type">The type of the entities.</param>
+            <param name="messageWriter">The message writer.</param>
+            <param name="writeContext">The writing context.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.HttpConfigurationExtensions">
+            <summary>
+            Offers a collection of extension methods to <see cref="T:System.Web.Http.HttpConfiguration"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpConfigurationExtensions.MapRestierRoute``1(System.Web.Http.HttpConfiguration,System.String,System.String,System.Func{Microsoft.Restier.Core.IApi},Microsoft.Restier.WebApi.Batch.RestierBatchHandler)">
+            TODO GitHubIssue#51 : Support model lazy loading
+            <summary>
+            Maps the API routes to the RestierController.
+            </summary>
+            <typeparam name="TApi">The user API.</typeparam>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/> instance.</param>
+            <param name="routeName">The name of the route.</param>
+            <param name="routePrefix">The prefix of the route.</param>
+            <param name="apiFactory">The callback to create API instances.</param>
+            <param name="batchHandler">The handler for batch requests.</param>
+            <returns>The task object containing the resulted <see cref="T:System.Web.OData.Routing.ODataRoute"/> instance.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpConfigurationExtensions.MapRestierRoute``1(System.Web.Http.HttpConfiguration,System.String,System.String,Microsoft.Restier.WebApi.Batch.RestierBatchHandler)">
+            <summary>
+            Maps the API routes to the RestierController.
+            </summary>
+            <typeparam name="TApi">The user API.</typeparam>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/> instance.</param>
+            <param name="routeName">The name of the route.</param>
+            <param name="routePrefix">The prefix of the route.</param>
+            <param name="batchHandler">The handler for batch requests.</param>
+            <returns>The task object containing the resulted <see cref="T:System.Web.OData.Routing.ODataRoute"/> instance.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpConfigurationExtensions.CreateRestierRoutingConventions(System.Web.Http.HttpConfiguration,Microsoft.OData.Edm.IEdmModel,System.Func{Microsoft.Restier.Core.IApi})">
+            <summary>
+            Creates the default routing conventions.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/> instance.</param>
+            <param name="model">The EDM model.</param>
+            <param name="apiFactory">The API factory.</param>
+            <returns>The routing conventions created.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.HttpRequestMessageExtensions">
+            <summary>
+            Offers a collection of extension methods to <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpRequestMessageExtensions.GetChangeSet(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Gets the <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty"/> from the <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+            <param name="request">The HTTP request.</param>
+            <returns>The <see cref="T:Microsoft.Restier.WebApi.Batch.RestierChangeSetProperty"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpRequestMessageExtensions.GetApiFactory(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Gets the API factory from the <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+            <param name="request">The HTTP request.</param>
+            <returns>The API factory.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.HttpRequestMessageExtensions.SetApiFactory(System.Net.Http.HttpRequestMessage,System.Func{Microsoft.Restier.Core.IApi})">
+            <summary>
+            Sets the API factory to the <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+            <param name="request">The HTTP request.</param>
+            <param name="apiFactory">The API factory.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.RestierFormattingAttribute">
+            <summary>
+            Specifies the serializer and deserializer provider for the API controller.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierFormattingAttribute.Initialize(System.Web.Http.Controllers.HttpControllerSettings,System.Web.Http.Controllers.HttpControllerDescriptor)">
+            <summary>
+            Inserts the RESTier specific formatters to the controller.
+            </summary>
+            <param name="controllerSettings">The controller settings.</param>
+            <param name="controllerDescriptor">The controller descriptor.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Filters.RestierExceptionFilterAttribute">
+            <summary>
+            An ExceptionFilter that is capable of serializing well-known exceptions to the client.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Filters.RestierExceptionFilterAttribute.OnExceptionAsync(System.Web.Http.Filters.HttpActionExecutedContext,System.Threading.CancellationToken)">
+            <summary>
+            The callback to execute when exception occurs.
+            </summary>
+            <param name="actionExecutedContext">The context where the action is executed.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that represents the callback execution.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.RestierPayloadValueConverter">
+            <summary>
+            The default payload value converter in RESTier.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierPayloadValueConverter.ConvertToPayloadValue(System.Object,Microsoft.OData.Edm.IEdmTypeReference)">
+            <summary>
+            Converts the given primitive value defined in a type definition from the payload object.
+            </summary>
+            <param name="value">The given CLR value.</param>
+            <param name="edmTypeReference">The expected type reference from model.</param>
+            <returns>The converted payload value of the underlying type.</returns>
+            <remarks>
+            RESTier handles Edm.Date specially.
+            System.DateTime values will be converted to System.DateTimeOffset in OData Web API
+            before being passed into ODataLib for serialization. So we need to convert System.DateTimeOffset
+            to Edm.Library.Date to avoid type validation failure in ODataLib.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.BatchHandlerRequiresApiContextFactory">
+            <summary>
+              Looks up a localized string similar to RestierBatchHandler was called without an ApiContext Factory..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.CannotWriteObjectType">
+            <summary>
+              Looks up a localized string similar to {0} cannot write an object of type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.ControllerRequiresPath">
+            <summary>
+              Looks up a localized string similar to Controller cannot have null path..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.DeleteOnlySupportedOnEntitySet">
+            <summary>
+              Looks up a localized string similar to Currently only EntitySets can be deleted from..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.EdmTypeNotSupported">
+            <summary>
+              Looks up a localized string similar to {0} is not a supported EDM type..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.EntitySetMissingForSerialization">
+            <summary>
+              Looks up a localized string similar to EntitySet is missing during serialization..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.IncorrectKeyFormat">
+            <summary>
+              Looks up a localized string similar to Keys were not specified in the format of &apos;KeyName=KeyValue&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.InsertOnlySupportedOnEntitySet">
+            <summary>
+              Looks up a localized string similar to Currently only EntitySets can be inserted into..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.InvalidEmptyPathInRequest">
+            <summary>
+              Looks up a localized string similar to Invalid request - ODataPath is null..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.InvalidODataInfoInRequest">
+            <summary>
+              Looks up a localized string similar to Invalid request - No ODataProperties..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.InvalidPathTemplateInRequest">
+            <summary>
+              Looks up a localized string similar to Invalid request - Expecting {0} path template..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.KeyNotValidForEntityType">
+            <summary>
+              Looks up a localized string similar to Specified key &apos;{0}&apos; is not a valid property of entity &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.MultiKeyValuesExpected">
+            <summary>
+              Looks up a localized string similar to Only one key was specified, when multiple were expected..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.PathSegmentNotSupported">
+            <summary>
+              Looks up a localized string similar to Path segment not supported: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.PostToUnboundActionNotSupported">
+            <summary>
+              Looks up a localized string similar to Post to unbound action is not supported by `RestierController`..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.ResourceNotFound">
+            <summary>
+              Looks up a localized string similar to The resource you requested is not found..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Properties.Resources.UpdateOnlySupportedOnEntitySet">
+            <summary>
+              Looks up a localized string similar to Currently only EntitySets can be updated..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.RestierController">
+            <summary>
+            The all-in-one controller class to handle API requests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Get(System.Threading.CancellationToken)">
+            <summary>
+            Handles a GET request to query entities.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the response message.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Post(System.Web.OData.EdmEntityObject,System.Threading.CancellationToken)">
+            <summary>
+            Handles a POST request to create an entity.
+            </summary>
+            <param name="edmEntityObject">The entity object to create.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the creation result.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Put(System.Web.OData.EdmEntityObject,System.Threading.CancellationToken)">
+            <summary>
+            Handles a PUT request to fully update an entity.
+            </summary>
+            <param name="edmEntityObject">The entity object to update.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the updated result.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Patch(System.Web.OData.EdmEntityObject,System.Threading.CancellationToken)">
+            <summary>
+            Handles a PATCH request to partially update an entity.
+            </summary>
+            <param name="edmEntityObject">The entity object to update.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the updated result.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Delete(System.Threading.CancellationToken)">
+            <summary>
+            Handles a DELETE request to delete an entity.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the deletion result.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.PostAction(System.Threading.CancellationToken)">
+            <summary>
+            Handles a POST request to an action.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that contains the action result.</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.RestierController.Dispose(System.Boolean)">
+            <summary>
+            Disposes the API and the controller.
+            </summary>
+            <param name="disposing">Indicates whether disposing is happening.</param>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.RestierController.Api">
+            <summary>
+            Gets the API associated with this controller.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.BaseCollectionResult">
+            <summary>
+            Represents a collection of objects being returned from an action.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.BaseResult">
+            <summary>
+            Represents the result of an OData query.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.BaseResult.#ctor(Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.BaseResult"/> class.
+            </summary>
+            <param name="edmType">The EDM type reference of the OData result.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Results.BaseResult.EdmType">
+            <summary>
+            Gets the EDM type reference of the OData result.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Results.BaseResult.Context">
+            <summary>
+            Gets the context where the action is executed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.BaseCollectionResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.BaseCollectionResult"/> class.
+            </summary>
+            <param name="query">The query that returns a collection of objects.</param>
+            <param name="edmType">The EDM type reference of the objects.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Results.BaseCollectionResult.Query">
+            <summary>
+            Gets the query that returns a collection of objects.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.EnumResult">
+            <summary>
+            Represents a single enum value being returned from an action.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.BaseSingleResult">
+            <summary>
+            Represents a single object being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.BaseSingleResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.BaseSingleResult"/> class.
+            </summary>
+            <param name="query">The query that returns an object.</param>
+            <param name="edmType">The EDM type reference of the object.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Results.BaseSingleResult.Result">
+            <summary>
+            Gets the result object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.EnumResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.EnumResult"/> class.
+            </summary>
+            <param name="query">The query that returns a enum value.</param>
+            <param name="edmType">The EDM type reference of the enum value.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.NonEntityCollectionResult">
+            <summary>
+            Represents a collection of non-entity values being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.NonEntityCollectionResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.NonEntityCollectionResult"/> class.
+            </summary>
+            <param name="query">The query that returns a collection of non-entity values.</param>
+            <param name="edmType">The EDM type reference of the values.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.EntityCollectionResult">
+            <summary>
+            Represents a collection of entity instances being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.EntityCollectionResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.EntityCollectionResult"/> class.
+            </summary>
+            <param name="query">The query that returns a collection of entities.</param>
+            <param name="edmType">The EDM type reference of the entities.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.ComplexResult">
+            <summary>
+            Represents a single complex value being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.ComplexResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.ComplexResult"/> class.
+            </summary>
+            <param name="query">The query that returns a complex value.</param>
+            <param name="edmType">The EDM type reference of the complex value.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.RawResult">
+            <summary>
+            Represents a raw value being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.RawResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.RawResult"/> class.
+            </summary>
+            <param name="query">The query that returns a primitive value.</param>
+            <param name="edmType">The EDM type reference of the primitive value.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.PrimitiveResult">
+            <summary>
+            Represents a single primitive value being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.PrimitiveResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.PrimitiveResult"/> class.
+            </summary>
+            <param name="query">The query that returns a primitive value.</param>
+            <param name="edmType">The EDM type reference of the primitive value.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Results.EntityResult">
+            <summary>
+            Represents a single entity instance being returned from an action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Results.EntityResult.#ctor(System.Linq.IQueryable,Microsoft.OData.Edm.IEdmTypeReference,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Results.EntityResult"/> class.
+            </summary>
+            <param name="query">The query that returns an entity.</param>
+            <param name="edmType">The EDM type reference of the entity.</param>
+            <param name="context">The context where the action is executed.</param>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Routing.RestierRoutingConvention">
+            <summary>
+            The default routing convention implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Routing.RestierRoutingConvention.#ctor(System.Func{Microsoft.Restier.Core.IApi})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Routing.RestierRoutingConvention"/> class.
+            </summary>
+            <param name="apiFactory">The API factory method.</param>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Routing.RestierRoutingConvention.SelectController(System.Web.OData.Routing.ODataPath,System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Selects OData controller based on parsed OData URI
+            </summary>
+            <param name="odataPath">Parsed OData URI</param>
+            <param name="request">Incoming HttpRequest</param>
+            <returns>Prefix for controller name</returns>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Routing.RestierRoutingConvention.SelectAction(System.Web.OData.Routing.ODataPath,System.Web.Http.Controllers.HttpControllerContext,System.Linq.ILookup{System.String,System.Web.Http.Controllers.HttpActionDescriptor})">
+            <summary>
+            Selects the appropriate action based on the parsed OData URI.
+            </summary>
+            <param name="odataPath">Parsed OData URI</param>
+            <param name="controllerContext">Context for HttpController</param>
+            <param name="actionMap">Mapping from action names to HttpActions</param>
+            <returns>String corresponding to controller action name</returns>
+        </member>
+        <member name="T:Microsoft.Restier.WebApi.Filters.ValidationResultDto">
+            <summary>
+            A data transfer object that is used to serialize ValidationResult instances to the client.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.WebApi.Filters.ValidationResultDto.#ctor(Microsoft.Restier.Core.Submit.ValidationResult)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.WebApi.Filters.ValidationResultDto"/> class.
+            </summary>
+            <param name="result">The validation result.</param>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Filters.ValidationResultDto.Id">
+            <summary>
+            Gets the id of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationResult"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Filters.ValidationResultDto.Message">
+            <summary>
+            Gets the message of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationResult"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Filters.ValidationResultDto.PropertyName">
+            <summary>
+            Gets the property name of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationResult"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.WebApi.Filters.ValidationResultDto.Severity">
+            <summary>
+            Gets the string that represents the severity of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationResult"/> instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Shared.SharedResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.QueryShouldGetSingleRecord">
+            <summary>
+              Looks up a localized string similar to A query for a single entity resulted in more than one record..
+            </summary>
+        </member>
+    </members>
+</doc>

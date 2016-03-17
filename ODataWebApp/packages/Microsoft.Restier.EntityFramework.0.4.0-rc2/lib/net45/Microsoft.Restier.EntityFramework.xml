@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Restier.EntityFramework</name>
+    </assembly>
+    <members>
+        <member name="M:System.Linq.Expressions.ExpressionHelpers.StripPagingOperators``1(System.Linq.IQueryable{``0})">
+            <summary>
+            Remove paging methods for given IQueryable
+            </summary>
+            <typeparam name="TElement">The type parameter for IQueryable</typeparam>
+            <param name="query">The input query.</param>
+            <returns>The proceed query.</returns>
+        </member>
+        <member name="M:System.TypeExtensions.FindGenericType(System.Type,System.Type)">
+            <summary>
+            Find a base type or implemented interface which has a generic definition
+            represented by the parameter, <c>definition</c>.
+            </summary>
+            <param name="type">
+            The subject type.
+            </param>
+            <param name="definition">
+            The generic definition to check with.
+            </param>
+            <returns>
+            The base type or the interface found; otherwise, <c>null</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Shared.SharedResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Shared.SharedResources.QueryShouldGetSingleRecord">
+            <summary>
+              Looks up a localized string similar to A query for a single entity resulted in more than one record..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.DbApi`1">
+            <summary>
+            Represents an API over a DbContext.
+            </summary>
+            <typeparam name="T">The DbContext type.</typeparam>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.DbApi`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.EntityFramework.DbApi`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.DbApi`1.CreateApiConfiguration">
+            <summary>
+            Creates the API configuration for this API.
+            </summary>
+            <returns>
+            The API configuration for this API.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.DbApi`1.CreateApiContext(Microsoft.Restier.Core.ApiConfiguration)">
+            <summary>
+            Creates the API context for this API.
+            </summary>
+            <param name="configuration">
+            The API configuration to use.
+            </param>
+            <returns>
+            The API context for this API.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.DbApi`1.CreateDbContext">
+            <summary>
+            Creates the underlying DbContext used by this API.
+            </summary>
+            <returns>
+            The underlying DbContext used by this API.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.DbApi`1.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources that are used by the
+            object and, optionally, releases the managed resources.
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources;
+            <c>false</c> to release only unmanaged resources.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.DbApi`1.DbContext">
+            <summary>
+            Gets the underlying DbContext for this API.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Model.ModelMapper">
+            <summary>
+            Represents a model mapper based on a DbContext.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Model.ModelMapper.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.EntityFramework.Model.ModelMapper"/> class.
+            </summary>
+            <param name="dbContextType">
+            The type of a DbContext class.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Model.ModelMapper.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.Type@)">
+            <summary>
+            Tries to get the relevant type of an entity
+            set, singleton, or composable function import.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="relevantType">
+            When this method returns, provides the
+            relevant type of the queryable source.
+            </param>
+            <returns>
+            <c>true</c> if the relevant type was
+            provided; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Model.ModelMapper.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.String,System.Type@)">
+            <summary>
+            Tries to get the relevant type of a composable function.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of composable function.
+            </param>
+            <param name="relevantType">
+            When this method returns, provides the
+            relevant type of the composable function.
+            </param>
+            <returns>
+            <c>true</c> if the relevant type was
+            provided; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Model.ModelProducer">
+            <summary>
+            Represents a model producer that uses the
+            metadata workspace accessible from a DbContext.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Model.ModelProducer.GetModelAsync(Microsoft.Restier.Core.InvocationContext,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Model.ModelProducer.Instance">
+            <summary>
+            Gets the single instance of this model producer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Query.QueryExecutor">
+            <summary>
+            Represents a query executor that uses Entity Framework methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Query.QueryExecutor.ExecuteQueryAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable{``0},System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes a query and produces a query result.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the query.
+            </typeparam>
+            <param name="context">
+            The query context.
+            </param>
+            <param name="query">
+            A composed query.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Query.QueryExecutor.ExecuteSingleAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable,System.Linq.Expressions.Expression,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes a singleton
+            query and produces a query result.
+            </summary>
+            <typeparam name="TResult">
+            The type of the singleton query result.
+            </typeparam>
+            <param name="context">
+            The query context.
+            </param>
+            <param name="query">
+            A base query.
+            </param>
+            <param name="expression">
+            An expression to be composed on the base query.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Query.QueryExecutor.Instance">
+            <summary>
+            Gets the single instance of this query executor.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Query.QueryExpressionSourcer">
+            <summary>
+            Represents a query expression sourcer that uses a DbContext.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Query.QueryExpressionSourcer.Source(Microsoft.Restier.Core.Query.QueryExpressionContext,System.Boolean)">
+            <summary>
+            Sources an expression.
+            </summary>
+            <param name="context">
+            The query expression context.
+            </param>
+            <param name="embedded">
+            Indicates if the sourcing is occurring on an embedded node.
+            </param>
+            <returns>
+            A data source expression that represents the visited node.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Query.QueryExpressionSourcer.Instance">
+            <summary>
+            Gets the single instance of this query expression sourcer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Properties.Resources.DataModificationMustBeCUD">
+            <summary>
+              Looks up a localized string similar to A DataModificationEntry must be either New, Update or Delete..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Properties.Resources.ResourceNotFound">
+            <summary>
+              Looks up a localized string similar to Could not find the specified resource..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Properties.Resources.UnsupportedPropertyType">
+            <summary>
+              Looks up a localized string similar to Unsupported type for property: {0}..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Submit.ChangeSetPreparer">
+            <summary>
+            To prepare changed entries for the given <see cref="T:Microsoft.Restier.Core.Submit.ChangeSet"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Submit.ChangeSetPreparer.PrepareAsync(Microsoft.Restier.Core.Submit.SubmitContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously prepare the <see cref="T:Microsoft.Restier.Core.Submit.ChangeSet"/>.
+            </summary>
+            <param name="context">The submit context class used for preparation.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that represents this asynchronous operation.</returns>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Submit.ChangeSetPreparer.Instance">
+            <summary>
+            Gets the singleton instance of the <see cref="T:Microsoft.Restier.EntityFramework.Submit.ChangeSetPreparer"/> class.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.EntityFramework.Submit.SubmitExecutor">
+            <summary>
+            To execute submission of changes to database.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.EntityFramework.Submit.SubmitExecutor.ExecuteSubmitAsync(Microsoft.Restier.Core.Submit.SubmitContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes the submission.
+            </summary>
+            <param name="context">The submit context class used for preparation.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The task object that represents this asynchronous operation.</returns>
+        </member>
+        <member name="P:Microsoft.Restier.EntityFramework.Submit.SubmitExecutor.Instance">
+            <summary>
+            Gets the singleton instance of the <see cref="T:Microsoft.Restier.EntityFramework.Submit.SubmitExecutor"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>
