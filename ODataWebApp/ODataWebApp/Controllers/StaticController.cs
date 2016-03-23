@@ -1,4 +1,5 @@
-﻿using ODataWebApp.Models;
+﻿using Microsoft.OData.Core;
+using ODataWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +42,15 @@ namespace ODataWebApp.Controllers
 		//	return Ok(DbContext.Equipment.Count());
 		//}
 
-		//[HttpPost]
-		//public IHttpActionResult GetEquipmentInformation(ODataActionParameters parameters)
-		//{
-		//	//parameters.First().Key
-		//	return Ok(DbContext.vmsGetEquipmentInformation("1"));
-		//}
+		[HttpPost]
+		[ODataRoute("ins_MaterialLotByController()")]
+		public IHttpActionResult ins_MaterialLotByController(ODataActionParameters parameters)
+		{
+			int controllerID = (int)parameters["controllerID"];
+			int result = DbContext.ins_MaterialLotByController(controllerID);
+
+			return Ok(result);
+		}
 
 		/// <summary>
 		/// Disposes the API and the controller.

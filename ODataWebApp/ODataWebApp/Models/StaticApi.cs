@@ -1,4 +1,6 @@
-﻿using Microsoft.Restier.EntityFramework;
+﻿using Microsoft.Restier.Core.Model;
+using Microsoft.Restier.EntityFramework;
+using ODataWebApp.DynamicFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,12 @@ namespace ODataWebApp.Models
 			{
 				return DbContext;
 			}
+		}
+
+		[Action]
+		public int ins_MaterialLotByController(int controllerID)
+		{
+			return -1;
 		}
 	}
 }
