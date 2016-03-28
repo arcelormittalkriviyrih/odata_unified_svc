@@ -18,5 +18,7 @@ namespace ODataWebApp
         public string ResponseState { get; set; }
         public int ProductionRequestID { get; set; }
         public int EquipmentID { get; set; }
+        public Nullable<int> ProductSegmentID { get; set; }
+        public Nullable<int> ProcessSegmentID { get; set; }
     }
 }

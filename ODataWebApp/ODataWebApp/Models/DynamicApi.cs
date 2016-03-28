@@ -31,6 +31,8 @@ namespace ODataWebApp.Models
 		private DynamicQueryExpressionExpander _dynamicQueryExpressionExpander = null;
 		private DynamicQueryExpressionSourcer _dynamicQueryExpressionSourcer = null;
 
+		private static DynamicContext _dynamicContext = null;
+
 		#endregion
 
 		#region Properties
@@ -41,7 +43,7 @@ namespace ODataWebApp.Models
 			{
 				return DbContext;
 			}
-		} 
+		}
 
 		#endregion
 
@@ -89,65 +91,20 @@ namespace ODataWebApp.Models
 			return apiConfiguration;
 		}
 
-		//protected override DynamicContext CreateDbContext()
-		//{
-		//	var context = base.CreateDbContext();
+		protected override DynamicContext CreateDbContext()
+		{
+			//this._dynamicContext = base.CreateDbContext();
 
-		//	System.Data.Entity.DbSet set = context.Set(typeof(KEP_logger));
+			if (_dynamicContext == null)
+			{
+				_dynamicContext = new DynamicContext();
+			}
 
-		//	return context;
-		//}
+			//Type type = _dynamicContext.GetModelType("AlarmData");
+			//var dbSet = _dynamicContext.Set(type);
 
-		//protected override DynamicContext CreateDbContext()
-		//{
-		//	DynamicContext context = null;//base.CreateDbContext();
-
-		//	System.Configuration.ConnectionStringSettings connectionStringSettings = WebConfigurationManager.ConnectionStrings["KEPServer"];
-
-		//	if (context == null)
-		//	{
-		//		context = new DynamicContext();//string.Format("name={0}", "KEPServer"/*"B2MML-BatchML"*/));
-
-		//		// https://www.nuget.org/packages/DatabaseSchemaReader/
-		//		using (var dbReader = new DatabaseReader(connectionStringSettings.ConnectionString, "System.Data.SqlClient", "dbo"))
-		//		{
-		//			var schema = dbReader.ReadAll();
-		//			var dcf = new DynamicClassFactory();
-
-		//			#region Read Tables
-
-		//			foreach (var table in schema.Tables)
-		//			{
-		//				if (table.Name != "__MigrationHistory")
-		//				{
-		//					var property = new Dictionary<string, Type>();
-		//					foreach (var col in table.Columns)
-		//					{
-		//						property.Add(col.Name, Type.GetType(col.DataType.NetDataType));
-		//						if (col.IsPrimaryKey)
-		//						{
-		//							//tableType.AddKeys(prop);
-		//						}
-		//					}
-		//					var type = CreateType(dcf, table.Name, property);
-		//					context.AddTable(type);
-
-		//					var tets = context.Set(type);
-		//				}
-		//			}
-
-		//			#endregion
-		//		}
-		//	}
-
-		//	return context;
-		//}
-
-		//private Type CreateType(DynamicClassFactory dcf, string name, Dictionary<string, Type> property)
-		//{
-		//	var t = dcf.CreateDynamicType<DynamicEntity>(name, property);
-		//	return t;
-		//} 
+			return _dynamicContext;
+		}
 
 		#endregion
 	}

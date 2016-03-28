@@ -202,7 +202,6 @@
         <EntityTypeShape EntityType="Model.ProductionSceduleRecord" Width="1.5" PointX="3.75" PointY="219" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.ProductProductionRuleIDGroup" Width="1.5" PointX="2.25" PointY="108.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.ProductSegment" Width="1.5" PointX="2.25" PointY="111.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Property" Width="1.5" PointX="4.5" PointY="80.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.PropertyTypes" Width="1.5" PointX="2.25" PointY="57" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.QualificationTestSpecification" Width="1.5" PointX="18.5" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.RecipeBuildingBlock" Width="1.5" PointX="2.25" PointY="228.75" IsExpanded="true" />
@@ -531,7 +530,6 @@
         <AssociationConnector Association="Model.FK_OpMaterialSpecification_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialDefinitionProperty_MaterialDefinitionProperty1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialDefinitionProperty_MaterialTestSpecification" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_MaterialDefinitionProperty_Property" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialDefinitionProperty_PropertyTypes" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialLotProperty_MaterialDefinitionProperty" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialInformation_MaterialLot" ManuallyRouted="false" />
@@ -555,7 +553,6 @@
         <AssociationConnector Association="Model.FK_MaterialLotProperty_MaterialLotProperty1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialLotProperty_MaterialTestSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialLotProperty_MateriaSubLot" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_MaterialLotProperty_Property" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialLotProperty_PropertyTypes" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialProducedActual_MateriaSubLot" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialProducedActual_SegmentResponse" ManuallyRouted="false" />
@@ -817,6 +814,7 @@
         <AssociationConnector Association="Model.FK_WorkResponse_WorkRequest" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_WorkSceduleRecord_WorkScedule" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_WorkScedule_WorkScedule" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ProductionParameter_PropertyTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

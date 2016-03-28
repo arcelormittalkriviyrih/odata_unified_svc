@@ -784,9 +784,6 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Property.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="PropertyTypes.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

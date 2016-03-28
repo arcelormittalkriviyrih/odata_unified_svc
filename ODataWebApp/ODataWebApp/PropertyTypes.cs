@@ -20,6 +20,7 @@ namespace ODataWebApp
             this.MaterialClassProperty = new HashSet<MaterialClassProperty>();
             this.MaterialDefinitionProperty = new HashSet<MaterialDefinitionProperty>();
             this.MaterialLotProperty = new HashSet<MaterialLotProperty>();
+            this.ProductionParameter = new HashSet<ProductionParameter>();
         }
     
         public int ID { get; set; }
@@ -31,5 +32,7 @@ namespace ODataWebApp
         public virtual ICollection<MaterialDefinitionProperty> MaterialDefinitionProperty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialLotProperty> MaterialLotProperty { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionParameter> ProductionParameter { get; set; }
     }
 }

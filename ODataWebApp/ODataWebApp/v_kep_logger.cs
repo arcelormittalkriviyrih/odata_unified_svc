@@ -19,6 +19,6 @@ namespace ODataWebApp
         public Nullable<int> Controller_ID { get; set; }
         public Nullable<float> Weight_VALUE { get; set; }
         public Nullable<System.DateTime> Weight_TIMESTAMP { get; set; }
-        public Nullable<bool> Weight_Status { get; set; }
+        public Nullable<bool> Weight_OK_Value { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace ODataWebApp.Controllers
 		//}
 
 		[HttpPost]
-		[ODataRoute("ins_MaterialLotByController()")]
+		//[ODataRoute("ins_MaterialLotByController()")]
 		public IHttpActionResult ins_MaterialLotByController(ODataActionParameters parameters)
 		{
 			int controllerID = (int)parameters["controllerID"];

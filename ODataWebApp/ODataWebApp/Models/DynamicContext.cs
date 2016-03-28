@@ -15,6 +15,14 @@ namespace ODataWebApp.Models
 {
 	public partial class DynamicContext : DbContext
 	{
+		#region Const
+
+		public const string cConfigConnectionName = "TestEntities";//"B2MML-BatchML";
+
+		public const string cDefaultSchemaName = "dbo";
+
+		#endregion
+
 		#region Fields
 
 		private Dictionary<string, Type> _tables = new Dictionary<string, Type>();
@@ -25,16 +33,12 @@ namespace ODataWebApp.Models
 
 		#region Property
 
-		//public DbSet<TestTable> TestTable { get; set; }
-
-		public DbSet<KEP_logger> KEP_logger { get; set; } 
-
 		#endregion
 
 		#region Constructor
 
 		public DynamicContext()
-			: base("name=KEPServer")//"name=B2MML-BatchML")
+			: base("name=" + cConfigConnectionName)
 		{
 			Database.SetInitializer(new NullDatabaseInitializer<DynamicContext>()); // Never create a database
 			Database.Log = LogQuery;
@@ -46,96 +50,150 @@ namespace ODataWebApp.Models
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			var test2 = modelBuilder.Entity<TestTable>();
-			test2.ToTable("TestTable", "dbo");
-			test2.HasEntitySetName("TestTable");
-
-			var result = this.Set<TestTable>();
-
-			//modelBuilder.Entity<TestTable>().Map(m =>
-			//{
-			//	m.Properties(t => new { t.ID, t.Name }); 
-			//	//m.MapInheritedProperties();
-			//	m.ToTable("TestTable", "dbo");
-			//});
-
-			//((EntityTypeConfiguration)test2.Configuration).IsExplicitEntity = false;
-
 			base.OnModelCreating(modelBuilder);
 
-			//GetType().Se
+			//modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+			modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>();
 
-			//base.OnModelCreating(modelBuilder);
+			// https://www.nuget.org/packages/DatabaseSchemaReader/
+			using (var dbReader = new DatabaseReader(this.Database.Connection.ConnectionString, "System.Data.SqlClient", cDefaultSchemaName))
+			{
+				var schema = dbReader.ReadAll();
+				var dynamicClassFactory = new DynamicClassFactory();
 
-			//var entityMethod = modelBuilder.GetType().GetMethod("Entity");
+				#region Read Tables
 
-			//// https://www.nuget.org/packages/DatabaseSchemaReader/
-			//using (var dbReader = new DatabaseReader(this.Database.Connection.ConnectionString, "System.Data.SqlClient", "dbo"))
-			//{
-			//	var schema = dbReader.ReadAll();
-			//	var dcf = new DynamicClassFactory();
+				List<string> failedTableColumns = new List<string>();
 
-			//	#region Read Tables
+				foreach (var table in schema.Tables)
+				{
+					if (schema.Tables[0] != table)
+						continue;
 
-			//	foreach (var table in schema.Tables)
-			//	{
-			//		if (table.Name != "__MigrationHistory")
-			//		{
-			//			var property = new Dictionary<string, Type>();
-			//			foreach (var col in table.Columns)
-			//			{
-			//				property.Add(col.Name, Type.GetType(col.DataType.NetDataType));
-			//				if (col.IsPrimaryKey)
-			//				{
-			//					//tableType.AddKeys(prop);
-			//				}
-			//			}
-			//			var type = CreateType(dcf, table.Name, property);
-			//			this.AddTable(type);
+					var property = new Dictionary<string, Type>();
+					foreach (var col in table.Columns)
+					{
+						if (col.DataType == null)
+						{
+							failedTableColumns.Add(string.Format("{0} - {1}", table.Name, col.ToString()));
+						}
+						else
+						{
+							property.Add(col.Name, Type.GetType(col.DataType.NetDataType));
+						}
 
-			//			var entityTypeConfiguration = entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, new object[] { });
-			//			foreach (var pi in (type).GetProperties())
-			//			{
-			//				var column = table.Columns.Find(x => x.Name == pi.Name);
+						if (col.IsPrimaryKey)
+						{
+							//tableType.AddKeys(prop);
+						}
+					}
 
-			//				if (column != null && column.IsPrimaryKey)
-			//					modelBuilder.Entity(type).HasKey(pi.PropertyType, pi.Name);
-			//				else
-			//					modelBuilder.Entity(type).PrimitiveProperty(pi.PropertyType, pi.Name);
-			//				//else if (pi.PropertyType == typeof(string))
-			//				//	modelBuilder.Entity(table.Value).StringProperty(pi.Name);
-			//			}
-			//			var toTableMethod = entityTypeConfiguration.GetType().GetGenericMethod("ToTable");
-			//			toTableMethod.Invoke(entityTypeConfiguration, new object[] { table.Name });
-			//			var setMethod = this.GetType().GetGenericMethod("Set");
-			//			var test1 = setMethod.MakeGenericMethod(type).Invoke(this, new object[] {});
-			//			//modelBuilder.Entity<Type>().ToTable()
-			//			//((EntityTypeConfiguration)returnType)..ToT(table.Key, "dbo");
-			//			//Entry()
+					var type = CreateType(dynamicClassFactory, table.Name, property);
+					this.AddTable(table.Name, type);
+					var entity = modelBuilder.Entity(type);
 
-			//			var tets = Set(type);
-			//		}
-			//	}
+					foreach (var pi in type.GetProperties())
+					{
+						try
+						{
+							var column = table.Columns.Find(x => x.Name == pi.Name);
 
-			//	#endregion
-			//}
+							if (column != null && column.IsPrimaryKey)
+								entity.HasKey(pi.PropertyType, pi.Name);
+							else if (pi.PropertyType == typeof(string))
+								entity.StringProperty(pi.Name);
+							else
+								entity.PrimitiveProperty(pi.PropertyType, pi.Name);
+						}
+						catch
+						{ 
+						
+						}
+					}
+
+					entity.TypeConfiguration.ToTable(table.Name, cDefaultSchemaName);
+					entity.TypeConfiguration.HasEntitySetName(table.Name);
+					//modelBuilder.Entity<Type>()
+					//entity.ToTable(table.Name, cDefaultSchemaName);
+					//entity.HasEntitySetName("TestTable");
+				}
+
+				#endregion
+			}
 		}
 
-		//public void AddTable(Type type)
-		//{
-		//	_tables.Add(type.Name, type);
-		//}
-
-		private Type CreateType(DynamicClassFactory dcf, string name, Dictionary<string, Type> property)
+		public void AddTable(string name, Type type)
 		{
-			var t = dcf.CreateDynamicType<DynamicEntity>(name, property);
-			return t;
+			this._tables.Add(type.Name, type);
+		}
+
+		public void AddView(string name, Type type)
+		{
+			this._views.Add(type.Name, type);
+		}
+
+		public void AddAction(string name, Type type)
+		{
+			this._actions.Add(type.Name, type);
+		}
+
+		public Type GetModelType(string name)
+		{
+			Type type = null;
+
+			if (this._tables.ContainsKey(name))
+			{
+				type = this._tables[name];
+			}
+
+			if (this._views.ContainsKey(name))
+			{
+				type = this._views[name];
+			}
+
+			if (this._actions.ContainsKey(name))
+			{
+				type = this._actions[name];
+			}
+
+			return type;
+		}
+
+		public bool TryGetRelevantType(string name, out Type relevantType)
+		{
+			relevantType = null;
+
+			if (this._tables.ContainsKey(name))
+			{
+				relevantType = this._tables[name];
+				return true;
+			}
+
+			if (this._views.ContainsKey(name))
+			{
+				relevantType = this._views[name];
+				return true;
+			}
+
+			if (this._actions.ContainsKey(name))
+			{
+				relevantType = this._actions[name];
+				return true;
+			}
+
+			return false;
+		}
+
+		private Type CreateType(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, Type> property)
+		{
+			var dynamicType = dynamicClassFactory.CreateDynamicType<DynamicEntity>(name, property);
+			return dynamicType;
 		}
 
 		public void LogQuery(string query)
 		{
 			System.Diagnostics.Debug.Write(query);
-		} 
+		}
 
 		#endregion
 	}
@@ -150,20 +208,5 @@ namespace ODataWebApp.Models
 
 			return foo1;
 		}
-	}
-
-	public class TestTable
-	{
-		public int ID { get; set; }
-		public string Name { get; set; }
-	}
-
-	public class KEP_logger
-	{
-		public int ID { get; set; }
-		public int Controller_ID { get; set; }
-		public Single Weight_VALUE { get; set; }
-		public DateTime Weight_TIMESTAMP { get; set; }
-		public Boolean Weight_Status { get; set; }
 	}
 }

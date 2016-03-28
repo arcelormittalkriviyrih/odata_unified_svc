@@ -29,7 +29,6 @@ namespace ODataWebApp
         public Nullable<int> MaterialDefinitionID { get; set; }
         public Nullable<int> ClassPropertyID { get; set; }
         public Nullable<int> PropertyType { get; set; }
-        public Nullable<int> PropertyID { get; set; }
     
         public virtual MaterialClassProperty MaterialClassProperty { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
@@ -37,7 +36,6 @@ namespace ODataWebApp
         public virtual ICollection<MaterialDefinitionProperty> MaterialDefinitionProperty11 { get; set; }
         public virtual MaterialDefinitionProperty MaterialDefinitionProperty2 { get; set; }
         public virtual MaterialTestSpecification MaterialTestSpecification { get; set; }
-        public virtual Property Property { get; set; }
         public virtual PropertyTypes PropertyTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialLotProperty> MaterialLotProperty { get; set; }

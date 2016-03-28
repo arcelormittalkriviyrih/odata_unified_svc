@@ -18,24 +18,18 @@ namespace ODataWebApp.DynamicFactory
 		public System.Linq.Expressions.Expression Source(QueryExpressionContext context, bool embedded)
 		{
 			//TODO: Source query expression dynamically
-			if (this.InnerHandler != null)
+			var dbContext = context.QueryContext.ApiContext.GetProperty<DynamicContext>("Microsoft.Restier.EntityFramework.DbContext");
+			if (dbContext != null)
 			{
-				try
-				{
-					var dbContext = context.QueryContext.ApiContext.GetProperty<DynamicContext>("Microsoft.Restier.EntityFramework.DbContext");
-					Type type = typeof(TestTable);
-					var dbSet = dbContext.Set(type);
-					//context.ModelReference.EntitySet
-					//context.ModelReference.EntityType
+				string name = context.ModelReference.EntitySet.Name;
+				Type type = dbContext.GetModelType(name);
+				var dbSet = dbContext.Set(type);
 
-					return Expression.Constant(dbSet);
-					//return this.InnerHandler.Source(context, embedded);
-				}
-				catch
-				{
-					throw;
-				}
+				return Expression.Constant(dbSet);
 			}
+
+			if (this.InnerHandler != null)
+				return this.InnerHandler.Source(context, embedded);
 			else
 				throw new NotImplementedException();
 		}

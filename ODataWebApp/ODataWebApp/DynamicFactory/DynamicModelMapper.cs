@@ -29,8 +29,11 @@ namespace ODataWebApp.DynamicFactory
 
 				if (!result)
 				{
-					relevantType = typeof(TestTable);
-					result = true;
+					var dbContext = context.GetProperty<DynamicContext>("Microsoft.Restier.EntityFramework.DbContext");
+					if (dbContext != null)
+					{
+						result = dbContext.TryGetRelevantType(name, out relevantType);
+					}
 				}
 
 				return result;

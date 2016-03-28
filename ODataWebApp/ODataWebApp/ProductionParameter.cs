@@ -24,10 +24,12 @@ namespace ODataWebApp
         public Nullable<int> ProductSegmentID { get; set; }
         public Nullable<int> ProcessSegmentID { get; set; }
         public string Parameter { get; set; }
+        public Nullable<int> PropertyType { get; set; }
     
         public virtual ProcessSegment ProcessSegment { get; set; }
         public virtual ProductSegment ProductSegment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SegmentRequirement> SegmentRequirement { get; set; }
+        public virtual PropertyTypes PropertyTypes { get; set; }
     }
 }

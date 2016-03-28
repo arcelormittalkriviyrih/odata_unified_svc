@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AlarmData">
           <Key>
             <PropertyRef Name="ID" />
@@ -454,15 +454,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Location" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'ID' in the table 'B2MML-BatchML.dbo.EquipmentClass' was excluded.
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.EquipmentClass' was excluded.
-warning 6031: The column 'ID' on the table/view 'B2MML-BatchML.dbo.EquipmentClass' was excluded, and is a key column.  The table/view has been excluded.  Please fix the entity in the schema file, and uncomment.
-        <EntityType Name="EquipmentClass">
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="Location" Type="nvarchar" MaxLength="50" />
-          <Property Name="EquipmentLevel" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'EquipmentClassID' in the table 'B2MML-BatchML.dbo.EquipmentClassProperty' was excluded.-->
         <EntityType Name="EquipmentClassProperty">
           <Key>
@@ -764,13 +755,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="Value" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HID' in the table 'B2MML-BatchML.dbo.HierarchyScope' was excluded.
-warning 6031: The column 'HID' on the table/view 'B2MML-BatchML.dbo.HierarchyScope' was excluded, and is a key column.  The table/view has been excluded.  Please fix the entity in the schema file, and uncomment.
-        <EntityType Name="HierarchyScope">
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>-->
         <EntityType Name="Individualapproval">
           <Key>
             <PropertyRef Name="ID" />
@@ -1114,20 +1098,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="OpMaterialCapabilityID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'ID' in the table 'B2MML-BatchML.dbo.MaterialClass' was excluded.
-warning 6031: The column 'ID' on the table/view 'B2MML-BatchML.dbo.MaterialClass' was excluded, and is a key column.  The table/view has been excluded.  Please fix the entity in the schema file, and uncomment.
-        <EntityType Name="MaterialClass">
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'MaterialClassID' in the table 'B2MML-BatchML.dbo.MaterialClassAssemblies' was excluded.
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'AssemblyClassID' in the table 'B2MML-BatchML.dbo.MaterialClassAssemblies' was excluded.
-warning 6013: The table/view 'B2MML-BatchML.dbo.MaterialClassAssemblies' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="MaterialClassAssemblies">
-          <Property Name="AssemblyType" Type="nvarchar" MaxLength="50" />
-          <Property Name="AssemblyRelationship" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'MaterialClass1' in the table 'B2MML-BatchML.dbo.MaterialClassLinks' was excluded.
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'MaterialClass2' in the table 'B2MML-BatchML.dbo.MaterialClassLinks' was excluded.
 warning 6002: The table/view 'B2MML-BatchML.dbo.MaterialClassLinks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1251,7 +1221,6 @@ warning 6002: The table/view 'B2MML-BatchML.dbo.MaterialDefinitionLinks' does no
           <Property Name="MaterialDefinitionID" Type="int" />
           <Property Name="ClassPropertyID" Type="int" />
           <Property Name="PropertyType" Type="int" />
-          <Property Name="PropertyID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.MaterialInformation' was excluded.
@@ -1317,7 +1286,6 @@ warning 6002: The table/view 'B2MML-BatchML.dbo.MaterialLotLinks' does not have 
           <Property Name="MaterialSubLotID" Type="int" />
           <Property Name="DefinitionPropertyID" Type="int" />
           <Property Name="PropertyType" Type="int" />
-          <Property Name="PropertyID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'MaterialClassID' in the table 'B2MML-BatchML.dbo.MaterialProducedActual' was excluded.
@@ -2160,15 +2128,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="OpPersonnelCapabilityID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'ID' in the table 'B2MML-BatchML.dbo.PersonnelClass' was excluded.
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.PersonnelClass' was excluded.
-warning 6031: The column 'ID' on the table/view 'B2MML-BatchML.dbo.PersonnelClass' was excluded, and is a key column.  The table/view has been excluded.  Please fix the entity in the schema file, and uncomment.
-        <EntityType Name="PersonnelClass">
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="Location" Type="nvarchar" MaxLength="50" />
-          <Property Name="PersonnelInformation" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'PersonnelClassID' in the table 'B2MML-BatchML.dbo.PersonnelClassProperty' was excluded.-->
         <EntityType Name="PersonnelClassProperty">
           <Key>
@@ -2369,14 +2328,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Version" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'ID' in the table 'B2MML-BatchML.dbo.PhysicalAssetClass' was excluded.
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.PhysicalAssetClass' was excluded.
-warning 6031: The column 'ID' on the table/view 'B2MML-BatchML.dbo.PhysicalAssetClass' was excluded, and is a key column.  The table/view has been excluded.  Please fix the entity in the schema file, and uncomment.
-        <EntityType Name="PhysicalAssetClass">
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'PhysicalAssetClassID' in the table 'B2MML-BatchML.dbo.PhysicalAssetClassProperty' was excluded.-->
         <EntityType Name="PhysicalAssetClassProperty">
           <Key>
@@ -2388,16 +2339,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="PhysicalAssetClassProperty" Type="int" />
           <Property Name="PhysicalAssetCapabilityTestSpecification" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.PhysicalAssetInformation' was excluded.
-warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'PhysicalAssetClass' in the table 'B2MML-BatchML.dbo.PhysicalAssetInformation' was excluded.
-warning 6013: The table/view 'B2MML-BatchML.dbo.PhysicalAssetInformation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="PhysicalAssetInformation">
-          <Property Name="ID" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="PublishedDate" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhysicalAsset" Type="int" />
-        </EntityType>-->
         <EntityType Name="PhysicalAssetProperty">
           <Key>
             <PropertyRef Name="ID" />
@@ -2655,6 +2596,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="ProductSegmentID" Type="int" />
           <Property Name="ProcessSegmentID" Type="int" />
           <Property Name="Parameter" Type="nvarchar" MaxLength="50" />
+          <Property Name="PropertyType" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'HierarchyScope' in the table 'B2MML-BatchML.dbo.ProductionPerformance' was excluded.-->
@@ -2752,13 +2694,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="ProductSegment" Type="int" />
           <Property Name="SegmentResponse" Type="int" />
           <Property Name="ProductDefinition" Type="int" />
-        </EntityType>
-        <EntityType Name="Property">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PropertyTypes">
           <Key>
@@ -3432,7 +3367,7 @@ warning 6002: The table/view 'B2MML-BatchML.dbo.v_kep_logger' does not have a pr
           <Property Name="Controller_ID" Type="int" />
           <Property Name="Weight_VALUE" Type="real" />
           <Property Name="Weight_TIMESTAMP" Type="datetime" />
-          <Property Name="Weight_Status" Type="bit" />
+          <Property Name="Weight_OK_Value" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'B2MML-BatchML.dbo.v_MaterialLot_Request' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -3458,6 +3393,8 @@ warning 6002: The table/view 'B2MML-BatchML.dbo.v_ProductionResponse' does not h
           <Property Name="ResponseState" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProductionRequestID" Type="int" Nullable="false" />
           <Property Name="EquipmentID" Type="int" Nullable="false" />
+          <Property Name="ProductSegmentID" Type="int" />
+          <Property Name="ProcessSegmentID" Type="int" />
         </EntityType>
         <Association Name="FK_AlarmData_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
@@ -3483,14 +3420,6 @@ warning 6002: The table/view 'B2MML-BatchML.dbo.v_ProductionResponse' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClassAssemblies' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_AssemblyClass_MaterialClass" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClassAssemblies' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_AssemblyClass_MaterialClass1" />-->
         <Association Name="FK_AssemblyDefinition_MaterialDefinition2">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="1" />
           <End Role="MaterialDefinitionAssemblies" Type="Self.MaterialDefinitionAssemblies" Multiplicity="*" />
@@ -3599,9 +3528,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClassAssemblies' is referenced 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_BatchListEntry_EquipmentClass" />-->
         <Association Name="FK_BatchListEntry_GRecipe">
           <End Role="GRecipe" Type="Self.GRecipe" Multiplicity="0..1" />
           <End Role="BatchListEntry" Type="Self.BatchListEntry" Multiplicity="*" />
@@ -4130,9 +4056,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_ConsumableActual_MaterialClass" />-->
         <Association Name="FK_ConsumableActual_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="ConsumableActual" Type="Self.ConsumableActual" Multiplicity="*" />
@@ -4169,9 +4092,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_ConsumableExpectedRequirement_MaterialClass" />-->
         <Association Name="FK_ConsumableExpectedRequirement_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="ConsumableExpectedRequirement" Type="Self.ConsumableExpectedRequirement" Multiplicity="*" />
@@ -4412,9 +4332,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_Equipment_EquipmentClass" />-->
         <Association Name="FK_EquipmentActual_Equipment">
           <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
           <End Role="EquipmentActual" Type="Self.EquipmentActual" Multiplicity="*" />
@@ -4427,9 +4344,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentActual_EquipmentClass" />-->
         <Association Name="FK_EquipmentActual_SegmentResponse">
           <End Role="SegmentResponse" Type="Self.SegmentResponse" Multiplicity="1" />
           <End Role="EquipmentActual" Type="Self.EquipmentActual" Multiplicity="*" />
@@ -4502,9 +4416,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentCapability_EquipmentClass" />-->
         <Association Name="FK_EquipmentCapability_ProcessSegmentCapability">
           <End Role="ProcessSegmentCapability" Type="Self.ProcessSegmentCapability" Multiplicity="0..1" />
           <End Role="EquipmentCapability" Type="Self.EquipmentCapability" Multiplicity="*" />
@@ -4565,9 +4476,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentClassProperty_EquipmentClass" />-->
         <Association Name="FK_EquipmentClassProperty_EquipmentClassProperty1">
           <End Role="EquipmentClassProperty" Type="Self.EquipmentClassProperty" Multiplicity="0..1" />
           <End Role="EquipmentClassProperty1" Type="Self.EquipmentClassProperty" Multiplicity="*" />
@@ -4676,9 +4584,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentInformation_EquipmentClass" />-->
         <Association Name="FK_EquipmentProoceduralElement_EquipmentElement">
           <End Role="EquipmentElement" Type="Self.EquipmentElement" Multiplicity="0..1" />
           <End Role="EquipmentProoceduralElement" Type="Self.EquipmentProoceduralElement" Multiplicity="*" />
@@ -4787,9 +4692,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentRequirement_EquipmentClass" />-->
         <Association Name="FK_EquipmentRequirement_SegmentRequirement">
           <End Role="SegmentRequirement" Type="Self.SegmentRequirement" Multiplicity="1" />
           <End Role="EquipmentRequirement" Type="Self.EquipmentRequirement" Multiplicity="*" />
@@ -4838,9 +4740,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentSegmentSpecification_EquipmentClass" />-->
         <Association Name="FK_EquipmentSegmentSpecification_ProcessSegment">
           <End Role="ProcessSegment" Type="Self.ProcessSegment" Multiplicity="1" />
           <End Role="EquipmentSegmentSpecification" Type="Self.EquipmentSegmentSpecification" Multiplicity="*" />
@@ -4877,9 +4776,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_EquipmentSpecification_EquipmentClass" />-->
         <Association Name="FK_EquipmentSpecification_ProductSegment">
           <End Role="ProductSegment" Type="Self.ProductSegment" Multiplicity="0..1" />
           <End Role="EquipmentSpecification" Type="Self.EquipmentSpecification" Multiplicity="*" />
@@ -5396,9 +5292,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_ManufacturingBill_MaterialClass" />-->
         <Association Name="FK_ManufacturingBill_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="ManufacturingBill" Type="Self.ManufacturingBill" Multiplicity="*" />
@@ -5507,9 +5400,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialActual_MaterialClass" />-->
         <Association Name="FK_MaterialActual_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialActual" Type="Self.MaterialActual" Multiplicity="*" />
@@ -5594,9 +5484,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialCapability_MaterialClass" />-->
         <Association Name="FK_MaterialCapability_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialCapability" Type="Self.MaterialCapability" Multiplicity="*" />
@@ -5681,12 +5568,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialClassLinks_MaterialClass" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialClassLinks_MaterialClass1" />-->
         <Association Name="FK_MaterialClassLinks_MaterialLinkTypes">
           <End Role="MaterialLinkTypes" Type="Self.MaterialLinkTypes" Multiplicity="1" />
           <End Role="MaterialClassLinks" Type="Self.MaterialClassLinks" Multiplicity="0..1" />
@@ -5699,9 +5580,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialClassProperty_MaterialClass" />-->
         <Association Name="FK_MaterialClassProperty_MaterialClassProperty1">
           <End Role="MaterialClassProperty" Type="Self.MaterialClassProperty" Multiplicity="0..1" />
           <End Role="MaterialClassProperty1" Type="Self.MaterialClassProperty" Multiplicity="*" />
@@ -5738,9 +5616,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialConsumedActual_MaterialClass" />-->
         <Association Name="FK_MaterialConsumedActual_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialConsumedActual" Type="Self.MaterialConsumedActual" Multiplicity="*" />
@@ -5801,9 +5676,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialConsumedRequirement_MaterialClass" />-->
         <Association Name="FK_MaterialConsumedRequirement_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialConsumedRequirement" Type="Self.MaterialConsumedRequirement" Multiplicity="*" />
@@ -5864,9 +5736,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialDefinition_MaterialClass" />-->
         <Association Name="FK_MaterialDefinitionLinks_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="1" />
           <End Role="MaterialDefinitionLinks" Type="Self.MaterialDefinitionLinks" Multiplicity="*" />
@@ -5951,18 +5820,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MaterialDefinitionProperty_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
-          <End Role="MaterialDefinitionProperty" Type="Self.MaterialDefinitionProperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaterialDefinitionProperty">
-              <PropertyRef Name="PropertyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MaterialDefinitionProperty_PropertyTypes">
           <End Role="PropertyTypes" Type="Self.PropertyTypes" Multiplicity="0..1" />
           <End Role="MaterialDefinitionProperty" Type="Self.MaterialDefinitionProperty" Multiplicity="*" />
@@ -5975,9 +5832,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialInformation_MaterialClass" />-->
         <Association Name="FK_MaterialInformation_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialInformation" Type="Self.MaterialInformation" Multiplicity="*" />
@@ -6134,18 +5988,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MaterialLotProperty_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
-          <End Role="MaterialLotProperty" Type="Self.MaterialLotProperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaterialLotProperty">
-              <PropertyRef Name="PropertyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MaterialLotProperty_PropertyTypes">
           <End Role="PropertyTypes" Type="Self.PropertyTypes" Multiplicity="0..1" />
           <End Role="MaterialLotProperty" Type="Self.MaterialLotProperty" Multiplicity="*" />
@@ -6158,9 +6000,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialProducedActual_MaterialClass" />-->
         <Association Name="FK_MaterialProducedActual_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialProducedActual" Type="Self.MaterialProducedActual" Multiplicity="*" />
@@ -6221,9 +6060,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialProducedRequirement_MaterialClass" />-->
         <Association Name="FK_MaterialProducedRequirement_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialProducedRequirement" Type="Self.MaterialProducedRequirement" Multiplicity="*" />
@@ -6284,9 +6120,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialRequirement_MaterialClass" />-->
         <Association Name="FK_MaterialRequirement_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialRequirement" Type="Self.MaterialRequirement" Multiplicity="*" />
@@ -6383,9 +6216,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialSegmentSpecificftion_MaterialClass" />-->
         <Association Name="FK_MaterialSegmentSpecificftion_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialSegmentSpecificftion" Type="Self.MaterialSegmentSpecificftion" Multiplicity="*" />
@@ -6422,9 +6252,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_MaterialSpecification_MaterialClass" />-->
         <Association Name="FK_MaterialSpecification_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="*" />
@@ -6593,9 +6420,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpEquipmentActual_EquipmentClass" />-->
         <Association Name="FK_OpEquipmentActual_JobResponse">
           <End Role="JobResponse" Type="Self.JobResponse" Multiplicity="0..1" />
           <End Role="OpEquipmentActual" Type="Self.OpEquipmentActual" Multiplicity="*" />
@@ -6632,9 +6456,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpEquipmentCapability_EquipmentClass" />-->
         <Association Name="FK_OpEquipmentCapability_OperationsCapability">
           <End Role="OperationsCapability" Type="Self.OperationsCapability" Multiplicity="0..1" />
           <End Role="OpEquipmentCapability" Type="Self.OpEquipmentCapability" Multiplicity="*" />
@@ -6695,9 +6516,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpEquipmentRequirement_EquipmentClass" />-->
         <Association Name="FK_OpEquipmentRequirement_JobOrder">
           <End Role="JobOrder" Type="Self.JobOrder" Multiplicity="0..1" />
           <End Role="OpEquipmentRequirement" Type="Self.OpEquipmentRequirement" Multiplicity="*" />
@@ -6734,9 +6552,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpEquipmentSpecification_EquipmentClass" />-->
         <Association Name="FK_OpEquipmentSpecification_OperationsSegment">
           <End Role="OperationsSegment" Type="Self.OperationsSegment" Multiplicity="1" />
           <End Role="OpEquipmentSpecification" Type="Self.OpEquipmentSpecification" Multiplicity="*" />
@@ -6845,9 +6660,6 @@ error 6004: The table 'B2MML-BatchML.dbo.EquipmentClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OperationsMaterialBillItem_MaterialClass" />-->
         <Association Name="FK_OperationsMaterialBillItem_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="OperationsMaterialBillItem" Type="Self.OperationsMaterialBillItem" Multiplicity="*" />
@@ -7040,9 +6852,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpMaterialActual_MaterialClass" />-->
         <Association Name="FK_OpMaterialActual_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="1" />
           <End Role="OpMaterialActual" Type="Self.OpMaterialActual" Multiplicity="*" />
@@ -7103,9 +6912,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpMaterialCapability_MaterialClass" />-->
         <Association Name="FK_OpMaterialCapability_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="OpMaterialCapability" Type="Self.OpMaterialCapability" Multiplicity="*" />
@@ -7214,9 +7020,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpMaterialRequirement_MaterialClass" />-->
         <Association Name="FK_OpMaterialRequirement_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="1" />
           <End Role="OpMaterialRequirement" Type="Self.OpMaterialRequirement" Multiplicity="*" />
@@ -7277,9 +7080,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpMaterialSpecification_MaterialClass" />-->
         <Association Name="FK_OpMaterialSpecification_MaterialDefinition">
           <End Role="MaterialDefinition" Type="Self.MaterialDefinition" Multiplicity="0..1" />
           <End Role="OpMaterialSpecification" Type="Self.OpMaterialSpecification" Multiplicity="*" />
@@ -7352,9 +7152,6 @@ error 6004: The table 'B2MML-BatchML.dbo.MaterialClass' is referenced by a relat
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPersonnelActual_PersonnelClass" />-->
         <Association Name="FK_OpPersonnelActual_SegmentResponse">
           <End Role="OpSegmentResponse" Type="Self.OpSegmentResponse" Multiplicity="0..1" />
           <End Role="OpPersonnelActual" Type="Self.OpPersonnelActual" Multiplicity="*" />
@@ -7391,9 +7188,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPersonnelCapability_PersonnelClass" />-->
         <Association Name="FK_OpPersonnelCapability_ProcessSegmentCapability">
           <End Role="OpProcessSegmentCapability" Type="Self.OpProcessSegmentCapability" Multiplicity="0..1" />
           <End Role="OpPersonnelCapability" Type="Self.OpPersonnelCapability" Multiplicity="*" />
@@ -7454,9 +7248,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPersonnelRequirement_PersonnelClass" />-->
         <Association Name="FK_OpPersonnelRequirement_SegmentRequirement">
           <End Role="OpSegmentRequirement" Type="Self.OpSegmentRequirement" Multiplicity="0..1" />
           <End Role="OpPersonnelRequirement" Type="Self.OpPersonnelRequirement" Multiplicity="*" />
@@ -7493,9 +7284,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPersonnelSpecification_PersonnelClass" />-->
         <Association Name="FK_OpPersonnelSpecification_WorkDefinition">
           <End Role="WorkDefinition" Type="Self.WorkDefinition" Multiplicity="0..1" />
           <End Role="OpPersonnelSpecification" Type="Self.OpPersonnelSpecification" Multiplicity="*" />
@@ -7544,9 +7332,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPhysicalAssetActual_PhysicalAssetClass" />-->
         <Association Name="FK_OpPhysicalAssetCapability_OperationsCapability">
           <End Role="OperationsCapability" Type="Self.OperationsCapability" Multiplicity="0..1" />
           <End Role="OpPhysicalAssetCapability" Type="Self.OpPhysicalAssetCapability" Multiplicity="*" />
@@ -7571,9 +7356,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPhysicalAssetCapability_PhysicalAssetClass" />-->
         <Association Name="FK_OpPhysicalAssetCapability_ProcessSegmentCapability">
           <End Role="OpProcessSegmentCapability" Type="Self.OpProcessSegmentCapability" Multiplicity="0..1" />
           <End Role="OpPhysicalAssetCapability" Type="Self.OpPhysicalAssetCapability" Multiplicity="*" />
@@ -7634,9 +7416,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPhysicalAssetRequirement_PhysicalAssetClass" />-->
         <Association Name="FK_OpPhysicalAssetRequirement_SegmentRequirement">
           <End Role="OpSegmentRequirement" Type="Self.OpSegmentRequirement" Multiplicity="0..1" />
           <End Role="OpPhysicalAssetRequirement" Type="Self.OpPhysicalAssetRequirement" Multiplicity="*" />
@@ -7673,9 +7452,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_OpPhysicalAssetSpecification_PhysicalAssetClass" />-->
         <Association Name="FK_OpPhysicalAssetSpecification_WorkDefinition">
           <End Role="WorkDefinition" Type="Self.WorkDefinition" Multiplicity="0..1" />
           <End Role="OpPhysicalAssetSpecification" Type="Self.OpPhysicalAssetSpecification" Multiplicity="*" />
@@ -7892,9 +7668,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_Person_PersonnelClass" />-->
         <Association Name="FK_Person_PersonnelInformation">
           <End Role="PersonnelInformation" Type="Self.PersonnelInformation" Multiplicity="0..1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
@@ -7919,9 +7692,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelActual_PersonnelClass" />-->
         <Association Name="FK_PersonnelActual_SegmentResponse">
           <End Role="SegmentResponse" Type="Self.SegmentResponse" Multiplicity="1" />
           <End Role="PersonnelActual" Type="Self.PersonnelActual" Multiplicity="*" />
@@ -7970,9 +7740,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelCapability_PersonnelClass" />-->
         <Association Name="FK_PersonnelCapability_ProcessSegmentCapability">
           <End Role="ProcessSegmentCapability" Type="Self.ProcessSegmentCapability" Multiplicity="0..1" />
           <End Role="PersonnelCapability" Type="Self.PersonnelCapability" Multiplicity="*" />
@@ -8021,12 +7788,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelClass_PersonnelInformation" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelClassProperty_PersonnelClass" />-->
         <Association Name="FK_PersonnelClassProperty_PersonnelClassProperty">
           <End Role="PersonnelClassProperty" Type="Self.PersonnelClassProperty" Multiplicity="0..1" />
           <End Role="PersonnelClassProperty1" Type="Self.PersonnelClassProperty" Multiplicity="*" />
@@ -8087,9 +7848,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelRequirement_PersonnelClass" />-->
         <Association Name="FK_PersonnelRequirement_SegmentRequirement">
           <End Role="SegmentRequirement" Type="Self.SegmentRequirement" Multiplicity="1" />
           <End Role="PersonnelRequirement" Type="Self.PersonnelRequirement" Multiplicity="*" />
@@ -8138,9 +7896,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelSegmentSpecification_PersonnelClass" />-->
         <Association Name="FK_PersonnelSegmentSpecification_ProcessSegment">
           <End Role="ProcessSegment" Type="Self.ProcessSegment" Multiplicity="1" />
           <End Role="PersonnelSegmentSpecification" Type="Self.PersonnelSegmentSpecification" Multiplicity="*" />
@@ -8177,9 +7932,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PersonnelSpecification_PersonnelClass" />-->
         <Association Name="FK_PersonnelSpecification_ProductSegment">
           <End Role="ProductSegment" Type="Self.ProductSegment" Multiplicity="0..1" />
           <End Role="PersonnelSpecification" Type="Self.PersonnelSpecification" Multiplicity="*" />
@@ -8276,9 +8028,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PersonnelClass' is referenced by a rela
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAsset_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetActual_PhysicalAsset">
           <End Role="PhysicalAsset" Type="Self.PhysicalAsset" Multiplicity="0..1" />
           <End Role="PhysicalAssetActual" Type="Self.PhysicalAssetActual" Multiplicity="*" />
@@ -8291,9 +8040,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetActual_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetActual_SegmentResponse">
           <End Role="SegmentResponse" Type="Self.SegmentResponse" Multiplicity="1" />
           <End Role="PhysicalAssetActual" Type="Self.PhysicalAssetActual" Multiplicity="*" />
@@ -8342,9 +8088,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetCapability_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetCapability_ProductionCapability">
           <End Role="ProductionCapability" Type="Self.ProductionCapability" Multiplicity="0..1" />
           <End Role="PhysicalAssetCapability" Type="Self.PhysicalAssetCapability" Multiplicity="*" />
@@ -8393,9 +8136,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetClassProperty_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetClassProperty_PhysicalAssetClassProperty">
           <End Role="PhysicalAssetClassProperty" Type="Self.PhysicalAssetClassProperty" Multiplicity="0..1" />
           <End Role="PhysicalAssetClassProperty1" Type="Self.PhysicalAssetClassProperty" Multiplicity="*" />
@@ -8408,13 +8148,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetInformation' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetInformation_PhysicalAsset" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetInformation' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetInformation_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetProperty_PhysicalAsset">
           <End Role="PhysicalAsset" Type="Self.PhysicalAsset" Multiplicity="0..1" />
           <End Role="PhysicalAssetProperty" Type="Self.PhysicalAssetProperty" Multiplicity="*" />
@@ -8475,9 +8208,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetInformation' is referenced
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetRequirement_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetRequirement_SegmentRequirement">
           <End Role="SegmentRequirement" Type="Self.SegmentRequirement" Multiplicity="1" />
           <End Role="PhysicalAssetRequirement" Type="Self.PhysicalAssetRequirement" Multiplicity="*" />
@@ -8526,9 +8256,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetSegmentSpecification_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetSegmentSpecification_ProcessSegment">
           <End Role="ProcessSegment" Type="Self.ProcessSegment" Multiplicity="1" />
           <End Role="PhysicalAssetSegmentSpecification" Type="Self.PhysicalAssetSegmentSpecification" Multiplicity="*" />
@@ -8565,9 +8292,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_PhysicalAssetSpecification_PhysicalAssetClass" />-->
         <Association Name="FK_PhysicalAssetSpecification_ProductSegment">
           <End Role="ProductSegment" Type="Self.ProductSegment" Multiplicity="0..1" />
           <End Role="PhysicalAssetSpecification" Type="Self.PhysicalAssetSpecification" Multiplicity="*" />
@@ -8913,6 +8637,18 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Principal>
             <Dependent Role="ProductionParameter">
               <PropertyRef Name="ProductSegmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionParameter_PropertyTypes">
+          <End Role="PropertyTypes" Type="Self.PropertyTypes" Multiplicity="0..1" />
+          <End Role="ProductionParameter" Type="Self.ProductionParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductionParameter">
+              <PropertyRef Name="PropertyType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10528,7 +10264,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <EntitySet Name="ProductionSceduleRecord" EntityType="Self.ProductionSceduleRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductProductionRuleIDGroup" EntityType="Self.ProductProductionRuleIDGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSegment" EntityType="Self.ProductSegment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PropertyTypes" EntityType="Self.PropertyTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QualificationTestSpecification" EntityType="Self.QualificationTestSpecification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecipeBuildingBlock" EntityType="Self.RecipeBuildingBlock" Schema="dbo" store:Type="Tables" />
@@ -10666,7 +10401,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
     [v_kep_logger].[Controller_ID] AS [Controller_ID], 
     [v_kep_logger].[Weight_VALUE] AS [Weight_VALUE], 
     [v_kep_logger].[Weight_TIMESTAMP] AS [Weight_TIMESTAMP], 
-    [v_kep_logger].[Weight_Status] AS [Weight_Status]
+    [v_kep_logger].[Weight_OK_Value] AS [Weight_OK_Value]
     FROM [dbo].[v_kep_logger] AS [v_kep_logger]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="v_MaterialLot_Request" EntityType="Self.v_MaterialLot_Request" store:Type="Views" store:Schema="dbo">
@@ -10681,7 +10416,9 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
     [v_ProductionResponse].[ID] AS [ID], 
     [v_ProductionResponse].[ResponseState] AS [ResponseState], 
     [v_ProductionResponse].[ProductionRequestID] AS [ProductionRequestID], 
-    [v_ProductionResponse].[EquipmentID] AS [EquipmentID]
+    [v_ProductionResponse].[EquipmentID] AS [EquipmentID], 
+    [v_ProductionResponse].[ProductSegmentID] AS [ProductSegmentID], 
+    [v_ProductionResponse].[ProcessSegmentID] AS [ProcessSegmentID]
     FROM [dbo].[v_ProductionResponse] AS [v_ProductionResponse]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AlarmData_Event" Association="Self.FK_AlarmData_Event">
@@ -11492,10 +11229,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <End Role="MaterialTestSpecification" EntitySet="MaterialTestSpecification" />
             <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
           </AssociationSet>
-          <AssociationSet Name="FK_MaterialDefinitionProperty_Property" Association="Self.FK_MaterialDefinitionProperty_Property">
-            <End Role="Property" EntitySet="Property" />
-            <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
-          </AssociationSet>
           <AssociationSet Name="FK_MaterialDefinitionProperty_PropertyTypes" Association="Self.FK_MaterialDefinitionProperty_PropertyTypes">
             <End Role="PropertyTypes" EntitySet="PropertyTypes" />
             <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
@@ -11550,10 +11283,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           </AssociationSet>
           <AssociationSet Name="FK_MaterialLotProperty_MateriaSubLot" Association="Self.FK_MaterialLotProperty_MateriaSubLot">
             <End Role="MaterialSubLot" EntitySet="MaterialSubLot" />
-            <End Role="MaterialLotProperty" EntitySet="MaterialLotProperty" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MaterialLotProperty_Property" Association="Self.FK_MaterialLotProperty_Property">
-            <End Role="Property" EntitySet="Property" />
             <End Role="MaterialLotProperty" EntitySet="MaterialLotProperty" />
           </AssociationSet>
           <AssociationSet Name="FK_MaterialLotProperty_PropertyTypes" Association="Self.FK_MaterialLotProperty_PropertyTypes">
@@ -12440,6 +12169,10 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <End Role="ProductSegment" EntitySet="ProductSegment" />
             <End Role="ProductionParameter" EntitySet="ProductionParameter" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductionParameter_PropertyTypes" Association="Self.FK_ProductionParameter_PropertyTypes">
+            <End Role="PropertyTypes" EntitySet="PropertyTypes" />
+            <End Role="ProductionParameter" EntitySet="ProductionParameter" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductionPerformance_ProductionScedule" Association="Self.FK_ProductionPerformance_ProductionScedule">
             <End Role="ProductionScedule" EntitySet="ProductionScedule" />
             <End Role="ProductionPerformance" EntitySet="ProductionPerformance" />
@@ -12861,8 +12594,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <End Role="WorkSceduleRecord" EntitySet="WorkSceduleRecord" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -14361,13 +14093,11 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <Property Name="MaterialDefinitionID" Type="Int32" />
           <Property Name="ClassPropertyID" Type="Int32" />
           <Property Name="PropertyType" Type="Int32" />
-          <Property Name="PropertyID" Type="Int32" />
           <NavigationProperty Name="MaterialClassProperty" Relationship="Self.FK_MaterialDefinitionProperty_MaterialClassProperty" FromRole="MaterialDefinitionProperty" ToRole="MaterialClassProperty" />
           <NavigationProperty Name="MaterialDefinition" Relationship="Self.FK_MaterialDefinitionProperty_MaterialDefinition" FromRole="MaterialDefinitionProperty" ToRole="MaterialDefinition" />
           <NavigationProperty Name="MaterialDefinitionProperty11" Relationship="Self.FK_MaterialDefinitionProperty_MaterialDefinitionProperty1" FromRole="MaterialDefinitionProperty" ToRole="MaterialDefinitionProperty1" />
           <NavigationProperty Name="MaterialDefinitionProperty2" Relationship="Self.FK_MaterialDefinitionProperty_MaterialDefinitionProperty1" FromRole="MaterialDefinitionProperty1" ToRole="MaterialDefinitionProperty" />
           <NavigationProperty Name="MaterialTestSpecification" Relationship="Self.FK_MaterialDefinitionProperty_MaterialTestSpecification" FromRole="MaterialDefinitionProperty" ToRole="MaterialTestSpecification" />
-          <NavigationProperty Name="Property" Relationship="Self.FK_MaterialDefinitionProperty_Property" FromRole="MaterialDefinitionProperty" ToRole="Property" />
           <NavigationProperty Name="PropertyTypes" Relationship="Self.FK_MaterialDefinitionProperty_PropertyTypes" FromRole="MaterialDefinitionProperty" ToRole="PropertyTypes" />
           <NavigationProperty Name="MaterialLotProperty" Relationship="Self.FK_MaterialLotProperty_MaterialDefinitionProperty" FromRole="MaterialDefinitionProperty" ToRole="MaterialLotProperty" />
         </EntityType>
@@ -14447,14 +14177,12 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <Property Name="MaterialSubLotID" Type="Int32" />
           <Property Name="DefinitionPropertyID" Type="Int32" />
           <Property Name="PropertyType" Type="Int32" />
-          <Property Name="PropertyID" Type="Int32" />
           <NavigationProperty Name="MaterialDefinitionProperty" Relationship="Self.FK_MaterialLotProperty_MaterialDefinitionProperty" FromRole="MaterialLotProperty" ToRole="MaterialDefinitionProperty" />
           <NavigationProperty Name="MaterialLot" Relationship="Self.FK_MaterialLotProperty_MaterialLot" FromRole="MaterialLotProperty" ToRole="MaterialLot" />
           <NavigationProperty Name="MaterialLotProperty11" Relationship="Self.FK_MaterialLotProperty_MaterialLotProperty1" FromRole="MaterialLotProperty" ToRole="MaterialLotProperty1" />
           <NavigationProperty Name="MaterialLotProperty2" Relationship="Self.FK_MaterialLotProperty_MaterialLotProperty1" FromRole="MaterialLotProperty1" ToRole="MaterialLotProperty" />
           <NavigationProperty Name="MaterialTestSpecification" Relationship="Self.FK_MaterialLotProperty_MaterialTestSpecification" FromRole="MaterialLotProperty" ToRole="MaterialTestSpecification" />
           <NavigationProperty Name="MaterialSubLot" Relationship="Self.FK_MaterialLotProperty_MateriaSubLot" FromRole="MaterialLotProperty" ToRole="MaterialSubLot" />
-          <NavigationProperty Name="Property" Relationship="Self.FK_MaterialLotProperty_Property" FromRole="MaterialLotProperty" ToRole="Property" />
           <NavigationProperty Name="PropertyTypes" Relationship="Self.FK_MaterialLotProperty_PropertyTypes" FromRole="MaterialLotProperty" ToRole="PropertyTypes" />
         </EntityType>
         <EntityType Name="MaterialProducedActual">
@@ -16016,6 +15744,8 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <NavigationProperty Name="ProcessSegment" Relationship="Self.FK_ProductionParameter_ProcessSegment" FromRole="ProductionParameter" ToRole="ProcessSegment" />
           <NavigationProperty Name="ProductSegment" Relationship="Self.FK_ProductionParameter_ProductSegment1" FromRole="ProductionParameter" ToRole="ProductSegment" />
           <NavigationProperty Name="SegmentRequirement" Relationship="Self.FK_SegmentRequirement_ProductionParameter" FromRole="ProductionParameter" ToRole="SegmentRequirement" />
+          <Property Name="PropertyType" Type="Int32" />
+          <NavigationProperty Name="PropertyTypes" Relationship="Model.FK_ProductionParameter_PropertyTypes" FromRole="ProductionParameter" ToRole="PropertyTypes" />
         </EntityType>
         <EntityType Name="ProductionPerformance">
           <Key>
@@ -16141,15 +15871,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <NavigationProperty Name="SegmentResponse1" Relationship="Self.FK_ProductSegment_SegmentResponse" FromRole="ProductSegment" ToRole="SegmentResponse" />
           <NavigationProperty Name="SegmentRequirement" Relationship="Self.FK_SegmentRequirement_ProductSegment" FromRole="ProductSegment" ToRole="SegmentRequirement" />
         </EntityType>
-        <EntityType Name="Property">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MaterialDefinitionProperty" Relationship="Self.FK_MaterialDefinitionProperty_Property" FromRole="Property" ToRole="MaterialDefinitionProperty" />
-          <NavigationProperty Name="MaterialLotProperty" Relationship="Self.FK_MaterialLotProperty_Property" FromRole="Property" ToRole="MaterialLotProperty" />
-        </EntityType>
         <EntityType Name="PropertyTypes">
           <Key>
             <PropertyRef Name="ID" />
@@ -16159,6 +15880,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <NavigationProperty Name="MaterialClassProperty" Relationship="Self.FK_MaterialClassProperty_PropertyTypes" FromRole="PropertyTypes" ToRole="MaterialClassProperty" />
           <NavigationProperty Name="MaterialDefinitionProperty" Relationship="Self.FK_MaterialDefinitionProperty_PropertyTypes" FromRole="PropertyTypes" ToRole="MaterialDefinitionProperty" />
           <NavigationProperty Name="MaterialLotProperty" Relationship="Self.FK_MaterialLotProperty_PropertyTypes" FromRole="PropertyTypes" ToRole="MaterialLotProperty" />
+          <NavigationProperty Name="ProductionParameter" Relationship="Model.FK_ProductionParameter_PropertyTypes" FromRole="PropertyTypes" ToRole="ProductionParameter" />
         </EntityType>
         <EntityType Name="QualificationTestSpecification">
           <Key>
@@ -17089,7 +16811,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <Property Name="Controller_ID" Type="Int32" />
           <Property Name="Weight_VALUE" Type="Single" />
           <Property Name="Weight_TIMESTAMP" Type="DateTime" Precision="3" />
-          <Property Name="Weight_Status" Type="Boolean" />
+          <Property Name="Weight_OK_Value" Type="Boolean" />
         </EntityType>
         <EntityType Name="v_MaterialLot_Request">
           <Key>
@@ -17110,6 +16832,8 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <Property Name="ResponseState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductionRequestID" Type="Int32" Nullable="false" />
           <Property Name="EquipmentID" Type="Int32" Nullable="false" />
+          <Property Name="ProductSegmentID" Type="Int32" />
+          <Property Name="ProcessSegmentID" Type="Int32" />
         </EntityType>
         <Association Name="FK_AlarmData_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
@@ -20207,18 +19931,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MaterialDefinitionProperty_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
-          <End Role="MaterialDefinitionProperty" Type="Self.MaterialDefinitionProperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaterialDefinitionProperty">
-              <PropertyRef Name="PropertyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MaterialDefinitionProperty_PropertyTypes">
           <End Role="PropertyTypes" Type="Self.PropertyTypes" Multiplicity="0..1" />
           <End Role="MaterialDefinitionProperty" Type="Self.MaterialDefinitionProperty" Multiplicity="*" />
@@ -20492,18 +20204,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             </Principal>
             <Dependent Role="MaterialLotProperty">
               <PropertyRef Name="MaterialSubLotID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MaterialLotProperty_Property">
-          <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
-          <End Role="MaterialLotProperty" Type="Self.MaterialLotProperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MaterialLotProperty">
-              <PropertyRef Name="PropertyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -23837,7 +23537,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <EntitySet Name="ProductionSceduleRecord" EntityType="Self.ProductionSceduleRecord" />
           <EntitySet Name="ProductProductionRuleIDGroup" EntityType="Self.ProductProductionRuleIDGroup" />
           <EntitySet Name="ProductSegment" EntityType="Self.ProductSegment" />
-          <EntitySet Name="Property" EntityType="Self.Property" />
           <EntitySet Name="PropertyTypes" EntityType="Self.PropertyTypes" />
           <EntitySet Name="QualificationTestSpecification" EntityType="Self.QualificationTestSpecification" />
           <EntitySet Name="RecipeBuildingBlock" EntityType="Self.RecipeBuildingBlock" />
@@ -24940,10 +24639,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <End Role="MaterialTestSpecification" EntitySet="MaterialTestSpecification" />
             <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
           </AssociationSet>
-          <AssociationSet Name="FK_MaterialDefinitionProperty_Property" Association="Self.FK_MaterialDefinitionProperty_Property">
-            <End Role="Property" EntitySet="Property" />
-            <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
-          </AssociationSet>
           <AssociationSet Name="FK_MaterialDefinitionProperty_PropertyTypes" Association="Self.FK_MaterialDefinitionProperty_PropertyTypes">
             <End Role="PropertyTypes" EntitySet="PropertyTypes" />
             <End Role="MaterialDefinitionProperty" EntitySet="MaterialDefinitionProperty" />
@@ -25034,10 +24729,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           </AssociationSet>
           <AssociationSet Name="FK_MaterialLotProperty_MateriaSubLot" Association="Self.FK_MaterialLotProperty_MateriaSubLot">
             <End Role="MaterialSubLot" EntitySet="MaterialSubLot" />
-            <End Role="MaterialLotProperty" EntitySet="MaterialLotProperty" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MaterialLotProperty_Property" Association="Self.FK_MaterialLotProperty_Property">
-            <End Role="Property" EntitySet="Property" />
             <End Role="MaterialLotProperty" EntitySet="MaterialLotProperty" />
           </AssociationSet>
           <AssociationSet Name="FK_MaterialLotProperty_PropertyTypes" Association="Self.FK_MaterialLotProperty_PropertyTypes">
@@ -26085,25 +25776,25 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <End Role="WorkSchedule1" EntitySet="WorkSchedule" />
           </AssociationSet>
           <FunctionImport Name="get_MaterialLot" IsComposable="true" ReturnType="Collection(Model.get_MaterialLot_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="get_ProductionResponse" IsComposable="true" ReturnType="Collection(Model.get_ProductionResponse_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="get_SegmentResponse" IsComposable="true" ReturnType="Collection(Model.get_SegmentResponse_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="del_MaterialActual">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="del_MaterialLot">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="del_ProductionResponse">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="del_SegmentResponse">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ins_MaterialActual">
             <Parameter Name="MaterialLotID" Mode="In" Type="Int32" />
@@ -26119,7 +25810,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <Parameter Name="MaterialLotID" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ins_MaterialLotByController">
-            <Parameter Name="ControllerID" Mode="In" Type="Int32" />
+          <Parameter Name="ControllerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ins_ProductionResponse">
             <Parameter Name="ProductionRequestID" Mode="In" Type="Int32" />
@@ -26196,6 +25887,10 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
             <Parameter Name="ProductionRequest" Mode="In" Type="Int32" />
             <Parameter Name="ProductionResponse" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_ProductionParameter_PropertyTypes" Association="Model.FK_ProductionParameter_PropertyTypes">
+            <End Role="PropertyTypes" EntitySet="PropertyTypes" />
+            <End Role="ProductionParameter" EntitySet="ProductionParameter" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -26208,6 +25903,18 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_ProductionParameter_PropertyTypes">
+          <End Type="Model.PropertyTypes" Role="PropertyTypes" Multiplicity="0..1" />
+          <End Type="Model.ProductionParameter" Role="ProductionParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductionParameter">
+              <PropertyRef Name="PropertyType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27390,7 +27097,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
                 <ScalarProperty Name="MaterialDefinitionID" ColumnName="MaterialDefinitionID" />
                 <ScalarProperty Name="ClassPropertyID" ColumnName="ClassPropertyID" />
                 <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -27445,7 +27151,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
                 <ScalarProperty Name="MaterialSubLotID" ColumnName="MaterialSubLotID" />
                 <ScalarProperty Name="DefinitionPropertyID" ColumnName="DefinitionPropertyID" />
                 <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -28684,6 +28389,7 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <EntitySetMapping Name="ProductionParameter">
             <EntityTypeMapping TypeName="Model.ProductionParameter">
               <MappingFragment StoreEntitySet="ProductionParameter">
+                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ProductSegmentID" ColumnName="ProductSegmentID" />
                 <ScalarProperty Name="ProcessSegmentID" ColumnName="ProcessSegmentID" />
@@ -28785,14 +28491,6 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
                 <ScalarProperty Name="ProductSegment1" ColumnName="ProductSegment" />
                 <ScalarProperty Name="SegmentResponse" ColumnName="SegmentResponse" />
                 <ScalarProperty Name="ProductDefinition" ColumnName="ProductDefinition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Property">
-            <EntityTypeMapping TypeName="Model.Property">
-              <MappingFragment StoreEntitySet="Property">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -29572,12 +29270,12 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <EntitySetMapping Name="v_kep_logger">
             <EntityTypeMapping TypeName="Model.v_kep_logger">
               <MappingFragment StoreEntitySet="v_kep_logger">
+                <ScalarProperty Name="Weight_OK_Value" ColumnName="Weight_OK_Value" />
                 <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Controller_ID" ColumnName="Controller_ID" />
                 <ScalarProperty Name="Weight_VALUE" ColumnName="Weight_VALUE" />
                 <ScalarProperty Name="Weight_TIMESTAMP" ColumnName="Weight_TIMESTAMP" />
-                <ScalarProperty Name="Weight_Status" ColumnName="Weight_Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -29593,6 +29291,8 @@ error 6004: The table 'B2MML-BatchML.dbo.PhysicalAssetClass' is referenced by a 
           <EntitySetMapping Name="v_ProductionResponse">
             <EntityTypeMapping TypeName="Model.v_ProductionResponse">
               <MappingFragment StoreEntitySet="v_ProductionResponse">
+                <ScalarProperty Name="ProcessSegmentID" ColumnName="ProcessSegmentID" />
+                <ScalarProperty Name="ProductSegmentID" ColumnName="ProductSegmentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ResponseState" ColumnName="ResponseState" />
                 <ScalarProperty Name="ProductionRequestID" ColumnName="ProductionRequestID" />

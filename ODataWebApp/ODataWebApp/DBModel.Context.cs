@@ -18,7 +18,7 @@ namespace ODataWebApp
     public partial class Entities : DbContext
     {
         public Entities()
-            : base("name=TestEntities")
+			: base("name=TestEntities")
         {
         }
     
@@ -224,7 +224,6 @@ namespace ODataWebApp
         public virtual DbSet<ProductionSceduleRecord> ProductionSceduleRecord { get; set; }
         public virtual DbSet<ProductProductionRuleIDGroup> ProductProductionRuleIDGroup { get; set; }
         public virtual DbSet<ProductSegment> ProductSegment { get; set; }
-        public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<PropertyTypes> PropertyTypes { get; set; }
         public virtual DbSet<QualificationTestSpecification> QualificationTestSpecification { get; set; }
         public virtual DbSet<RecipeBuildingBlock> RecipeBuildingBlock { get; set; }

@@ -30,7 +30,6 @@ namespace ODataWebApp
         public Nullable<int> MaterialSubLotID { get; set; }
         public Nullable<int> DefinitionPropertyID { get; set; }
         public Nullable<int> PropertyType { get; set; }
-        public Nullable<int> PropertyID { get; set; }
     
         public virtual MaterialDefinitionProperty MaterialDefinitionProperty { get; set; }
         public virtual MaterialLot MaterialLot { get; set; }
@@ -39,7 +38,6 @@ namespace ODataWebApp
         public virtual MaterialLotProperty MaterialLotProperty2 { get; set; }
         public virtual MaterialTestSpecification MaterialTestSpecification { get; set; }
         public virtual MaterialSubLot MaterialSubLot { get; set; }
-        public virtual Property Property { get; set; }
         public virtual PropertyTypes PropertyTypes { get; set; }
     }
 }
