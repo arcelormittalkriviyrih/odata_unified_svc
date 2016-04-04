@@ -1,0 +1,2570 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Restier.Core</name>
+    </assembly>
+    <members>
+        <member name="M:System.Linq.Expressions.ExpressionHelpers.StripPagingOperators``1(System.Linq.IQueryable{``0})">
+            <summary>
+            Remove paging methods for given IQueryable
+            </summary>
+            <typeparam name="TElement">The type parameter for IQueryable</typeparam>
+            <param name="query">The input query.</param>
+            <returns>The proceed query.</returns>
+        </member>
+        <member name="M:System.TypeExtensions.FindGenericType(System.Type,System.Type)">
+            <summary>
+            Find a base type or implemented interface which has a generic definition
+            represented by the parameter, <c>definition</c>.
+            </summary>
+            <param name="type">
+            The subject type.
+            </param>
+            <param name="definition">
+            The generic definition to check with.
+            </param>
+            <returns>
+            The base type or the interface found; otherwise, <c>null</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Model.FunctionAttribute">
+            <summary>
+            Attribute that indicates a method is an OData function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.FunctionAttribute.Name">
+            <summary>
+            Gets or sets the name of the function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.FunctionAttribute.Namespace">
+            <summary>
+            Gets or sets the namespace of the function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.FunctionAttribute.EntitySet">
+            <summary>
+            Gets or sets the entity set associated with the function result.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.FunctionAttribute.IsComposable">
+            <summary>
+            Gets or sets a value indicating whether the function is composable.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Model.ActionAttribute">
+            <summary>
+            Attribute that indicates a method is an OData action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.ActionAttribute.Name">
+            <summary>
+            Gets or sets the name of the action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.ActionAttribute.Namespace">
+            <summary>
+            Gets or sets the namespace of the action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Model.ActionAttribute.EntitySet">
+            <summary>
+            Gets or sets the entity set associated with the action result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetAuthorizer">
+            <summary>
+            A convention-based change set entry authorizer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.IChangeSetEntryAuthorizer">
+            <summary>
+            Represents a change set entry authorizer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.IHookHandler">
+            <summary>
+            Base interface for all hook handlers
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.IChangeSetEntryAuthorizer.AuthorizeAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously authorizes the ChangeSetEntry.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="entry">
+            A change set entry to be authorized.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetAuthorizer.ApplyTo(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetAuthorizer.AuthorizeAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryFilter">
+            <summary>
+            A convention-based change set entry filter.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.IChangeSetEntryFilter">
+            <summary>
+            Represents a change set entry filter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.IChangeSetEntryFilter.OnExecutingEntryAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously applies logic before a change set entry is executed.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="entry">
+            A change set entry.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.IChangeSetEntryFilter.OnExecutedEntryAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously applies logic after a change set entry is executed.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="entry">
+            A change set entry.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryFilter.ApplyTo(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryFilter.OnExecutingEntryAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryFilter.OnExecutedEntryAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryValidator">
+            <summary>
+            A convention-based change set entry validator.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.IChangeSetEntryValidator">
+            <summary>
+            Represents a change set entry validator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.IChangeSetEntryValidator.ValidateEntityAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,Microsoft.Restier.Core.Submit.ValidationResults,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously validates a change set entry.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="entry">
+            The change set entry to validate.
+            </param>
+            <param name="validationResults">
+            A set of validation results.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryValidator.ValidateEntityAsync(Microsoft.Restier.Core.Submit.SubmitContext,Microsoft.Restier.Core.Submit.ChangeSetEntry,Microsoft.Restier.Core.Submit.ValidationResults,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Conventions.ConventionBasedChangeSetEntryValidator.Instance">
+            <summary>
+            Gets a static instance of convention-based change set entry validator.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder">
+            <summary>
+            A convention-based API model builder that extends a model, maps between
+            the model space and the object space, and expands a query expression.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Model.IModelBuilder">
+            <summary>
+            The hook point for model generation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Model.IModelBuilder.GetModelAsync(Microsoft.Restier.Core.InvocationContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets an API model for an API.
+            </summary>
+            <param name="context">
+            The context for processing
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is the API model.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.IDelegateHookHandler`1">
+            <summary>
+            Representing an interface that supports delegation chain.
+            </summary>
+            <typeparam name="T">The <see cref="T:Microsoft.Restier.Core.IHookHandler"/> type.</typeparam>
+        </member>
+        <member name="P:Microsoft.Restier.Core.IDelegateHookHandler`1.InnerHandler">
+            <summary>
+            Gets or sets the inner handler
+            </summary>
+            <remarks>
+            This property would be auto-set during hook registration.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Model.IModelMapper">
+            <summary>
+            Represents a hook point that maps between
+            the model space and the object space.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Model.IModelMapper.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.Type@)">
+            <summary>
+            Tries to get the relevant type of an entity
+            set, singleton, or composable function import.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="relevantType">
+            When this method returns, provides the
+            relevant type of the queryable source.
+            </param>
+            <returns>
+            <c>true</c> if the relevant type was
+            provided; otherwise, <c>false</c>.
+            </returns>
+            <remarks>
+            <para>
+            For entity sets, the relevant type is its element entity type.
+            </para>
+            <para>
+            For singletons, the relevant type is the singleton entity type.
+            </para>
+            <para>
+            For composable function imports, the relevant type is the return
+            type if it is a primitive, complex or entity type, or the element
+            type of the return type if it is a collection type.
+            </para>
+            <para>
+            This method can return true and assign <c>null</c> as the relevant
+            type when it is overriding a previously registered hook point and
+            specifically opting to not support the specified queryable source.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Model.IModelMapper.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.String,System.Type@)">
+            <summary>
+            Tries to get the relevant type of a composable function.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of composable function.
+            </param>
+            <param name="relevantType">
+            When this method returns, provides the
+            relevant type of the composable function.
+            </param>
+            <returns>
+            <c>true</c> if the relevant type was
+            provided; otherwise, <c>false</c>.
+            </returns>
+            <remarks>
+            <para>
+            For composable functions, the relevant type is the return
+            type if it is a primitive, complex or entity type, or the
+            element type of the return type if it is a collection type.
+            </para>
+            <para>
+            This method can return true and assign <c>null</c> as the relevant
+            type when it is overriding a previously registered hook point and
+            specifically opting to not support the specified composable function.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.IQueryExpressionExpander">
+            <summary>
+            Represents a hook point that expands a query expression.
+            </summary>
+            <remarks>
+            <para>
+            Query expression expansion converts an expression that represents
+            normalized API data into an expression using more primitive nodes.
+            </para>
+            <para>
+            Expansion is the second step that occurs when processing a query
+            expression after its children have been visited, so it occurs during
+            upward traversal of the query expression and after inspection. Since
+            expansion fundamentally alters the query expression, the resulting
+            expression is recursively processed to ensure that all appropriate
+            normalization, inspection, expansion, filtering and sourcing occurs.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExpressionExpander.Expand(Microsoft.Restier.Core.Query.QueryExpressionContext)">
+            <summary>
+            Expands an expression.
+            </summary>
+            <param name="context">
+            The query expression context.
+            </param>
+            <returns>
+            An expanded expression of the same type as the visited node, or
+            if expansion did not apply, the visited node or <c>null</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.IQueryExpressionSourcer">
+            <summary>
+            Represents a hook point that sources a query expression.
+            </summary>
+            <remarks>
+            <para>
+            Query expression sourcing converts an expression that identifies
+            API data in a normalized manner to an equivalent representation
+            in terms of the underlying data source proxy.
+            </para>
+            <para>
+            Sourcing is the last step that occurs when processing a query
+            expression, and only happens on expressions that represent API
+            data that cannot be expanded into any more primitive of an expression.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExpressionSourcer.Source(Microsoft.Restier.Core.Query.QueryExpressionContext,System.Boolean)">
+            <summary>
+            Sources an expression.
+            </summary>
+            <param name="context">
+            The query expression context.
+            </param>
+            <param name="embedded">
+            Indicates if the sourcing is occurring on an embedded node.
+            </param>
+            <returns>
+            A data source expression that represents the visited node.
+            </returns>
+            <remarks>
+            <para>
+            When <paramref name="embedded"/> is <c>false</c>, this method
+            should produce a constant expression whose value is a queryable
+            object produced by calling into the underlying data source proxy.
+            </para>
+            <para>
+            When <paramref name="embedded"/> is <c>true</c>, this method should
+            return an expression that represents the API data identified by
+            the visited node in terms of the underlying data source proxy.
+            </para>
+            <para>
+            Consider an example where the data source API has a method to get
+            a query over customers, accessed through "data.GetCustomers()".
+            When <paramref name="embedded"/> is false, this method should call
+            that method and return a constant expression containing the query.
+            When <paramref name="embedded"/> is true, this method should build
+            a call expression to "GetCustomers" where the object to which it
+            applies is a constant expression whose value is the data object.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.ApplyTo(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.GetModelAsync(Microsoft.Restier.Core.InvocationContext,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.Type@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.TryGetRelevantType(Microsoft.Restier.Core.ApiContext,System.String,System.String,System.Type@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.Expand(Microsoft.Restier.Core.Query.QueryExpressionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedApiModelBuilder.Source(Microsoft.Restier.Core.Query.QueryExpressionContext,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Conventions.ConventionBasedEntitySetFilter">
+            <summary>
+            A convention-based query expression filter on entity set.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.IQueryExpressionFilter">
+            <summary>
+            Represents a hook point that filters a query expression.
+            </summary>
+            <remarks>
+            <para>
+            Query expression filtering converts an expression node into a
+            different expression node according to API logic such as a
+            restricting filter on top of some composable API data.
+            </para>
+            <para>
+            Filtering is the third step that occurs when processing a query
+            expression after its children have been visited, so it occurs during
+            upward traversal of the query expression and after inspection and
+            expansion. Since filtering fundamentally alters the query expression,
+            the resulting expression is recursively processed to ensure that all
+            appropriate normalization, inspection, expansion, filtering and
+            sourcing occurs.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExpressionFilter.Filter(Microsoft.Restier.Core.Query.QueryExpressionContext)">
+            <summary>
+            Filters an expression.
+            </summary>
+            <param name="context">
+            The query expression context.
+            </param>
+            <returns>
+            A filtered expression of the same type as the visited node, or
+            if filtering did not apply, the visited node or <c>null</c>.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedEntitySetFilter.ApplyTo(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Conventions.ConventionBasedEntitySetFilter.Filter(Microsoft.Restier.Core.Query.QueryExpressionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Api">
+            <summary>
+            Represents the API engine and provides a set of static
+            (Shared in Visual Basic) methods for interacting with objects
+            that implement <see cref="T:Microsoft.Restier.Core.IApi"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.GetModelAsync(Microsoft.Restier.Core.IApi,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets an API model for an API.
+            </summary>
+            <param name="api">
+            An API.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is the API model.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.GetModelAsync(Microsoft.Restier.Core.ApiContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets an API model using an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is the API model.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source(Microsoft.Restier.Core.IApi,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data exposed by an API.
+            </summary>
+            <param name="api">
+            An API.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a composable function import,
+            the arguments to be passed to the composable function import.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a singleton or a composable function import
+            whose result is a singleton, the resulting queryable source will
+            be configured such that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source(Microsoft.Restier.Core.ApiContext,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data using an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a composable function import,
+            the arguments to be passed to the composable function import.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a singleton or a composable function import
+            whose result is a singleton, the resulting queryable source will
+            be configured such that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source(Microsoft.Restier.Core.IApi,System.String,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data exposed by an API.
+            </summary>
+            <param name="api">
+            An API.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of a composable function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the composable function.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a composable function whose result is a
+            singleton, the resulting queryable source will be configured such
+            that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source(Microsoft.Restier.Core.ApiContext,System.String,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data using an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of a composable function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the composable function.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a composable function whose result is a
+            singleton, the resulting queryable source will be configured such
+            that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source``1(Microsoft.Restier.Core.IApi,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data exposed by an API.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable source.
+            </typeparam>
+            <param name="api">
+            An API.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a composable function import,
+            the arguments to be passed to the composable function import.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a singleton or a composable function import
+            whose result is a singleton, the resulting queryable source will
+            be configured such that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source``1(Microsoft.Restier.Core.ApiContext,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data using an API context.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable source.
+            </typeparam>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a composable function import,
+            the arguments to be passed to the composable function import.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a singleton or a composable function import
+            whose result is a singleton, the resulting queryable source will
+            be configured such that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source``1(Microsoft.Restier.Core.IApi,System.String,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data exposed by an API.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable source.
+            </typeparam>
+            <param name="api">
+            An API.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of a composable function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the composable function.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a composable function whose result is a
+            singleton, the resulting queryable source will be configured such
+            that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.Source``1(Microsoft.Restier.Core.ApiContext,System.String,System.String,System.Object[])">
+            <summary>
+            Gets a queryable source of data using an API context.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable source.
+            </typeparam>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing a composable function.
+            </param>
+            <param name="name">
+            The name of a composable function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the composable function.
+            </param>
+            <returns>
+            A queryable source.
+            </returns>
+            <remarks>
+            <para>
+            If the name identifies a composable function whose result is a
+            singleton, the resulting queryable source will be configured such
+            that it represents exactly zero or one result.
+            </para>
+            <para>
+            Note that the resulting queryable source cannot be synchronously
+            enumerated, as the API engine only operates asynchronously.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.QueryAsync``1(Microsoft.Restier.Core.IApi,System.Linq.IQueryable{``0},System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously queries for data exposed by an API.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the query.
+            </typeparam>
+            <param name="api">
+            An API.
+            </param>
+            <param name="query">
+            A composed query that was derived from a queryable source.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation
+            whose result is a sequence of the query results.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.QueryAsync(Microsoft.Restier.Core.IApi,Microsoft.Restier.Core.Query.QueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously queries for data exposed by an API.
+            </summary>
+            <param name="api">
+            An API.
+            </param>
+            <param name="request">
+            A query request.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.QueryAsync(Microsoft.Restier.Core.ApiContext,Microsoft.Restier.Core.Query.QueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously queries for data using an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="request">
+            A query request.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.SubmitAsync(Microsoft.Restier.Core.IApi,Microsoft.Restier.Core.Submit.ChangeSet,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously submits changes made to an API.
+            </summary>
+            <param name="api">
+            An API.
+            </param>
+            <param name="changeSet">
+            A change set, or <c>null</c> to submit existing pending changes.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a submit result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Api.SubmitAsync(Microsoft.Restier.Core.ApiContext,Microsoft.Restier.Core.Submit.ChangeSet,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously submits changes made using an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="changeSet">
+            A change set, or <c>null</c> to submit existing pending changes.
+            </param>
+            <param name="cancellationToken">
+            An optional cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a submit result.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiBase">
+            <summary>
+            Represents a base class for an API.
+            </summary>
+            <remarks>
+            <para>
+            An API configuration is intended to be long-lived, and can be
+            statically cached according to an API type specified when the
+            configuration is created. Additionally, the API model produced
+            as a result of a particular configuration is cached under the same
+            API type to avoid re-computing it on each invocation.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.IApi">
+            <summary>
+            Represents an API.
+            </summary>
+            <remarks>
+            An API composes an API configuration with semantics
+            around the creation and disposal of an API context.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.IApi.Context">
+            <summary>
+            Gets the context for this API.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Microsoft.Restier.Core.ApiBase"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.Dispose">
+            <summary>
+            Performs application-defined tasks associated with
+            freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.CreateApiConfiguration">
+            <summary>
+            Creates the API configuration for this API.
+            </summary>
+            <returns>
+            The API configuration for this API.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.CreateApiContext(Microsoft.Restier.Core.ApiConfiguration)">
+            <summary>
+            Creates the API context for this API.
+            </summary>
+            <param name="configuration">
+            The API configuration to use.
+            </param>
+            <returns>
+            The API context for this API.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources that are used by the
+            object and, optionally, releases the managed resources.
+            </summary>
+            <param name="disposing">
+            <c>true</c> to release both managed and unmanaged resources;
+            <c>false</c> to release only unmanaged resources.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiBase.EnableConventions(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <summary>
+            Enables code-based conventions for an API.
+            </summary>
+            <param name="configuration">
+            An API configuration.
+            </param>
+            <param name="targetType">
+            The type of a class on which code-based conventions are used.
+            </param>
+            <remarks>
+            This method adds hook points to the API configuration that
+            inspect a target type for a variety of code-based conventions
+            such as usage of specific attributes or members that follow
+            certain naming conventions.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.ApiBase.ApiConfiguration">
+            <summary>
+            Gets the API configuration for this API.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.ApiBase.ApiContext">
+            <summary>
+            Gets the API context for this API.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.ApiBase.IsDisposed">
+            <summary>
+            Gets a value indicating whether this API has been disposed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiConfiguration">
+            <summary>
+            Represents a configuration that defines an API.
+            </summary>
+            <remarks>
+            <para>
+            An API configuration defines the model and behavior of an API
+            through a set of registered hook points. It also maintains a set of
+            properties that can be used to share static data between hook points.
+            </para>
+            <para>
+            Hook points may be singletons, meaning there is at most one instance of
+            the hook point registered, or multi-cast, in which case there can be
+            zero or more instances of the hook point that are registered. In the
+            multi-cast case, registration order is maintained, and such hook points
+            are normally used in the original or reverse order of registration.
+            </para>
+            <para>
+            In order to use an API configuration, it must first be committed.
+            This fixes the configuration so that its set of hook points are
+            immutable, ensuring that any active use of the configuration sees a
+            consistent set of hook points throughout a particular API flow.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.PropertyBag">
+            <summary>
+            Represents a bag of properties.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.PropertyBag.HasProperty(System.String)">
+            <summary>
+            Indicates if this object has a property.
+            </summary>
+            <param name="name">
+            The name of a property.
+            </param>
+            <returns>
+            <c>true</c> if this object has the
+            property; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.PropertyBag.GetProperty``1(System.String)">
+            <summary>
+            Gets a property.
+            </summary>
+            <typeparam name="T">
+            The type of the property.
+            </typeparam>
+            <param name="name">
+            The name of a property.
+            </param>
+            <returns>
+            The value of the property.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.PropertyBag.GetProperty(System.String)">
+            <summary>
+            Gets a property.
+            </summary>
+            <param name="name">
+            The name of a property.
+            </param>
+            <returns>
+            The value of the property.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.PropertyBag.SetProperty(System.String,System.Object)">
+            <summary>
+            Sets a property.
+            </summary>
+            <param name="name">
+            The name of a property.
+            </param>
+            <param name="value">
+            A value for the property.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.PropertyBag.ClearProperty(System.String)">
+            <summary>
+            Clears a property.
+            </summary>
+            <param name="name">
+            The name of a property.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.ApiConfiguration"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguration.EnsureCommitted">
+            <summary>
+            Ensures this API configuration has been committed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguration.AddHookHandler``1(``0)">
+            <summary>
+            Adds a hook handler instance.
+            </summary>
+            <typeparam name="T">The hook handler interface.</typeparam>
+            <param name="handler">An instance of hook handler for TContext.</param>
+            <returns>Current <see cref="T:Microsoft.Restier.Core.ApiConfiguration"/></returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguration.GetHookHandler``1">
+            <summary>
+            Gets a hook handler instance.
+            </summary>
+            <typeparam name="T">The hook handler interface.</typeparam>
+            <returns>The hook handler instance.</returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.ApiConfiguration.IsCommitted">
+            <summary>
+            Gets a value indicating whether this API configuration has been committed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiConfigurationExtensions">
+            <summary>
+            Offers a collection of extension methods to <see cref="T:Microsoft.Restier.Core.ApiConfiguration"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfigurationExtensions.IgnoreProperty(Microsoft.Restier.Core.ApiConfiguration,System.String)">
+            <summary>
+            Ignores the given property when building the model.
+            </summary>
+            <param name="configuration">An API configuration.</param>
+            <param name="propertyName">The name of the property to be ignored.</param>
+            <returns>The current API configuration instance.</returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiContext">
+            <summary>
+            Represents context under which an API operates.
+            </summary>
+            <remarks>
+            An API context is an instantiation of an API configuration. It
+            maintains a set of properties that can be used to share instance
+            data between hook points.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiContext.#ctor(Microsoft.Restier.Core.ApiConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.ApiContext"/> class.
+            </summary>
+            <param name="configuration">
+            An API configuration.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.ApiContext.Configuration">
+            <summary>
+            Gets the API configuration.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiData">
+            <summary>
+            Represents methods that identify API data.
+            </summary>
+            <remarks>
+            The methods in this class are placeholders that identify API data
+            in a normalized manner inside a query expression. This enables query
+            hook points to identify and reason about the referenced API data.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Source``1(System.String,System.Object[])">
+            <summary>
+            Identifies an entity set, singleton or queryable data
+            resulting from a call to a composable function import.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable data.
+            </typeparam>
+            <param name="name">
+            The name of an entity set, singleton or composable function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a composable function import,
+            the arguments to be passed to the composable function import.
+            </param>
+            <returns>
+            A representation of the entity set, singleton or queryable
+            data resulting from a call to the composable function import.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Source``1(System.String,System.String,System.Object[])">
+            <summary>
+            Identifies queryable data resulting
+            from a call to a composable function.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the queryable data.
+            </typeparam>
+            <param name="namespaceName">
+            The name of a namespace containing the composable function.
+            </param>
+            <param name="name">
+            The name of a composable function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the composable function.
+            </param>
+            <returns>
+            A representation of the queryable data resulting
+            from a call to the composable function.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Results``1(System.String,System.Object[])">
+            <summary>
+            Identifies an entity set or results of a call to a function import.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the results.
+            </typeparam>
+            <param name="name">
+            The name of an entity set or function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a function import,
+            the arguments to be passed to the function import.
+            </param>
+            <returns>
+            A representation of the entity set or
+            results of a call to the function import.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Result``1(System.String,System.Object[])">
+            <summary>
+            Identifies a singleton or result of a
+            call to a singular function import.
+            </summary>
+            <typeparam name="TResult">
+            The type of the result.
+            </typeparam>
+            <param name="name">
+            The name of a singleton or singular function import.
+            </param>
+            <param name="arguments">
+            If <paramref name="name"/> is a singular function import,
+            the arguments to be passed to the singular function import.
+            </param>
+            <returns>
+            A representation of the singleton or result
+            of a call to the singular function import.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Results``1(System.String,System.String,System.Object[])">
+            <summary>
+            Identifies the results of a call to a function.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the results.
+            </typeparam>
+            <param name="namespaceName">
+            The name of a namespace containing the function.
+            </param>
+            <param name="name">
+            The name of a function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the function.
+            </param>
+            <returns>
+            A representation of the results of a call to the function.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Result``1(System.String,System.String,System.Object[])">
+            <summary>
+            Identifies the result of a call to a singular function.
+            </summary>
+            <typeparam name="TResult">
+            The type of the result.
+            </typeparam>
+            <param name="namespaceName">
+            The name of a namespace containing the singular function.
+            </param>
+            <param name="name">
+            The name of a singular function.
+            </param>
+            <param name="arguments">
+            The arguments to be passed to the singular function.
+            </param>
+            <returns>
+            A representation of the result of a call to the singular function.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiData.Value``1(System.Object,System.String)">
+            <summary>
+            Identifies the value of an extended property of an object.
+            </summary>
+            <typeparam name="TResult">
+            The type of the result.
+            </typeparam>
+            <param name="source">
+            A source object.
+            </param>
+            <param name="propertyName">
+            The name of a property.
+            </param>
+            <returns>
+            A representation of the value of the
+            extended property of the object.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.ApiConfiguratorAttribute">
+            <summary>
+            Specifies a set of methods that can participate in the
+            configuration, initialization and disposal of an API.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.ApiConfiguratorAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.ApplyConfiguration(System.Type,Microsoft.Restier.Core.ApiConfiguration)">
+            <summary>
+            Applies configuration from any API configurator attributes
+            specified on an API type to an API configuration.
+            </summary>
+            <param name="type">
+            An API type.
+            </param>
+            <param name="configuration">
+            An API configuration.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.ApplyInitialization(System.Type,System.Object,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Applies initialization routines from any API configurator
+            attributes specified on an API type to an API context.
+            </summary>
+            <param name="type">
+            An API type.
+            </param>
+            <param name="instance">
+            An API instance, if applicable.
+            </param>
+            <param name="context">
+            An API context.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.ApplyDisposal(System.Type,System.Object,Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Applies disposal routines from any API configurator
+            attributes specified on an API type to an API context.
+            </summary>
+            <param name="type">
+            An API type.
+            </param>
+            <param name="instance">
+            An API instance, if applicable.
+            </param>
+            <param name="context">
+            An API context.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.Configure(Microsoft.Restier.Core.ApiConfiguration,System.Type)">
+            <summary>
+            Configures an API configuration.
+            </summary>
+            <param name="configuration">
+            An API configuration.
+            </param>
+            <param name="type">
+            The API type on which this attribute was placed.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.Initialize(Microsoft.Restier.Core.ApiContext,System.Type,System.Object)">
+            <summary>
+            Initializes an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="type">
+            The API type on which this attribute was placed.
+            </param>
+            <param name="instance">
+            An API instance, if applicable.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.ApiConfiguratorAttribute.Dispose(Microsoft.Restier.Core.ApiContext,System.Type,System.Object)">
+            <summary>
+            Disposes an API context.
+            </summary>
+            <param name="context">
+            An API context.
+            </param>
+            <param name="type">
+            The API type on which this attribute was placed.
+            </param>
+            <param name="instance">
+            An API instance, if applicable.
+            </param>
+        </member>
+        <member name="T:Microsoft.Restier.Core.InvocationContext">
+            <summary>
+            Represents context under which an API flow operates.
+            </summary>
+            <remarks>
+            An invocation context is created each time an API is invoked and
+            is used for a specific API flow. It maintains a set of properties
+            that can store data that lives for the lifetime of the flow.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.InvocationContext.#ctor(Microsoft.Restier.Core.ApiContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.InvocationContext"/> class.
+            </summary>
+            <param name="apiContext">
+            An API context.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.InvocationContext.GetHookHandler``1">
+            <summary>
+            Gets a hook handler instance.
+            </summary>
+            <typeparam name="T">The hook handler interface.</typeparam>
+            <returns>The hook handler instance.</returns>
+            <remarks>
+            This method directly returns the hook handler instance from
+            the configuration of the inner context.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.InvocationContext.ApiContext">
+            <summary>
+            Gets the API context.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ApiConfigurationIsCommitted">
+            <summary>
+              Looks up a localized string similar to The specified `ApiConfiguration` is committed thus cannot be modified..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ApiConfigurationShouldBeCommitted">
+            <summary>
+              Looks up a localized string similar to The specified `ApiConfiguration` should already be committed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.CallQueryableSourceNotSupported">
+            <summary>
+              Looks up a localized string similar to Calling the methods in &apos;QueryableSource&apos; or &apos;QueryableSource&lt;T&gt;&apos; is not supported..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.CannotSetChangeSetIfThereIsResult">
+            <summary>
+              Looks up a localized string similar to The change set cannot be set if there is already a result..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.CannotSetResultsSourceIfThereIsAnyError">
+            <summary>
+              Looks up a localized string similar to The results source cannot be set if there is any error..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.CannotSetTotalCountIfThereIsNoResult">
+            <summary>
+              Looks up a localized string similar to The total count cannot be set if there is no result yet..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ChangeSetPreparerMissing">
+            <summary>
+              Looks up a localized string similar to Change set preparer is missing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.DataModificationMustBeCUD">
+            <summary>
+              Looks up a localized string similar to A DataModification must be either: IsNew, IsUpdate, or IsDelete..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.DataModificationNotSupportCreateEntity">
+            <summary>
+              Looks up a localized string similar to &quot;DataModificationEntry.ApplyTo cannot be called on an IsNew entry..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.DataModificationRequiresEntityKey">
+            <summary>
+              Looks up a localized string similar to There should have been at least one predicate applied to the query from the EntityKey.  Ensure there is at least one EntityKey..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.DoNotCallApiDataDirectly">
+            <summary>
+              Looks up a localized string similar to Do not call the methods in &apos;ApiData&apos; directly..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ElementTypeNotFound">
+            <summary>
+              Looks up a localized string similar to Element type cannot be found for &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ElementTypeNotMatch">
+            <summary>
+              Looks up a localized string similar to Element type not match..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ErrorInVerifyingNoEntityHasChanged">
+            <summary>
+              Looks up a localized string similar to Saving the change set has terminated to prevent potential stack overflow.  There have been entity changes and/or creates that have continuously spawn entity changes and/or creates..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ExpanderCannotChangeExpressionType">
+            <summary>
+              Looks up a localized string similar to Expander cannot change the expression type..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ExpressionMustBeQueryable">
+            <summary>
+              Looks up a localized string similar to Expression must be queryable..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.FilterCannotChangeExpressionType">
+            <summary>
+              Looks up a localized string similar to Filter cannot change the expression type..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.InspectionFailed">
+            <summary>
+              Looks up a localized string similar to Inspection failed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.InvalidChangeSetEntryType">
+            <summary>
+              Looks up a localized string similar to Invalid ChangeSetEntry Type: {0}..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.NoPermissionToDeleteEntity">
+            <summary>
+              Looks up a localized string similar to The current user does not have permission to delete entities from the EntitySet &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.NoPermissionToInsertEntity">
+            <summary>
+              Looks up a localized string similar to The current user does not have permission to insert entities into the EntitySet &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.NoPermissionToInvokeAction">
+            <summary>
+              Looks up a localized string similar to The current user does not have permission to invoke the requested action &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.NoPermissionToUpdateEntity">
+            <summary>
+              Looks up a localized string similar to The current user does not have permission to update entities in the EntitySet &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.NotSupportedType">
+            <summary>
+              Looks up a localized string similar to Not supported type: {0}..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.OriginalExpressionShouldBeConstant">
+            <summary>
+              Looks up a localized string similar to Original query expression should be constant expression..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.OriginalExpressionShouldBeQueryable">
+            <summary>
+              Looks up a localized string similar to Original query expression should contain a value which is queryable..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.QueryableSourceCannotBeUsedAsQuery">
+            <summary>
+              Looks up a localized string similar to &apos;QueryableSource&apos; cannot be used as query..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.QueryExecutorMissing">
+            <summary>
+              Looks up a localized string similar to Query executor is missing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.QuerySourcerMissing">
+            <summary>
+              Looks up a localized string similar to Query expression sourcer is missing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ShouldBeInterfaceType">
+            <summary>
+              Looks up a localized string similar to Should specify an interface type T for the handler..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.SourceExpressionMissing">
+            <summary>
+              Looks up a localized string similar to Expression returned by sourcer is missing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.SubmitExecutorMissing">
+            <summary>
+              Looks up a localized string similar to Submit executor is missing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Properties.Resources.ValidationFailsTheOperation">
+            <summary>
+              Looks up a localized string similar to The operation cannot be performed because one or more objects are invalid.  Please inspect the ValidationException.ValidationResults property for more information..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.DefaultQueryExecutor">
+            <summary>
+            Default implementation for <see cref="T:Microsoft.Restier.Core.Query.IQueryExecutor"/>
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.IQueryExecutor">
+            <summary>
+            Represents a hook point that executes a query.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExecutor.ExecuteQueryAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable{``0},System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes a query and produces a query result.
+            </summary>
+            <typeparam name="TElement">
+            The type of the elements in the query.
+            </typeparam>
+            <param name="context">
+            The query context.
+            </param>
+            <param name="query">
+            A composed query.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExecutor.ExecuteSingleAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable,System.Linq.Expressions.Expression,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes a singleton
+            query and produces a query result.
+            </summary>
+            <typeparam name="TResult">
+            The type of the singleton query result.
+            </typeparam>
+            <param name="context">
+            The query context.
+            </param>
+            <param name="query">
+            A base query.
+            </param>
+            <param name="expression">
+            An expression to be composed on the base query.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.DefaultQueryExecutor.ExecuteQueryAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable{``0},System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.DefaultQueryExecutor.ExecuteSingleAsync``1(Microsoft.Restier.Core.Query.QueryContext,System.Linq.IQueryable,System.Linq.Expressions.Expression,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.DefaultQueryExecutor.Instance">
+            <summary>
+            Gets the singleton Instance for <see cref="T:Microsoft.Restier.Core.Query.DefaultQueryExecutor"/>
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.DefaultQueryHandler">
+            <summary>
+            Represents the default query handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.DefaultQueryHandler.QueryAsync(Microsoft.Restier.Core.Query.QueryContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes the query flow.
+            </summary>
+            <param name="context">
+            The query context.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a query result.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.IQueryExpressionInspector">
+            <summary>
+            Represents a hook point that inspects a query expression.
+            </summary>
+            <remarks>
+            <para>
+            Query expression inspection evaluates an expression to determine
+            if it is valid according to API logic such as authorization rules.
+            </para>
+            <para>
+            Inspection is the first step that occurs when processing a query
+            expression after its children have been visited, so it occurs during
+            upward traversal of the query expression. This ensures that inspection
+            has a chance to take place before the node is altered in any way (with
+            the exception of normalization of expressions identifying API data).
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.IQueryExpressionInspector.Inspect(Microsoft.Restier.Core.Query.QueryExpressionContext)">
+            <summary>
+            Inspects an expression.
+            </summary>
+            <param name="context">
+            The query expression context.
+            </param>
+            <returns>
+            <c>true</c> if the inspection passed; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.QueryContext">
+            <summary>
+            Represents context under which a query flow operates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryContext.#ctor(Microsoft.Restier.Core.ApiContext,Microsoft.Restier.Core.Query.QueryRequest)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.QueryContext"/> class.
+            </summary>
+            <param name="apiContext">
+            An API context.
+            </param>
+            <param name="request">
+            A query request.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryContext.Model">
+            <summary>
+            Gets the model that informs this query context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryContext.Request">
+            <summary>
+            Gets the query request.
+            </summary>
+            <remarks>
+            The query request cannot be set if there is already a result.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.QueryExpressionContext">
+            <summary>
+            Represents context for a query expression that
+            is used during query expression processing.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryExpressionContext.#ctor(Microsoft.Restier.Core.Query.QueryContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.QueryExpressionContext"/> class.
+            </summary>
+            <param name="queryContext">
+            A query context.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryExpressionContext.PushVisitedNode(System.Linq.Expressions.Expression)">
+            <summary>
+            Pushes a visited node.
+            </summary>
+            <param name="visitedNode">
+            A visited node.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryExpressionContext.ReplaceVisitedNode(System.Linq.Expressions.Expression)">
+            <summary>
+            Replaces the visited node.
+            </summary>
+            <param name="visitedNode">
+            A new visited node.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryExpressionContext.PopVisitedNode">
+            <summary>
+            Pops a visited node.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryExpressionContext.GetModelReferenceForNode(System.Linq.Expressions.Expression)">
+            <summary>
+            Gets a reference to the model element
+            that represents an expression node.
+            </summary>
+            <param name="node">
+            An expression node.
+            </param>
+            <returns>
+            A reference to the model element
+            that represents the expression node.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryExpressionContext.QueryContext">
+            <summary>
+            Gets the query context associated with this context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryExpressionContext.VisitedNode">
+            <summary>
+            Gets the expression node that is being visited.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryExpressionContext.ModelReference">
+            <summary>
+            Gets a reference to the model element
+            that represents the visited node.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryExpressionContext.AfterNestedVisitCallback">
+            <summary>
+            Gets or sets an action that is invoked after an
+            expanded or filtered expression has been visited.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.QueryModelReference">
+            <summary>
+            Represents a reference to query data in terms of a model.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryModelReference.EntitySet">
+            <summary>
+            Gets the entity set that ultimately contains the data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryModelReference.Type">
+            <summary>
+            Gets the type of the data, if any.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.ApiDataReference">
+            <summary>
+            Represents a reference to API data in terms of a model.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.ApiDataReference.#ctor(Microsoft.Restier.Core.Query.QueryContext,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.ApiDataReference"/> class.
+            </summary>
+            <param name="context">
+            A query context.
+            </param>
+            <param name="name">
+            The name of an entity set, singleton or function import.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.ApiDataReference.#ctor(Microsoft.Restier.Core.Query.QueryContext,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.ApiDataReference"/> class referring to a function.
+            </summary>
+            <param name="context">
+            A query context.
+            </param>
+            <param name="namespaceName">
+            The name of a namespace containing the function.
+            </param>
+            <param name="name">
+            The name of a function.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.ApiDataReference.EntitySet">
+            <summary>
+            Gets the entity set that ultimately contains the data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.ApiDataReference.Type">
+            <summary>
+            Gets the type of the data, if any.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.ApiDataReference.Element">
+            <summary>
+            Gets the element representing the API data.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.DerivedDataReference">
+            <summary>
+            Represents a reference to derived data in terms of a model.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.DerivedDataReference.#ctor(Microsoft.Restier.Core.Query.QueryModelReference)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.DerivedDataReference"/> class.
+            </summary>
+            <param name="source">
+            A source query model reference.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.DerivedDataReference.Source">
+            <summary>
+            Gets the source of the derived data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.DerivedDataReference.EntitySet">
+            <summary>
+            Gets the entity set that contains the data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.DerivedDataReference.Type">
+            <summary>
+            Gets the type of the data.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.CollectionElementReference">
+            <summary>
+            Represents a reference to element data in terms of a model.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.CollectionElementReference.#ctor(Microsoft.Restier.Core.Query.QueryModelReference)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.CollectionElementReference"/> class.
+            </summary>
+            <param name="source">
+            A source query model reference.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.CollectionElementReference.Type">
+            <summary>
+            Gets the type of the data.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.PropertyDataReference">
+            <summary>
+            Represents a reference to property data in terms of a model.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.PropertyDataReference.#ctor(Microsoft.Restier.Core.Query.QueryModelReference,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.PropertyDataReference"/> class.
+            </summary>
+            <param name="source">
+            A source query model reference.
+            </param>
+            <param name="propertyName">
+            The name of a property.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.PropertyDataReference.Type">
+            <summary>
+            Gets the type of the queryable data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.PropertyDataReference.Property">
+            <summary>
+            Gets the property representing the property data.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.QueryRequest">
+            <summary>
+            Represents a query request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryRequest.#ctor(System.Linq.IQueryable,System.Nullable{System.Boolean})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.QueryRequest"/> class with a composed query.
+            </summary>
+            <param name="query">
+            A composed query that was derived from a queryable source.
+            </param>
+            <param name="includeTotalCount">
+            Indicates if the total number of items should be retrieved
+            when the result has been filtered using paging operators.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryRequest.Expression">
+            <summary>
+            Gets or sets the composed query expression.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryRequest.IncludeTotalCount">
+            <summary>
+            Gets or sets a value indicating whether the total
+            number of items should be retrieved when the
+            result has been filtered using paging operators.
+            </summary>
+            <remarks>
+            Setting this to <c>true</c> may have a performance impact as
+            the data provider may need to execute two independent queries.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryRequest.ShouldReturnCount">
+            <summary>
+            Gets or sets a value indicating whether the number
+            of the items should be returned instead of the
+            items themselves.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Query.QueryResult">
+            <summary>
+            Represents a query result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryResult.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.QueryResult"/> class with an error.
+            </summary>
+            <param name="error">
+            An error.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Query.QueryResult.#ctor(System.Collections.IEnumerable,System.Nullable{System.Int64})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Query.QueryResult"/> class with in-memory results.
+            </summary>
+            <param name="results">
+            In-memory results.
+            </param>
+            <param name="totalCount">
+            The total number of items represented by the
+            results had paging operators not been applied.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryResult.Error">
+            <summary>
+            Gets or sets an error to be returned.
+            </summary>
+            <remarks>
+            Setting this value will override any existing error or results.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryResult.ResultsSource">
+            <summary>
+            Gets or sets the entity set from which the results were sourced.
+            </summary>
+            <remarks>
+            This property will be <c>null</c> if the results are not instances
+            of a particular entity type that has an associated entity set.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryResult.Results">
+            <summary>
+            Gets or sets the in-memory results.
+            </summary>
+            <remarks>
+            Setting this value will override any existing error or results.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Query.QueryResult.TotalCount">
+            <summary>
+            Gets or sets the total number of items available but not
+            returned by a query whose items were filtered for paging.
+            </summary>
+            <remarks>
+            This should be <c>null</c> if total count
+            is not supported or was not requested.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ChangeSet">
+            <summary>
+            Represents a change set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ChangeSet.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.ChangeSet"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ChangeSet.#ctor(System.Collections.Generic.IEnumerable{Microsoft.Restier.Core.Submit.ChangeSetEntry})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.ChangeSet"/> class.
+            </summary>
+            <param name="entries">
+            A set of change set entries.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ChangeSet.Entries">
+            <summary>
+            Gets the entries in this change set.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ChangeSet.AnEntityHasChanged">
+            TODO GitHubIssue#37 : make the ChangeSet 'dynamic' so it gets added to as things change during the flow.
+            <summary>
+            Gets or sets a value indicating whether an Entity has been added, modified, or deleted.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ChangeSetEntryType">
+            <summary>
+            Specifies the type of a change set entry.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.ChangeSetEntryType.DataModification">
+            <summary>
+            Specifies a data modification entry.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.ChangeSetEntryType.ActionInvocation">
+            <summary>
+            Specifies an action invocation entry.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState">
+            <summary>
+            Possible states of an entity during a ChangeSet life cycle
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState.Changed">
+            <summary>
+            If an entity has changed it gets this state
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState.Validated">
+            <summary>
+            The entity has been validated.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState.PreEventing">
+            <summary>
+            The entity set deleting, inserting or updating events are raised
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState.ChangedWithinOwnPreEventing">
+            <summary>
+            The entity was modified within its own pre eventing interception method. This indicates that the entity
+            should be revalidated but its pre eventing interception point should not be invoked again.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DynamicChangeSetEntityState.PreEvented">
+            <summary>
+            The entity's pre events have been raised
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.AddAction">
+            <summary>
+            This enum controls the actions requested for an entity.
+            </summary>
+            <remarks>
+            This is required because during the post-CUD events, the EntityState has been lost.
+            This enum allows the API to remember which pre-CUD event was raised for the Entity.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.AddAction.Undefined">
+            <summary>
+            Specifies an undefined action.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.AddAction.Updating">
+            <summary>
+            Specifies the entity is being updated.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.AddAction.Inserting">
+            <summary>
+            Specifies the entity is being inserted.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.AddAction.Removing">
+            <summary>
+            Specifies the entity is being removed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ChangeSetEntry">
+            <summary>
+            Represents an entry in a change set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ChangeSetEntry.HasChanged">
+            <summary>
+            Indicates whether this change set entry is in a changed state.
+            </summary>
+            <returns>
+            Whether this change set entry is in a changed state.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ChangeSetEntry.Type">
+            <summary>
+            Gets the type of this change set entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ChangeSetEntry.ChangeSetEntityState">
+            <summary>
+            Gets or sets the dynamic state of this change set entry.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.DataModificationEntry">
+            <summary>
+            Represents a data modification entry in a change set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.DataModificationEntry.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.DataModificationEntry"/> class.
+            </summary>
+            <param name="entitySetName">
+            The name of the entity set in question.
+            </param>
+            <param name="entityTypeName">
+            The name of the entity type in question.
+            </param>
+            <param name="entityKey">
+            The key of the entity being modified.
+            </param>
+            <param name="originalValues">
+            Any original values of the entity that are known.
+            </param>
+            <param name="localValues">
+            The local values of the entity.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.DataModificationEntry.ApplyTo(System.Linq.IQueryable)">
+            <summary>
+            Applies the current DataModificationEntry's KeyValues and OriginalValues to the
+            specified query and returns the new query.
+            </summary>
+            <param name="query">The IQueryable to apply the property values to.</param>
+            <returns>
+            The new IQueryable with the property values applied to it in a Where condition.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.EntitySetName">
+            <summary>
+            Gets the name of the entity set in question.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.EntityTypeName">
+            <summary>
+            Gets the name of the entity type in question.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.EntityKey">
+            <summary>
+            Gets the key of the entity being modified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.AddAction">
+            <summary>
+            Gets or sets the action to be taken.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.IsNew">
+            <summary>
+            Gets a value indicating whether the modification is a new entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.IsUpdate">
+            <summary>
+            Gets a value indicating whether the modification is updating an entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.IsFullReplaceUpdate">
+            <summary>
+            Gets or sets a value indicating whether the entity should be fully replaced by the modification.
+            </summary>
+            <remarks>
+            If true, all properties will be updated, even if the property isn't in LocalValues.
+            If false, only properties identified in LocalValues will be updated on the entity.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.IsDelete">
+            <summary>
+            Gets a value indicating whether the modification is deleting an entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.Entity">
+            <summary>
+            Gets or sets the entity object in question.
+            </summary>
+            <remarks>
+            Initially this will be <c>null</c>, however after the change
+            set has been prepared it will represent the pending entity.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.OriginalValues">
+            <summary>
+            Gets the original values for properties that have changed.
+            </summary>
+            <remarks>
+            For new entities, this property is <c>null</c>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.ServerValues">
+            <summary>
+            Gets the current server values for properties that have changed.
+            </summary>
+            <remarks>
+            For new entities, this property is <c>null</c>. For updated
+            entities, it is <c>null</c> until the change set is prepared.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry.LocalValues">
+            <summary>
+            Gets the local values for properties that have changed.
+            </summary>
+            <remarks>
+            For entities pending deletion, this property is <c>null</c>.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.DataModificationEntry`1">
+            <summary>
+            Represents a data modification entry in a change set.
+            </summary>
+            <typeparam name="T">The entity type.</typeparam>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.DataModificationEntry`1.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.DataModificationEntry`1"/> class.
+            </summary>
+            <param name="entitySetName">
+            The name of the entity set in question.
+            </param>
+            <param name="entityTypeName">
+            The name of the entity type in question.
+            </param>
+            <param name="entityKey">
+            The key of the entity being modified.
+            </param>
+            <param name="originalValues">
+            Any original values of the entity that are known.
+            </param>
+            <param name="localValues">
+            The local values of the entity.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.DataModificationEntry`1.Entity">
+            <summary>
+            Gets or sets the entity object in question.
+            </summary>
+            <remarks>
+            Initially this will be <c>null</c>, however after the change
+            set has been prepared it will represent the pending entity.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ActionInvocationEntry">
+            <summary>
+            Represents an action invocation entry in a change set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ActionInvocationEntry.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.ActionInvocationEntry"/> class.
+            </summary>
+            <param name="actionName">
+            An action name.
+            </param>
+            <param name="arguments">
+            A set of arguments to pass to the action.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ActionInvocationEntry.GetArgumentArray">
+            <summary>
+            Gets an array of the arguments to pass to the action.
+            </summary>
+            <returns>
+            An array of the arguments to pass to the action.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ActionInvocationEntry.ActionName">
+            <summary>
+            Gets or sets the operation (action) request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ActionInvocationEntry.Arguments">
+            <summary>
+            Gets the set of arguments to pass to the action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ActionInvocationEntry.Result">
+            <summary>
+            Gets or sets the result of the action.
+            </summary>
+            <remarks>
+            Initially this will be <c>null</c>, however after the action
+            has been invoked it will contain the result.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.DefaultSubmitHandler">
+            <summary>
+            Represents the default submit handler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.DefaultSubmitHandler.MaxLoop">
+            <summary>
+            The maximum numbers of loops for the pre-persisting events save loop
+            and the post-persisting events save loops allowed before the DataService
+            stops processing to prevent potential infinite loop.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.DefaultSubmitHandler.SubmitAsync(Microsoft.Restier.Core.Submit.SubmitContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes the submit flow.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a submit result.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.IChangeSetPreparer">
+            <summary>
+            Represents a service that can prepare a change set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.IChangeSetPreparer.PrepareAsync(Microsoft.Restier.Core.Submit.SubmitContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously prepares a change set for submission.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous operation.
+            </returns>
+            <remarks>
+            Preparing a change set involves creating new entity objects for
+            new data, loading entities that are pending update or delete from
+            to get current server values, and using a data provider mechanism
+            to locally apply the supplied changes to the loaded entities.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ISubmitExecutor">
+            <summary>
+            Represents a hook point that executes a submission.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ISubmitExecutor.ExecuteSubmitAsync(Microsoft.Restier.Core.Submit.SubmitContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes a submission and produces a submit result.
+            </summary>
+            <param name="context">
+            The submit context.
+            </param>
+            <param name="cancellationToken">
+            A cancellation token.
+            </param>
+            <returns>
+            A task that represents the asynchronous
+            operation whose result is a submit result.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.SubmitContext">
+            <summary>
+            Represents context under which a submit flow operates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.SubmitContext.#ctor(Microsoft.Restier.Core.ApiContext,Microsoft.Restier.Core.Submit.ChangeSet)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.SubmitContext"/> class.
+            </summary>
+            <param name="apiContext">
+            An API context.
+            </param>
+            <param name="changeSet">
+            A change set.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.SubmitContext.Model">
+            <summary>
+            Gets the model that informs this submit context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.SubmitContext.ChangeSet">
+            <summary>
+            Gets or sets the change set.
+            </summary>
+            <remarks>
+            The change set cannot be set if there is already a result.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.SubmitContext.Result">
+            <summary>
+            Gets or sets the submit result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.SubmitResult">
+            <summary>
+            Represents a submit result.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.SubmitResult.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.SubmitResult"/> class with an error.
+            </summary>
+            <param name="error">
+            An error.
+            </param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.SubmitResult.#ctor(Microsoft.Restier.Core.Submit.ChangeSet)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.SubmitResult"/> class
+            </summary>
+            <param name="completedChangeSet">
+            A completed change set.
+            </param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.SubmitResult.Error">
+            <summary>
+            Gets or sets an error to be returned.
+            </summary>
+            <remarks>
+            Setting this value will override any
+            existing error or completed change set.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.SubmitResult.CompletedChangeSet">
+            <summary>
+            Gets or sets the completed change set.
+            </summary>
+            <remarks>
+            Setting this value will override any
+            existing error or completed change set.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ValidationException">
+            <summary>
+            Represents an exception that indicates validation errors occurred on entities.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationException"/> class.
+            </summary>
+            <param name="message">Message of the exception.</param>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Restier.Core.Submit.ValidationException"/> class.
+            </summary>
+            <param name="message">Message of the exception.</param>
+            <param name="innerException">Inner exception.</param>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationException.ValidationResults">
+            <summary>
+            Gets or sets the validation results.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ValidationResult">
+            <summary>
+            Represents a single result when validating an entity, property, etc.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Restier.Core.Submit.ValidationResult.ToString">
+            <summary>
+            Returns the string that represents this validation result.
+            </summary>
+            <returns>
+            The string that represents this validation result.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResult.Id">
+            <summary>
+            Gets or sets the identifier for this validation result.
+            </summary>
+            <remarks>
+            Id allows programmatic matching of validation results between tiers.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResult.Target">
+            <summary>
+            Gets or sets the item to which the validation result applies.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResult.PropertyName">
+            <summary>
+            Gets or sets the name of the property to which the validation result applies.
+            If null, the validation result applies to the whole Target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResult.Severity">
+            <summary>
+            Gets or sets the severity of this validation result.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResult.Message">
+            <summary>
+            Gets or sets the message to be displayed to the end user for this validation result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ValidationResults">
+            <summary>
+            Represents a collection of ValidationResult instances that identify what is not valid on a validated item.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResults.HasErrors">
+            <summary>
+            Gets a value indicating whether there is any result that has Severity equal to "Error"
+            in the current validation results.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Restier.Core.Submit.ValidationResults.Errors">
+            <summary>
+            Gets a collection of ValidationResult instances that have Severity equal to "Error"
+            in the current validation results.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Restier.Core.Submit.ValidationSeverity">
+            <summary>
+            Specifies the severity of a validation result.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.ValidationSeverity.Error">
+            <summary>
+            Specifies a validation error.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.ValidationSeverity.Warning">
+            <summary>
+            Specifies a validation warning.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Restier.Core.Submit.ValidationSeverity.Informational">
+            <summary>
+            Specifies validation information.
+            </summary>
+        </member>
+    </members>
+</doc>
