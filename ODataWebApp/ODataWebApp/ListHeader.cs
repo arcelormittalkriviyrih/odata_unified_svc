@@ -24,7 +24,7 @@ namespace ODataWebApp
         public string Version { get; set; }
         public string Description { get; set; }
         public string Origin { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTimeOffset> CreateDate { get; set; }
         public Nullable<int> BatchList { get; set; }
         public Nullable<int> BatchInformation { get; set; }
     

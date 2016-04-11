@@ -1,0 +1,1 @@
+C:\ArcelorMittal\Development\Web service\OData\ODataWebApp\ODataWebApp\obj\Debug\ODataWebApp.csprojResolveAssemblyReference.cache

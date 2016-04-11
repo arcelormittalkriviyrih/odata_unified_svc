@@ -25,11 +25,12 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string WorkType { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string ScheduleState { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public Nullable<int> WorkShedule { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -22,6 +22,7 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinitionID { get; set; }
         public Nullable<int> MaterialLotID { get; set; }
         public Nullable<int> MaterialSubLotID { get; set; }
@@ -30,9 +31,10 @@ namespace ODataWebApp
         public string Reason { get; set; }
         public string EquipmentElementLevel { get; set; }
         public string MaterialUse { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> AssemblyCapability { get; set; }
         public string AssemblyType { get; set; }
@@ -43,6 +45,7 @@ namespace ODataWebApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialCapability> MaterialCapability1 { get; set; }
         public virtual MaterialCapability MaterialCapability2 { get; set; }
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         public virtual MaterialLot MaterialLot { get; set; }
         public virtual MaterialSubLot MaterialSubLot { get; set; }

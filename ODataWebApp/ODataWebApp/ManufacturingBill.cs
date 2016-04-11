@@ -22,6 +22,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinitionID { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> AssemblyManufacturingBill { get; set; }
@@ -33,6 +34,7 @@ namespace ODataWebApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ManufacturingBill> ManufacturingBill1 { get; set; }
         public virtual ManufacturingBill ManufacturingBill2 { get; set; }
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         public virtual ProductDefinition ProductDefinition1 { get; set; }
     }

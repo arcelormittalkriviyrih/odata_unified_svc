@@ -42,8 +42,10 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string EquipmentLevel { get; set; }
         public Nullable<int> Equipment1 { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchListEntry> BatchListEntry { get; set; }
@@ -52,6 +54,7 @@ namespace ODataWebApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Equipment> Equipment11 { get; set; }
         public virtual Equipment Equipment2 { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentActual> EquipmentActual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

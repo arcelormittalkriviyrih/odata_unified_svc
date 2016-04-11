@@ -24,10 +24,11 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public Nullable<int> ProductionScheduleID { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string EquipmentElementLevel { get; set; }
         public string PerformanceState { get; set; }
     

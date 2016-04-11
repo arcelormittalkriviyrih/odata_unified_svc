@@ -21,12 +21,14 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
         public Nullable<int> EquipmentID { get; set; }
         public string Description { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> ProductSegmentID { get; set; }
     
         public virtual Equipment Equipment { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         public virtual ProductSegment ProductSegment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentSpecificationProperty> EquipmentSpecificationProperty { get; set; }

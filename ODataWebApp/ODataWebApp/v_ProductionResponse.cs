@@ -14,10 +14,12 @@ namespace ODataWebApp
     
     public partial class v_ProductionResponse
     {
-        public int ID { get; set; }
+        public Nullable<System.Guid> ID { get; set; }
+        public int ProductionResponseID { get; set; }
         public string ResponseState { get; set; }
         public int ProductionRequestID { get; set; }
         public int EquipmentID { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
         public Nullable<int> ProductSegmentID { get; set; }
         public Nullable<int> ProcessSegmentID { get; set; }
     }

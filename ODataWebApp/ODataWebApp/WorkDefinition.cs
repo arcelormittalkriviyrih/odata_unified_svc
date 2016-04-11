@@ -31,8 +31,8 @@ namespace ODataWebApp
         public string Description { get; set; }
         public string HierarchyScope { get; set; }
         public string WorkType { get; set; }
-        public Nullable<System.DateTime> Duration { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> Duration { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public Nullable<int> OperationsDefinitionID { get; set; }
         public string Parameter { get; set; }
     

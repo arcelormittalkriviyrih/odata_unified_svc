@@ -28,8 +28,8 @@ namespace ODataWebApp
     
         public virtual ProcessSegment ProcessSegment { get; set; }
         public virtual ProductSegment ProductSegment { get; set; }
+        public virtual PropertyTypes PropertyTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SegmentRequirement> SegmentRequirement { get; set; }
-        public virtual PropertyTypes PropertyTypes { get; set; }
     }
 }

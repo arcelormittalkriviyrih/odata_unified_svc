@@ -27,7 +27,8 @@ namespace ODataWebApp
         public string Version { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public Nullable<int> ProductProductionRule { get; set; }
         public string BillOfMaterialsID { get; set; }
         public string BillOfResourcesID { get; set; }

@@ -16,7 +16,7 @@ namespace ODataWebApp
     {
         public int ID { get; set; }
         public string ApprovedBy { get; set; }
-        public Nullable<System.DateTime> ApprovalDate { get; set; }
+        public Nullable<System.DateTimeOffset> ApprovalDate { get; set; }
         public string Description { get; set; }
         public Nullable<int> ApprovalHistory { get; set; }
     

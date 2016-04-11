@@ -21,18 +21,21 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> PhysicalAssetClassID { get; set; }
         public Nullable<int> PhysicalAssetID { get; set; }
         public string Description { get; set; }
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string EquipmentElementLevel { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> PruductionCapabilityID { get; set; }
     
         public virtual PhysicalAsset PhysicalAsset { get; set; }
+        public virtual PhysicalAssetClass PhysicalAssetClass { get; set; }
         public virtual ProductionCapability ProductionCapability { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAssetCapabilityProperty> PhysicalAssetCapabilityProperty { get; set; }

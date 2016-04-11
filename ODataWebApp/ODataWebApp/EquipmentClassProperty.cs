@@ -26,8 +26,10 @@ namespace ODataWebApp
         public string Value { get; set; }
         public Nullable<int> EquipmentClassProperty1 { get; set; }
         public string EquipmentCapabilityTestSpecification { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
     
         public virtual EquipmentCapabilityTestSpecification EquipmentCapabilityTestSpecification1 { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentClassProperty> EquipmentClassProperty11 { get; set; }
         public virtual EquipmentClassProperty EquipmentClassProperty2 { get; set; }

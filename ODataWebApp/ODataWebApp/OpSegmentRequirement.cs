@@ -27,10 +27,11 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string OperationsType { get; set; }
         public Nullable<int> ProcessSegmentID { get; set; }
-        public Nullable<System.DateTime> EarliestStartTime { get; set; }
-        public Nullable<System.DateTime> LatestEndTime { get; set; }
+        public Nullable<System.DateTimeOffset> EarliestStartTime { get; set; }
+        public Nullable<System.DateTimeOffset> LatestEndTime { get; set; }
         public string Duration { get; set; }
         public Nullable<int> OperationsDefinitionID { get; set; }
         public string SegmentState { get; set; }

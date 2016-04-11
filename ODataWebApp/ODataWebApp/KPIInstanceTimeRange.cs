@@ -15,8 +15,8 @@ namespace ODataWebApp
     public partial class KPIInstanceTimeRange
     {
         public int ID { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string Recurrence { get; set; }
         public string Duration { get; set; }
         public Nullable<int> KPIInstanceID { get; set; }

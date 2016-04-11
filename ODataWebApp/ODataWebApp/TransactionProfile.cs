@@ -24,8 +24,9 @@ namespace ODataWebApp
         public string releaseID { get; set; }
         public string versionID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PublishedScope { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportedAction> SupportedAction { get; set; }

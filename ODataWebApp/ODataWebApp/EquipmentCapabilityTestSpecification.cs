@@ -25,6 +25,7 @@ namespace ODataWebApp
         public string Description { get; set; }
         public string Version { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentClassProperty> EquipmentClassProperty { get; set; }

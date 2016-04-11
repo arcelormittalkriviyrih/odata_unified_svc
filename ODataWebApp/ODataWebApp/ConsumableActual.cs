@@ -21,13 +21,16 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinitionID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string RequiredByRequestedSegmentResponse { get; set; }
         public int SegmentResponseID { get; set; }
     
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         public virtual SegmentResponse SegmentResponse { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

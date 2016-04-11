@@ -35,16 +35,17 @@ namespace ODataWebApp
         public Nullable<int> ProductID { get; set; }
         public string OrderID { get; set; }
         public string StartCondition { get; set; }
-        public Nullable<System.DateTime> RequestedStartTime { get; set; }
-        public Nullable<System.DateTime> ActualStartTime { get; set; }
-        public Nullable<System.DateTime> RequestedEndTime { get; set; }
-        public Nullable<System.DateTime> ActualEndTime { get; set; }
+        public Nullable<System.DateTimeOffset> RequestedStartTime { get; set; }
+        public Nullable<System.DateTimeOffset> ActualStartTime { get; set; }
+        public Nullable<System.DateTimeOffset> RequestedEndTime { get; set; }
+        public Nullable<System.DateTimeOffset> ActualEndTime { get; set; }
         public string BatchPriority { get; set; }
         public string RequestedBatchSize { get; set; }
         public string ActualBatchSize { get; set; }
         public string UnitOfMeasure { get; set; }
         public string Note { get; set; }
         public Nullable<int> EquipmentID { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
         public Nullable<int> ActualEquipmentID { get; set; }
         public Nullable<int> BatchListEntry1 { get; set; }
         public Nullable<int> BatchList { get; set; }
@@ -54,6 +55,7 @@ namespace ODataWebApp
         public virtual ICollection<BatchListEntry> BatchListEntry11 { get; set; }
         public virtual BatchListEntry BatchListEntry2 { get; set; }
         public virtual Equipment Equipment { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         public virtual GRecipe GRecipe { get; set; }
         public virtual GRecipeProductInformation GRecipeProductInformation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

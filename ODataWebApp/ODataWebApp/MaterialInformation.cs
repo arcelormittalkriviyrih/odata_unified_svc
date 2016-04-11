@@ -17,11 +17,14 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PublishedDate { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinition { get; set; }
         public Nullable<int> MaterialLot { get; set; }
         public Nullable<int> MaterialSubLot { get; set; }
     
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition1 { get; set; }
         public virtual MaterialLot MaterialLot1 { get; set; }
         public virtual MaterialSubLot MaterialSubLot1 { get; set; }

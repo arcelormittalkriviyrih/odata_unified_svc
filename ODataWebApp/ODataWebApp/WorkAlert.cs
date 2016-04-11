@@ -22,6 +22,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string MessageText { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string TimeStamp { get; set; }
         public string Priority { get; set; }
         public string Category { get; set; }

@@ -14,8 +14,12 @@ namespace ODataWebApp
     
     public partial class MaterialClassLinks
     {
+        public int MaterialClassID1 { get; set; }
+        public int MaterialClassID2 { get; set; }
         public int LinkType { get; set; }
     
+        public virtual MaterialClass MaterialClass { get; set; }
+        public virtual MaterialClass MaterialClass1 { get; set; }
         public virtual MaterialLinkTypes MaterialLinkTypes { get; set; }
     }
 }

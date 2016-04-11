@@ -21,6 +21,7 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> PersonnelClassID { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string Description { get; set; }
         public string PersonnelUse { get; set; }
@@ -30,6 +31,7 @@ namespace ODataWebApp
     
         public virtual OperationsSegment OperationsSegment { get; set; }
         public virtual Person Person { get; set; }
+        public virtual PersonnelClass PersonnelClass { get; set; }
         public virtual WorkDefinition WorkDefinition1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonnelSpecificationProperty> PersonnelSpecificationProperty { get; set; }

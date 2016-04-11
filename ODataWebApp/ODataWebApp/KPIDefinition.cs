@@ -25,6 +25,7 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
+        public Nullable<int> Scope { get; set; }
         public string Formula { get; set; }
         public string UnitOfMeasure { get; set; }
         public string Range { get; set; }

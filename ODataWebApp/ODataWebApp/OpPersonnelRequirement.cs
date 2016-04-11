@@ -21,16 +21,19 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public int PersonnelClassID { get; set; }
         public int PersonID { get; set; }
         public string Description { get; set; }
         public string PersonnelUse { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string RequiredByRequestedSegment { get; set; }
         public Nullable<int> JobOrderID { get; set; }
         public Nullable<int> SegmenRequirementID { get; set; }
     
         public virtual JobOrder JobOrder { get; set; }
         public virtual Person Person { get; set; }
+        public virtual PersonnelClass PersonnelClass { get; set; }
         public virtual OpSegmentRequirement OpSegmentRequirement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonnelRequirementProperty> PersonnelRequirementProperty { get; set; }

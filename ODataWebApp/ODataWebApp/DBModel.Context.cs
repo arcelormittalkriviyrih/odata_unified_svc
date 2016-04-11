@@ -61,6 +61,7 @@ namespace ODataWebApp
         public virtual DbSet<EquipmentCapability> EquipmentCapability { get; set; }
         public virtual DbSet<EquipmentCapabilityProperty> EquipmentCapabilityProperty { get; set; }
         public virtual DbSet<EquipmentCapabilityTestSpecification> EquipmentCapabilityTestSpecification { get; set; }
+        public virtual DbSet<EquipmentClass> EquipmentClass { get; set; }
         public virtual DbSet<EquipmentClassProperty> EquipmentClassProperty { get; set; }
         public virtual DbSet<EquipmentConnection> EquipmentConnection { get; set; }
         public virtual DbSet<EquipmentElement> EquipmentElement { get; set; }
@@ -87,11 +88,13 @@ namespace ODataWebApp
         public virtual DbSet<GRecipeProductInformation> GRecipeProductInformation { get; set; }
         public virtual DbSet<Header> Header { get; set; }
         public virtual DbSet<HeaderProperty> HeaderProperty { get; set; }
+        public virtual DbSet<HierarchyScope> HierarchyScope { get; set; }
         public virtual DbSet<Individualapproval> Individualapproval { get; set; }
         public virtual DbSet<JobList> JobList { get; set; }
         public virtual DbSet<JobOrder> JobOrder { get; set; }
         public virtual DbSet<JobResponse> JobResponse { get; set; }
         public virtual DbSet<JobResponsetData> JobResponsetData { get; set; }
+        public virtual DbSet<KEP_logger> KEP_logger { get; set; }
         public virtual DbSet<KPIDefinition> KPIDefinition { get; set; }
         public virtual DbSet<KPIDefinitionProperty> KPIDefinitionProperty { get; set; }
         public virtual DbSet<KPIDefinitionTimeRange> KPIDefinitionTimeRange { get; set; }
@@ -112,6 +115,7 @@ namespace ODataWebApp
         public virtual DbSet<MaterialActualProperty> MaterialActualProperty { get; set; }
         public virtual DbSet<MaterialCapability> MaterialCapability { get; set; }
         public virtual DbSet<MaterialCapabilityProperty> MaterialCapabilityProperty { get; set; }
+        public virtual DbSet<MaterialClass> MaterialClass { get; set; }
         public virtual DbSet<MaterialClassProperty> MaterialClassProperty { get; set; }
         public virtual DbSet<MaterialConsumedActual> MaterialConsumedActual { get; set; }
         public virtual DbSet<MaterialConsumedActualProperty> MaterialConsumedActualProperty { get; set; }
@@ -178,6 +182,7 @@ namespace ODataWebApp
         public virtual DbSet<PersonnelActualProperty> PersonnelActualProperty { get; set; }
         public virtual DbSet<PersonnelCapability> PersonnelCapability { get; set; }
         public virtual DbSet<PersonnelCapabilityProperty> PersonnelCapabilityProperty { get; set; }
+        public virtual DbSet<PersonnelClass> PersonnelClass { get; set; }
         public virtual DbSet<PersonnelClassProperty> PersonnelClassProperty { get; set; }
         public virtual DbSet<PersonnelIdentificationManifest> PersonnelIdentificationManifest { get; set; }
         public virtual DbSet<PersonnelInformation> PersonnelInformation { get; set; }
@@ -194,6 +199,7 @@ namespace ODataWebApp
         public virtual DbSet<PhysicalAssetCapability> PhysicalAssetCapability { get; set; }
         public virtual DbSet<PhysicalAssetCapabilityProperty> PhysicalAssetCapabilityProperty { get; set; }
         public virtual DbSet<PhysicalAssetCapabilityTestSpesification> PhysicalAssetCapabilityTestSpesification { get; set; }
+        public virtual DbSet<PhysicalAssetClass> PhysicalAssetClass { get; set; }
         public virtual DbSet<PhysicalAssetClassProperty> PhysicalAssetClassProperty { get; set; }
         public virtual DbSet<PhysicalAssetProperty> PhysicalAssetProperty { get; set; }
         public virtual DbSet<PhysicalAssetRequirement> PhysicalAssetRequirement { get; set; }
@@ -247,8 +253,9 @@ namespace ODataWebApp
         public virtual DbSet<SegmentResponse> SegmentResponse { get; set; }
         public virtual DbSet<Step> Step { get; set; }
         public virtual DbSet<SupportedAction> SupportedAction { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TagSpecification> TagSpecification { get; set; }
+        public virtual DbSet<TestAccessRights> TestAccessRights { get; set; }
+        public virtual DbSet<TestDataTypes> TestDataTypes { get; set; }
         public virtual DbSet<TimeSpecification> TimeSpecification { get; set; }
         public virtual DbSet<ToID> ToID { get; set; }
         public virtual DbSet<TransactionProfile> TransactionProfile { get; set; }
@@ -285,15 +292,89 @@ namespace ODataWebApp
         public virtual DbSet<EquipmentAssetMapping> EquipmentAssetMapping { get; set; }
         public virtual DbSet<EquipmentInformation> EquipmentInformation { get; set; }
         public virtual DbSet<MarerialClassTR> MarerialClassTR { get; set; }
+        public virtual DbSet<MaterialClassAssemblies> MaterialClassAssemblies { get; set; }
         public virtual DbSet<MaterialClassLinks> MaterialClassLinks { get; set; }
         public virtual DbSet<MaterialDefinitionAssemblies> MaterialDefinitionAssemblies { get; set; }
         public virtual DbSet<MaterialDefinitionLinks> MaterialDefinitionLinks { get; set; }
         public virtual DbSet<MaterialLotLinks> MaterialLotLinks { get; set; }
         public virtual DbSet<MaterialSubLotLinks> MaterialSubLotLinks { get; set; }
-        public virtual DbSet<PersonelRequirement> PersonelRequirement { get; set; }
+        public virtual DbSet<v_EquipmentProperty> v_EquipmentProperty { get; set; }
         public virtual DbSet<v_kep_logger> v_kep_logger { get; set; }
         public virtual DbSet<v_MaterialLot_Request> v_MaterialLot_Request { get; set; }
+        public virtual DbSet<v_PrintProperties> v_PrintProperties { get; set; }
+        public virtual DbSet<v_ProductionParameter_Files> v_ProductionParameter_Files { get; set; }
         public virtual DbSet<v_ProductionResponse> v_ProductionResponse { get; set; }
+        public virtual DbSet<v_Property> v_Property { get; set; }
+    
+        [DbFunction("Entities", "get_Equipment")]
+        public virtual IQueryable<get_Equipment_Result> get_Equipment(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_Equipment_Result>("[Entities].[get_Equipment](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_EquipmentClass")]
+        public virtual IQueryable<get_EquipmentClass_Result> get_EquipmentClass(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_EquipmentClass_Result>("[Entities].[get_EquipmentClass](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_EquipmentClassProperty")]
+        public virtual IQueryable<get_EquipmentClassProperty_Result> get_EquipmentClassProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_EquipmentClassProperty_Result>("[Entities].[get_EquipmentClassProperty](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_EquipmentProperty")]
+        public virtual IQueryable<get_EquipmentProperty_Result> get_EquipmentProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_EquipmentProperty_Result>("[Entities].[get_EquipmentProperty](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_EquipmentRequirement")]
+        public virtual IQueryable<get_EquipmentRequirement_Result> get_EquipmentRequirement(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_EquipmentRequirement_Result>("[Entities].[get_EquipmentRequirement](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_MaterialActual")]
+        public virtual IQueryable<get_MaterialActual_Result> get_MaterialActual(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_MaterialActual_Result>("[Entities].[get_MaterialActual](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_MaterialDefinitionProperty")]
+        public virtual IQueryable<get_MaterialDefinitionProperty_Result> get_MaterialDefinitionProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_MaterialDefinitionProperty_Result>("[Entities].[get_MaterialDefinitionProperty](@ID)", iDParameter);
+        }
     
         [DbFunction("Entities", "get_MaterialLot")]
         public virtual IQueryable<get_MaterialLot_Result> get_MaterialLot(Nullable<int> iD)
@@ -303,6 +384,36 @@ namespace ODataWebApp
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_MaterialLot_Result>("[Entities].[get_MaterialLot](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_MaterialLotProperty")]
+        public virtual IQueryable<get_MaterialLotProperty_Result> get_MaterialLotProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_MaterialLotProperty_Result>("[Entities].[get_MaterialLotProperty](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_ProductionParameter")]
+        public virtual IQueryable<get_ProductionParameter_Result> get_ProductionParameter(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_ProductionParameter_Result>("[Entities].[get_ProductionParameter](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_ProductionRequest")]
+        public virtual IQueryable<get_ProductionRequest_Result> get_ProductionRequest(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_ProductionRequest_Result>("[Entities].[get_ProductionRequest](@ID)", iDParameter);
         }
     
         [DbFunction("Entities", "get_ProductionResponse")]
@@ -315,6 +426,26 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_ProductionResponse_Result>("[Entities].[get_ProductionResponse](@ID)", iDParameter);
         }
     
+        [DbFunction("Entities", "get_PropertyTypes")]
+        public virtual IQueryable<get_PropertyTypes_Result> get_PropertyTypes(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_PropertyTypes_Result>("[Entities].[get_PropertyTypes](@ID)", iDParameter);
+        }
+    
+        [DbFunction("Entities", "get_SegmentRequirement")]
+        public virtual IQueryable<get_SegmentRequirement_Result> get_SegmentRequirement(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_SegmentRequirement_Result>("[Entities].[get_SegmentRequirement](@ID)", iDParameter);
+        }
+    
         [DbFunction("Entities", "get_SegmentResponse")]
         public virtual IQueryable<get_SegmentResponse_Result> get_SegmentResponse(Nullable<int> iD)
         {
@@ -323,6 +454,51 @@ namespace ODataWebApp
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<get_SegmentResponse_Result>("[Entities].[get_SegmentResponse](@ID)", iDParameter);
+        }
+    
+        public virtual int del_Equipment(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_Equipment", iDParameter);
+        }
+    
+        public virtual int del_EquipmentClass(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_EquipmentClass", iDParameter);
+        }
+    
+        public virtual int del_EquipmentClassProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_EquipmentClassProperty", iDParameter);
+        }
+    
+        public virtual int del_EquipmentProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_EquipmentProperty", iDParameter);
+        }
+    
+        public virtual int del_EquipmentRequirement(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_EquipmentRequirement", iDParameter);
         }
     
         public virtual int del_MaterialActual(Nullable<int> iD)
@@ -334,6 +510,15 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_MaterialActual", iDParameter);
         }
     
+        public virtual int del_MaterialDefinitionProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_MaterialDefinitionProperty", iDParameter);
+        }
+    
         public virtual int del_MaterialLot(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
@@ -341,6 +526,33 @@ namespace ODataWebApp
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_MaterialLot", iDParameter);
+        }
+    
+        public virtual int del_MaterialLotProperty(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_MaterialLotProperty", iDParameter);
+        }
+    
+        public virtual int del_ProductionParameter(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_ProductionParameter", iDParameter);
+        }
+    
+        public virtual int del_ProductionRequest(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_ProductionRequest", iDParameter);
         }
     
         public virtual int del_ProductionResponse(Nullable<int> iD)
@@ -352,6 +564,24 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_ProductionResponse", iDParameter);
         }
     
+        public virtual int del_PropertyTypes(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_PropertyTypes", iDParameter);
+        }
+    
+        public virtual int del_SegmentRequirement(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_SegmentRequirement", iDParameter);
+        }
+    
         public virtual int del_SegmentResponse(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
@@ -359,6 +589,111 @@ namespace ODataWebApp
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("del_SegmentResponse", iDParameter);
+        }
+    
+        public virtual int ins_Equipment(string description, Nullable<int> equipmentClassID, ObjectParameter equipmentID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_Equipment", descriptionParameter, equipmentClassIDParameter, equipmentID);
+        }
+    
+        public virtual int ins_EquipmentClass(Nullable<int> parentID, string description, string location, Nullable<int> hierarchyScope, string equipmentLevel, ObjectParameter equipmentClassID)
+        {
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var locationParameter = location != null ?
+                new ObjectParameter("Location", location) :
+                new ObjectParameter("Location", typeof(string));
+    
+            var hierarchyScopeParameter = hierarchyScope.HasValue ?
+                new ObjectParameter("HierarchyScope", hierarchyScope) :
+                new ObjectParameter("HierarchyScope", typeof(int));
+    
+            var equipmentLevelParameter = equipmentLevel != null ?
+                new ObjectParameter("EquipmentLevel", equipmentLevel) :
+                new ObjectParameter("EquipmentLevel", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_EquipmentClass", parentIDParameter, descriptionParameter, locationParameter, hierarchyScopeParameter, equipmentLevelParameter, equipmentClassID);
+        }
+    
+        public virtual int ins_EquipmentClassProperty(string description, string value, Nullable<int> equipmentClassID, ObjectParameter equipmentClassPropertyID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_EquipmentClassProperty", descriptionParameter, valueParameter, equipmentClassIDParameter, equipmentClassPropertyID);
+        }
+    
+        public virtual int ins_EquipmentProperty(string description, string value, Nullable<int> equipmentProperty, Nullable<int> equipmentID, Nullable<int> classPropertyID, ObjectParameter equipmentPropertyID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var equipmentPropertyParameter = equipmentProperty.HasValue ?
+                new ObjectParameter("EquipmentProperty", equipmentProperty) :
+                new ObjectParameter("EquipmentProperty", typeof(int));
+    
+            var equipmentIDParameter = equipmentID.HasValue ?
+                new ObjectParameter("EquipmentID", equipmentID) :
+                new ObjectParameter("EquipmentID", typeof(int));
+    
+            var classPropertyIDParameter = classPropertyID.HasValue ?
+                new ObjectParameter("ClassPropertyID", classPropertyID) :
+                new ObjectParameter("ClassPropertyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_EquipmentProperty", descriptionParameter, valueParameter, equipmentPropertyParameter, equipmentIDParameter, classPropertyIDParameter, equipmentPropertyID);
+        }
+    
+        public virtual int ins_EquipmentRequirement(Nullable<int> equipmentClassID, Nullable<int> equipmentID, string description, Nullable<int> quantity, Nullable<int> segmentRequirementID, ObjectParameter equipmentRequirementID)
+        {
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
+    
+            var equipmentIDParameter = equipmentID.HasValue ?
+                new ObjectParameter("EquipmentID", equipmentID) :
+                new ObjectParameter("EquipmentID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            var segmentRequirementIDParameter = segmentRequirementID.HasValue ?
+                new ObjectParameter("SegmentRequirementID", segmentRequirementID) :
+                new ObjectParameter("SegmentRequirementID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_EquipmentRequirement", equipmentClassIDParameter, equipmentIDParameter, descriptionParameter, quantityParameter, segmentRequirementIDParameter, equipmentRequirementID);
         }
     
         public virtual int ins_MaterialActual(Nullable<int> materialLotID, string description, Nullable<int> quantity, Nullable<int> segmentResponseID, ObjectParameter materialActualID)
@@ -380,6 +715,27 @@ namespace ODataWebApp
                 new ObjectParameter("SegmentResponseID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_MaterialActual", materialLotIDParameter, descriptionParameter, quantityParameter, segmentResponseIDParameter, materialActualID);
+        }
+    
+        public virtual int ins_MaterialDefinitionProperty(string description, string value, Nullable<int> classPropertyID, Nullable<int> propertyType, ObjectParameter materialDefinitionPropertyID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var classPropertyIDParameter = classPropertyID.HasValue ?
+                new ObjectParameter("ClassPropertyID", classPropertyID) :
+                new ObjectParameter("ClassPropertyID", typeof(int));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_MaterialDefinitionProperty", descriptionParameter, valueParameter, classPropertyIDParameter, propertyTypeParameter, materialDefinitionPropertyID);
         }
     
         public virtual int ins_MaterialLot(string description, string status, Nullable<int> quantity, ObjectParameter materialLotID)
@@ -408,6 +764,85 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_MaterialLotByController", controllerIDParameter);
         }
     
+        public virtual int ins_MaterialLotProperty(string description, string value, Nullable<int> materialLotProperty, Nullable<int> materialLotID, Nullable<int> definitionPropertyID, Nullable<int> propertyType, ObjectParameter materialLotPropertyID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var materialLotPropertyParameter = materialLotProperty.HasValue ?
+                new ObjectParameter("MaterialLotProperty", materialLotProperty) :
+                new ObjectParameter("MaterialLotProperty", typeof(int));
+    
+            var materialLotIDParameter = materialLotID.HasValue ?
+                new ObjectParameter("MaterialLotID", materialLotID) :
+                new ObjectParameter("MaterialLotID", typeof(int));
+    
+            var definitionPropertyIDParameter = definitionPropertyID.HasValue ?
+                new ObjectParameter("DefinitionPropertyID", definitionPropertyID) :
+                new ObjectParameter("DefinitionPropertyID", typeof(int));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_MaterialLotProperty", descriptionParameter, valueParameter, materialLotPropertyParameter, materialLotIDParameter, definitionPropertyIDParameter, propertyTypeParameter, materialLotPropertyID);
+        }
+    
+        public virtual int ins_ProductionParameter(Nullable<int> productSegmentID, Nullable<int> processSegmentID, string parameter, Nullable<int> propertyType, ObjectParameter productionParameterID)
+        {
+            var productSegmentIDParameter = productSegmentID.HasValue ?
+                new ObjectParameter("ProductSegmentID", productSegmentID) :
+                new ObjectParameter("ProductSegmentID", typeof(int));
+    
+            var processSegmentIDParameter = processSegmentID.HasValue ?
+                new ObjectParameter("ProcessSegmentID", processSegmentID) :
+                new ObjectParameter("ProcessSegmentID", typeof(int));
+    
+            var parameterParameter = parameter != null ?
+                new ObjectParameter("Parameter", parameter) :
+                new ObjectParameter("Parameter", typeof(string));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_ProductionParameter", productSegmentIDParameter, processSegmentIDParameter, parameterParameter, propertyTypeParameter, productionParameterID);
+        }
+    
+        public virtual int ins_ProductionRequest(string description, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, string priority, string requestState, Nullable<int> productionSchedule, ObjectParameter productionRequestID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var startTimeParameter = startTime.HasValue ?
+                new ObjectParameter("StartTime", startTime) :
+                new ObjectParameter("StartTime", typeof(System.DateTime));
+    
+            var endTimeParameter = endTime.HasValue ?
+                new ObjectParameter("EndTime", endTime) :
+                new ObjectParameter("EndTime", typeof(System.DateTime));
+    
+            var priorityParameter = priority != null ?
+                new ObjectParameter("Priority", priority) :
+                new ObjectParameter("Priority", typeof(string));
+    
+            var requestStateParameter = requestState != null ?
+                new ObjectParameter("RequestState", requestState) :
+                new ObjectParameter("RequestState", typeof(string));
+    
+            var productionScheduleParameter = productionSchedule.HasValue ?
+                new ObjectParameter("ProductionSchedule", productionSchedule) :
+                new ObjectParameter("ProductionSchedule", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_ProductionRequest", descriptionParameter, startTimeParameter, endTimeParameter, priorityParameter, requestStateParameter, productionScheduleParameter, productionRequestID);
+        }
+    
         public virtual int ins_ProductionResponse(Nullable<int> productionRequestID, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, string responseState, ObjectParameter productionResponseID)
         {
             var productionRequestIDParameter = productionRequestID.HasValue ?
@@ -427,6 +862,60 @@ namespace ODataWebApp
                 new ObjectParameter("ResponseState", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_ProductionResponse", productionRequestIDParameter, startTimeParameter, endTimeParameter, responseStateParameter, productionResponseID);
+        }
+    
+        public virtual int ins_PropertyTypes(string description, ObjectParameter propertyTypesID)
+        {
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_PropertyTypes", descriptionParameter, propertyTypesID);
+        }
+    
+        public virtual int ins_SegmentRequirement(Nullable<int> productSegmentID, Nullable<int> processSegmentID, string description, Nullable<System.DateTime> earliestStartTime, Nullable<System.DateTime> latestEndTime, string duration, Nullable<int> productionParameter, Nullable<int> segmentRequirement, string seqmentState, Nullable<int> productionRequest, ObjectParameter segmentRequirementID)
+        {
+            var productSegmentIDParameter = productSegmentID.HasValue ?
+                new ObjectParameter("ProductSegmentID", productSegmentID) :
+                new ObjectParameter("ProductSegmentID", typeof(int));
+    
+            var processSegmentIDParameter = processSegmentID.HasValue ?
+                new ObjectParameter("ProcessSegmentID", processSegmentID) :
+                new ObjectParameter("ProcessSegmentID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var earliestStartTimeParameter = earliestStartTime.HasValue ?
+                new ObjectParameter("EarliestStartTime", earliestStartTime) :
+                new ObjectParameter("EarliestStartTime", typeof(System.DateTime));
+    
+            var latestEndTimeParameter = latestEndTime.HasValue ?
+                new ObjectParameter("LatestEndTime", latestEndTime) :
+                new ObjectParameter("LatestEndTime", typeof(System.DateTime));
+    
+            var durationParameter = duration != null ?
+                new ObjectParameter("Duration", duration) :
+                new ObjectParameter("Duration", typeof(string));
+    
+            var productionParameterParameter = productionParameter.HasValue ?
+                new ObjectParameter("ProductionParameter", productionParameter) :
+                new ObjectParameter("ProductionParameter", typeof(int));
+    
+            var segmentRequirementParameter = segmentRequirement.HasValue ?
+                new ObjectParameter("SegmentRequirement", segmentRequirement) :
+                new ObjectParameter("SegmentRequirement", typeof(int));
+    
+            var seqmentStateParameter = seqmentState != null ?
+                new ObjectParameter("SeqmentState", seqmentState) :
+                new ObjectParameter("SeqmentState", typeof(string));
+    
+            var productionRequestParameter = productionRequest.HasValue ?
+                new ObjectParameter("ProductionRequest", productionRequest) :
+                new ObjectParameter("ProductionRequest", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_SegmentRequirement", productSegmentIDParameter, processSegmentIDParameter, descriptionParameter, earliestStartTimeParameter, latestEndTimeParameter, durationParameter, productionParameterParameter, segmentRequirementParameter, seqmentStateParameter, productionRequestParameter, segmentRequirementID);
         }
     
         public virtual int ins_SegmentResponse(string description, Nullable<System.DateTime> actualStartTime, Nullable<System.DateTime> actualEndTime, string segmentState, Nullable<int> productionRequest, Nullable<int> productionResponse, ObjectParameter segmentResponseID)
@@ -458,107 +947,129 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ins_SegmentResponse", descriptionParameter, actualStartTimeParameter, actualEndTimeParameter, segmentStateParameter, productionRequestParameter, productionResponseParameter, segmentResponseID);
         }
     
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual int upd_Equipment(Nullable<int> iD, string description, Nullable<int> equipmentClassID)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
     
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
     
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_Equipment", iDParameter, descriptionParameter, equipmentClassIDParameter);
         }
     
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual int upd_EquipmentClass(Nullable<int> iD, Nullable<int> parentID, string description, string location, Nullable<int> hierarchyScope, string equipmentLevel)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
     
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
     
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
+            var locationParameter = location != null ?
+                new ObjectParameter("Location", location) :
+                new ObjectParameter("Location", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            var hierarchyScopeParameter = hierarchyScope.HasValue ?
+                new ObjectParameter("HierarchyScope", hierarchyScope) :
+                new ObjectParameter("HierarchyScope", typeof(int));
+    
+            var equipmentLevelParameter = equipmentLevel != null ?
+                new ObjectParameter("EquipmentLevel", equipmentLevel) :
+                new ObjectParameter("EquipmentLevel", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_EquipmentClass", iDParameter, parentIDParameter, descriptionParameter, locationParameter, hierarchyScopeParameter, equipmentLevelParameter);
         }
     
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        public virtual int upd_EquipmentClassProperty(Nullable<int> iD, string description, string value, Nullable<int> equipmentClassID)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_EquipmentClassProperty", iDParameter, descriptionParameter, valueParameter, equipmentClassIDParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual int upd_EquipmentProperty(Nullable<int> iD, string description, string value, Nullable<int> equipmentProperty, Nullable<int> equipmentID, Nullable<int> classPropertyID)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var equipmentPropertyParameter = equipmentProperty.HasValue ?
+                new ObjectParameter("EquipmentProperty", equipmentProperty) :
+                new ObjectParameter("EquipmentProperty", typeof(int));
+    
+            var equipmentIDParameter = equipmentID.HasValue ?
+                new ObjectParameter("EquipmentID", equipmentID) :
+                new ObjectParameter("EquipmentID", typeof(int));
+    
+            var classPropertyIDParameter = classPropertyID.HasValue ?
+                new ObjectParameter("ClassPropertyID", classPropertyID) :
+                new ObjectParameter("ClassPropertyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_EquipmentProperty", iDParameter, descriptionParameter, valueParameter, equipmentPropertyParameter, equipmentIDParameter, classPropertyIDParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual int upd_EquipmentRequirement(Nullable<int> iD, Nullable<int> equipmentClassID, Nullable<int> equipmentID, string description, Nullable<int> quantity, Nullable<int> segmentRequirementID)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var equipmentClassIDParameter = equipmentClassID.HasValue ?
+                new ObjectParameter("EquipmentClassID", equipmentClassID) :
+                new ObjectParameter("EquipmentClassID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
+            var equipmentIDParameter = equipmentID.HasValue ?
+                new ObjectParameter("EquipmentID", equipmentID) :
+                new ObjectParameter("EquipmentID", typeof(int));
     
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
     
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
+            var segmentRequirementIDParameter = segmentRequirementID.HasValue ?
+                new ObjectParameter("SegmentRequirementID", segmentRequirementID) :
+                new ObjectParameter("SegmentRequirementID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_EquipmentRequirement", iDParameter, equipmentClassIDParameter, equipmentIDParameter, descriptionParameter, quantityParameter, segmentRequirementIDParameter);
         }
     
         public virtual int upd_MaterialActual(Nullable<int> iD, Nullable<int> materialLotID, string description, Nullable<int> quantity, Nullable<int> segmentResponseID)
@@ -586,6 +1097,31 @@ namespace ODataWebApp
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_MaterialActual", iDParameter, materialLotIDParameter, descriptionParameter, quantityParameter, segmentResponseIDParameter);
         }
     
+        public virtual int upd_MaterialDefinitionProperty(Nullable<int> iD, string description, string value, Nullable<int> classPropertyID, Nullable<int> propertyType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var classPropertyIDParameter = classPropertyID.HasValue ?
+                new ObjectParameter("ClassPropertyID", classPropertyID) :
+                new ObjectParameter("ClassPropertyID", typeof(int));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_MaterialDefinitionProperty", iDParameter, descriptionParameter, valueParameter, classPropertyIDParameter, propertyTypeParameter);
+        }
+    
         public virtual int upd_MaterialLot(Nullable<int> iD, string description, string status, Nullable<int> quantity)
         {
             var iDParameter = iD.HasValue ?
@@ -605,6 +1141,97 @@ namespace ODataWebApp
                 new ObjectParameter("Quantity", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_MaterialLot", iDParameter, descriptionParameter, statusParameter, quantityParameter);
+        }
+    
+        public virtual int upd_MaterialLotProperty(Nullable<int> iD, string description, string value, Nullable<int> materialLotProperty, Nullable<int> materialLotID, Nullable<int> definitionPropertyID, Nullable<int> propertyType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(string));
+    
+            var materialLotPropertyParameter = materialLotProperty.HasValue ?
+                new ObjectParameter("MaterialLotProperty", materialLotProperty) :
+                new ObjectParameter("MaterialLotProperty", typeof(int));
+    
+            var materialLotIDParameter = materialLotID.HasValue ?
+                new ObjectParameter("MaterialLotID", materialLotID) :
+                new ObjectParameter("MaterialLotID", typeof(int));
+    
+            var definitionPropertyIDParameter = definitionPropertyID.HasValue ?
+                new ObjectParameter("DefinitionPropertyID", definitionPropertyID) :
+                new ObjectParameter("DefinitionPropertyID", typeof(int));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_MaterialLotProperty", iDParameter, descriptionParameter, valueParameter, materialLotPropertyParameter, materialLotIDParameter, definitionPropertyIDParameter, propertyTypeParameter);
+        }
+    
+        public virtual int upd_ProductionParameter(Nullable<int> iD, Nullable<int> productSegmentID, Nullable<int> processSegmentID, string parameter, Nullable<int> propertyType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var productSegmentIDParameter = productSegmentID.HasValue ?
+                new ObjectParameter("ProductSegmentID", productSegmentID) :
+                new ObjectParameter("ProductSegmentID", typeof(int));
+    
+            var processSegmentIDParameter = processSegmentID.HasValue ?
+                new ObjectParameter("ProcessSegmentID", processSegmentID) :
+                new ObjectParameter("ProcessSegmentID", typeof(int));
+    
+            var parameterParameter = parameter != null ?
+                new ObjectParameter("Parameter", parameter) :
+                new ObjectParameter("Parameter", typeof(string));
+    
+            var propertyTypeParameter = propertyType.HasValue ?
+                new ObjectParameter("PropertyType", propertyType) :
+                new ObjectParameter("PropertyType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_ProductionParameter", iDParameter, productSegmentIDParameter, processSegmentIDParameter, parameterParameter, propertyTypeParameter);
+        }
+    
+        public virtual int upd_ProductionRequest(Nullable<int> iD, string description, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, string priority, string requestState, Nullable<int> productionSchedule)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var startTimeParameter = startTime.HasValue ?
+                new ObjectParameter("StartTime", startTime) :
+                new ObjectParameter("StartTime", typeof(System.DateTime));
+    
+            var endTimeParameter = endTime.HasValue ?
+                new ObjectParameter("EndTime", endTime) :
+                new ObjectParameter("EndTime", typeof(System.DateTime));
+    
+            var priorityParameter = priority != null ?
+                new ObjectParameter("Priority", priority) :
+                new ObjectParameter("Priority", typeof(string));
+    
+            var requestStateParameter = requestState != null ?
+                new ObjectParameter("RequestState", requestState) :
+                new ObjectParameter("RequestState", typeof(string));
+    
+            var productionScheduleParameter = productionSchedule.HasValue ?
+                new ObjectParameter("ProductionSchedule", productionSchedule) :
+                new ObjectParameter("ProductionSchedule", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_ProductionRequest", iDParameter, descriptionParameter, startTimeParameter, endTimeParameter, priorityParameter, requestStateParameter, productionScheduleParameter);
         }
     
         public virtual int upd_ProductionResponse(Nullable<int> iD, Nullable<int> productionRequestID, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, string responseState)
@@ -630,6 +1257,68 @@ namespace ODataWebApp
                 new ObjectParameter("ResponseState", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_ProductionResponse", iDParameter, productionRequestIDParameter, startTimeParameter, endTimeParameter, responseStateParameter);
+        }
+    
+        public virtual int upd_PropertyTypes(Nullable<int> iD, string description)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_PropertyTypes", iDParameter, descriptionParameter);
+        }
+    
+        public virtual int upd_SegmentRequirement(Nullable<int> iD, Nullable<int> productSegmentID, Nullable<int> processSegmentID, string description, Nullable<System.DateTime> earliestStartTime, Nullable<System.DateTime> latestEndTime, string duration, Nullable<int> productionParameter, Nullable<int> segmentRequirement, string seqmentState, Nullable<int> productionRequest)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var productSegmentIDParameter = productSegmentID.HasValue ?
+                new ObjectParameter("ProductSegmentID", productSegmentID) :
+                new ObjectParameter("ProductSegmentID", typeof(int));
+    
+            var processSegmentIDParameter = processSegmentID.HasValue ?
+                new ObjectParameter("ProcessSegmentID", processSegmentID) :
+                new ObjectParameter("ProcessSegmentID", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var earliestStartTimeParameter = earliestStartTime.HasValue ?
+                new ObjectParameter("EarliestStartTime", earliestStartTime) :
+                new ObjectParameter("EarliestStartTime", typeof(System.DateTime));
+    
+            var latestEndTimeParameter = latestEndTime.HasValue ?
+                new ObjectParameter("LatestEndTime", latestEndTime) :
+                new ObjectParameter("LatestEndTime", typeof(System.DateTime));
+    
+            var durationParameter = duration != null ?
+                new ObjectParameter("Duration", duration) :
+                new ObjectParameter("Duration", typeof(string));
+    
+            var productionParameterParameter = productionParameter.HasValue ?
+                new ObjectParameter("ProductionParameter", productionParameter) :
+                new ObjectParameter("ProductionParameter", typeof(int));
+    
+            var segmentRequirementParameter = segmentRequirement.HasValue ?
+                new ObjectParameter("SegmentRequirement", segmentRequirement) :
+                new ObjectParameter("SegmentRequirement", typeof(int));
+    
+            var seqmentStateParameter = seqmentState != null ?
+                new ObjectParameter("SeqmentState", seqmentState) :
+                new ObjectParameter("SeqmentState", typeof(string));
+    
+            var productionRequestParameter = productionRequest.HasValue ?
+                new ObjectParameter("ProductionRequest", productionRequest) :
+                new ObjectParameter("ProductionRequest", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upd_SegmentRequirement", iDParameter, productSegmentIDParameter, processSegmentIDParameter, descriptionParameter, earliestStartTimeParameter, latestEndTimeParameter, durationParameter, productionParameterParameter, segmentRequirementParameter, seqmentStateParameter, productionRequestParameter);
         }
     
         public virtual int upd_SegmentResponse(Nullable<int> iD, string description, Nullable<System.DateTime> actualStartTime, Nullable<System.DateTime> actualEndTime, string segmentState, Nullable<int> productionRequest, Nullable<int> productionResponse)

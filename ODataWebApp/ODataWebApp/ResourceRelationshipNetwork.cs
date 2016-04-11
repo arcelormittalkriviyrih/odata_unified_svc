@@ -22,6 +22,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string RelationshipType { get; set; }
         public string RelationshipForm { get; set; }
         public string PublishedDate { get; set; }

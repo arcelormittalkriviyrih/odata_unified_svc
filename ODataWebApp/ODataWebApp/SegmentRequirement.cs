@@ -32,8 +32,9 @@ namespace ODataWebApp
         public Nullable<int> ProcessSegmentID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> EarliestStartTime { get; set; }
-        public Nullable<System.DateTime> LatestEndTime { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> EarliestStartTime { get; set; }
+        public Nullable<System.DateTimeOffset> LatestEndTime { get; set; }
         public string Duration { get; set; }
         public Nullable<int> ProductionParameter { get; set; }
         public Nullable<int> SegmentRequirement1 { get; set; }

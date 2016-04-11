@@ -26,12 +26,13 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string ConfidenceFactor { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public Nullable<int> OperationsCapabilityInformation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

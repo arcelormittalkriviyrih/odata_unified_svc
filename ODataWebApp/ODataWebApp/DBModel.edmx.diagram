@@ -4,274 +4,285 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5a7e1a7f5d614dd59709e87d667a88a4" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.AlarmData" Width="1.5" PointX="6" PointY="198.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ApprovalHistory" Width="1.5" PointX="4.5" PointY="168.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchEquipmentRequirement" Width="1.5" PointX="6.75" PointY="195.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchInformation" Width="1.5" PointX="2.25" PointY="153.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchList" Width="1.5" PointX="4.5" PointY="153.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchListEntry" Width="1.5" PointX="19" PointY="116.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchOtherInformation" Width="1.5" PointX="6.75" PointY="191" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchParameter" Width="1.5" PointX="21.25" PointY="169.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchProductionRecord" Width="1.5" PointX="6" PointY="92" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchProductionRecordEntry" Width="1.5" PointX="3.75" PointY="133" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchSize" Width="1.5" PointX="2.25" PointY="173.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.BatchValue" Width="1.5" PointX="4.25" PointY="265.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Change" Width="1.5" PointX="3.75" PointY="50.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ClassInstanceAssociation" Width="1.5" PointX="10.5" PointY="178.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="3.75" PointY="118.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Constraint" Width="1.5" PointX="9" PointY="195.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ConsumableActual" Width="1.5" PointX="3.75" PointY="68.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ConsumableActualProperty" Width="1.5" PointX="6" PointY="77.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ConsumableExpectedRequirement" Width="1.5" PointX="6.75" PointY="68.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ConsumableExpectedRequirementProperty" Width="1.5" PointX="9" PointY="77.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ControlRecipe" Width="1.5" PointX="1.5" PointY="159.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ControlRecipeRecord" Width="1.5" PointX="3.75" PointY="160.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DataSet" Width="1.5" PointX="3.75" PointY="144.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DataValue" Width="1.5" PointX="8.25" PointY="157.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DelimitedDataBlock" Width="1.5" PointX="1.5" PointY="144" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DirectedLink" Width="1.5" PointX="12" PointY="58.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Enumeration" Width="1.5" PointX="8.75" PointY="149.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EnumerationSet" Width="1.5" PointX="6.5" PointY="149.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Equipment" Width="1.5" PointX="3.75" PointY="188.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentActual" Width="1.5" PointX="20.25" PointY="130" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentActualProperty" Width="1.5" PointX="22.5" PointY="112.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentCapability" Width="1.5" PointX="22.25" PointY="91.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentCapabilityProperty" Width="1.5" PointX="24.5" PointY="96.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentCapabilityTestSpecification" Width="1.5" PointX="18.5" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentClassProperty" Width="1.5" PointX="20.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentConnection" Width="1.5" PointX="8.25" PointY="174.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentElement" Width="1.5" PointX="6" PointY="172" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentElementProperty" Width="1.5" PointX="13" PointY="115.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentProoceduralElement" Width="1.5" PointX="13.5" PointY="178.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentProoceduralElementClass" Width="1.5" PointX="8.25" PointY="185" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentProperty" Width="1.5" PointX="27" PointY="97.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentRequirement" Width="1.5" PointX="6.75" PointY="114.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentRequirementProperty" Width="1.5" PointX="22.25" PointY="122.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentSegmentSpecification" Width="1.5" PointX="6" PointY="106.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentSegmentSpecificationProperty" Width="1.5" PointX="8.25" PointY="120.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentSpecification" Width="1.5" PointX="14.75" PointY="136.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentSpecificationProperty" Width="1.5" PointX="17" PointY="133.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="3.75" PointY="195.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Files" Width="1.5" PointX="9.5" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Formula" Width="1.5" PointX="2.25" PointY="165.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.FromID" Width="1.5" PointX="9.75" PointY="35" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipe" Width="1.5" PointX="12.75" PointY="37.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeFormula" Width="1.5" PointX="9.75" PointY="46.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeHeader" Width="1.5" PointX="2.25" PointY="181.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeInformation" Width="1.5" PointX="10.5" PointY="38.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeMaterial" Width="1.5" PointX="3.75" PointY="64.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeMaterials" Width="1.5" PointX="1.5" PointY="63.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.GRecipeProductInformation" Width="1.5" PointX="2.25" PointY="177.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Header" Width="1.5" PointX="2.25" PointY="169" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.HeaderProperty" Width="1.5" PointX="15" PointY="119.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Individualapproval" Width="1.5" PointX="6.75" PointY="168.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.JobList" Width="1.5" PointX="10.5" PointY="119.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.JobOrder" Width="1.5" PointX="12.75" PointY="120.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.JobResponse" Width="1.5" PointX="15" PointY="122.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.JobResponsetData" Width="1.5" PointX="17.25" PointY="124.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIDefinition" Width="1.5" PointX="11.5" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIDefinitionProperty" Width="1.5" PointX="13.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIDefinitionTimeRange" Width="1.5" PointX="13.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIInstance" Width="1.5" PointX="13.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIInstanceProperty" Width="1.5" PointX="16" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIInstanceRange" Width="1.5" PointX="16" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIInstanceResourceReference" Width="1.5" PointX="16" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIInstanceTimeRange" Width="1.5" PointX="16" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIValue" Width="1.5" PointX="16" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIValueProperty" Width="1.5" PointX="18.25" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.KPIValueTimeRange" Width="1.5" PointX="18.25" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Link" Width="1.5" PointX="7.5" PointY="34.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ListHeader" Width="1.5" PointX="6.75" PointY="153.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ManufacturingBill" Width="1.5" PointX="3.75" PointY="72" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MasterRecipe" Width="1.5" PointX="1.5" PointY="202" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MasterRecipeRecord" Width="1.5" PointX="3.75" PointY="203" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialActual" Width="1.5" PointX="8.25" PointY="103.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialActualProperty" Width="1.5" PointX="19.5" PointY="107.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialCapability" Width="1.5" PointX="11.25" PointY="106" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialCapabilityProperty" Width="1.5" PointX="19.5" PointY="103.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialClassProperty" Width="1.5" PointX="4.5" PointY="54.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialConsumedActual" Width="1.5" PointX="11.25" PointY="101.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialConsumedActualProperty" Width="1.5" PointX="13.5" PointY="94.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialConsumedRequirement" Width="1.5" PointX="8.25" PointY="110.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialConsumedRequirementProperty" Width="1.5" PointX="10.5" PointY="113" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialDefinition" Width="1.5" PointX="1.5" PointY="66.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialDefinitionProperty" Width="1.5" PointX="6.75" PointY="62.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialInformation" Width="1.5" PointX="8.25" PointY="99.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialLinkTypes" Width="1.5" PointX="1.5" PointY="60.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialLot" Width="1.5" PointX="3.75" PointY="124.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialLotProperty" Width="1.5" PointX="9" PointY="93.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialProducedActual" Width="1.5" PointX="14.25" PointY="110.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialProducedActualProperty" Width="1.5" PointX="16.5" PointY="115.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialProducedRequirement" Width="1.5" PointX="14.25" PointY="105.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialProducedRequirementProperty" Width="1.5" PointX="16.5" PointY="98" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialRequirement" Width="1.5" PointX="14.25" PointY="98.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialRequirementProperty" Width="1.5" PointX="16.5" PointY="94.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSegmentSpecificationProperty" Width="1.5" PointX="9" PointY="80.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSegmentSpecificftion" Width="1.5" PointX="6.75" PointY="72.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSpecification" Width="1.5" PointX="9.75" PointY="67.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSpecificationProperty" Width="1.5" PointX="12" PointY="71.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSubLot" Width="1.5" PointX="6" PointY="139" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialTestSpecification" Width="1.5" PointX="2.25" PointY="54" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ModificationLog" Width="1.5" PointX="9" PointY="161.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpEquipmentActual" Width="1.5" PointX="20.25" PointY="111.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpEquipmentCapability" Width="1.5" PointX="19.25" PointY="95.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpEquipmentRequirement" Width="1.5" PointX="20" PointY="124.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpEquipmentSpecification" Width="1.5" PointX="11.75" PointY="131.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsCapability" Width="1.5" PointX="2.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsCapabilityInformation" Width="1.5" PointX="2.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsDefinition" Width="1.5" PointX="5.25" PointY="44.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsDefinitionInformation" Width="1.5" PointX="3" PointY="41.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsDefinitionRecord" Width="1.5" PointX="3.75" PointY="77.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsMaterialBill" Width="1.5" PointX="7.5" PointY="45.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsMaterialBillItem" Width="1.5" PointX="9.75" PointY="62.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsPerfomance" Width="1.5" PointX="0.75" PointY="43.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsPerformanceRecord" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsRequest" Width="1.5" PointX="0.75" PointY="35.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsResponse" Width="1.5" PointX="3" PointY="43.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsScedule" Width="1.5" PointX="1.5" PointY="47.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsSceduleRecord" Width="1.5" PointX="3.75" PointY="206.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OperationsSegment" Width="1.5" PointX="7.5" PointY="57.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpMaterialActual" Width="1.5" PointX="17.25" PointY="109.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpMaterialCapability" Width="1.5" PointX="17.25" PointY="101.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpMaterialRequirement" Width="1.5" PointX="11.25" PointY="94.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpMaterialSpecification" Width="1.5" PointX="9.75" PointY="72.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPersonnelActual" Width="1.5" PointX="17.25" PointY="79.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPersonnelCapability" Width="1.5" PointX="17.25" PointY="62.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPersonnelRequirement" Width="1.5" PointX="18" PointY="89.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPersonnelSpecification" Width="1.5" PointX="9.75" PointY="88" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPhysicalAssetActual" Width="1.5" PointX="21.25" PointY="117.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPhysicalAssetCapability" Width="1.5" PointX="22.25" PointY="96.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPhysicalAssetRequirement" Width="1.5" PointX="18" PointY="129" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpPhysicalAssetSpecification" Width="1.5" PointX="14.75" PointY="132.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpProcessSegmentCapability" Width="1.5" PointX="2.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpSegmentData" Width="1.5" PointX="19.5" PointY="79.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpSegmentRequirement" Width="1.5" PointX="9" PointY="50.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OpSegmentResponse" Width="1.5" PointX="3" PointY="34.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OrderedData" Width="1.5" PointX="6" PointY="157.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OtherInformation" Width="1.5" PointX="15" PointY="58.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Parameter" Width="1.5" PointX="15" PointY="128.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Person" Width="1.5" PointX="1.5" PointY="117.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelActual" Width="1.5" PointX="20.25" PointY="75.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelActualProperty" Width="1.5" PointX="22.5" PointY="79.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelCapability" Width="1.5" PointX="17.25" PointY="49.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelCapabilityProperty" Width="1.5" PointX="19.5" PointY="63.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelClassProperty" Width="1.5" PointX="20.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelIdentificationManifest" Width="1.5" PointX="3.75" PointY="209.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelInformation" Width="1.5" PointX="2.25" PointY="140.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelRequirement" Width="1.5" PointX="12.75" PointY="75.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelRequirementProperty" Width="1.5" PointX="20.25" PointY="83.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelSegmentSpecification" Width="1.5" PointX="14.5" PointY="68.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelSegmentSpecificationProperty" Width="1.5" PointX="16.75" PointY="68.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelSpecification" Width="1.5" PointX="15.75" PointY="74.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonnelSpecificationProperty" Width="1.5" PointX="18" PointY="85.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonProperty" Width="1.5" PointX="23" PointY="62.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAsset" Width="1.5" PointX="1.5" PointY="195.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetActual" Width="1.5" PointX="21.25" PointY="137.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetActualProperty" Width="1.5" PointX="23.5" PointY="117.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetCapability" Width="1.5" PointX="22.25" PointY="103.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetCapabilityProperty" Width="1.5" PointX="24.5" PointY="100" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetCapabilityTestSpesification" Width="1.5" PointX="16.5" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetClassProperty" Width="1.5" PointX="18.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetProperty" Width="1.5" PointX="25" PointY="104.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetRequirement" Width="1.5" PointX="9.75" PointY="116" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetRequirementProperty" Width="1.5" PointX="22.25" PointY="126" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetSegmentSpecification" Width="1.5" PointX="4.5" PointY="111.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetSegmentSpecificationProperty" Width="1.5" PointX="6.75" PointY="123.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetSpecification" Width="1.5" PointX="17.75" PointY="136.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PhysicalAssetSpecificationProperty" Width="1.5" PointX="20" PointY="133.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcedureChartElement" Width="1.5" PointX="12" PointY="65.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcedureLogic" Width="1.5" PointX="2.25" PointY="184.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessElement" Width="1.5" PointX="9.75" PointY="57.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessElementLibrary" Width="1.5" PointX="7.5" PointY="42.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessElementParameter" Width="1.5" PointX="12" PointY="54.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessSegment" Width="1.5" PointX="2.25" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessSegmentCapability" Width="1.5" PointX="9" PointY="129.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProcessSegmentInformation" Width="1.5" PointX="2.25" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductDefinition" Width="1.5" PointX="2.25" PointY="100.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductDefinitionRecord" Width="1.5" PointX="3.75" PointY="213.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductInformation" Width="1.5" PointX="2.25" PointY="105.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionCapability" Width="1.5" PointX="6.75" PointY="130.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionData" Width="1.5" PointX="3.75" PointY="269.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionParameter" Width="1.5" PointX="2.25" PointY="31" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionPerformance" Width="1.5" PointX="2.25" PointY="95.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionPerformanceRecord" Width="1.5" PointX="3.75" PointY="216" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionRequest" Width="1.5" PointX="2.25" PointY="82" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionResponse" Width="1.5" PointX="2.25" PointY="91.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionScedule" Width="1.5" PointX="2.25" PointY="87.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductionSceduleRecord" Width="1.5" PointX="3.75" PointY="219" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductProductionRuleIDGroup" Width="1.5" PointX="2.25" PointY="108.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ProductSegment" Width="1.5" PointX="2.25" PointY="111.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PropertyTypes" Width="1.5" PointX="2.25" PointY="57" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.QualificationTestSpecification" Width="1.5" PointX="18.5" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RecipeBuildingBlock" Width="1.5" PointX="2.25" PointY="228.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RecipeElement" Width="1.5" PointX="1.5" PointY="221.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.RecipeElementRecord" Width="1.5" PointX="3.75" PointY="223.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceConstraint" Width="1.5" PointX="15" PointY="54.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceConstraintLibrary" Width="1.5" PointX="12.75" PointY="62" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceConstraintProperty" Width="1.5" PointX="17.25" PointY="54.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceNetworkConnection" Width="1.5" PointX="6.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceNetworkConnectionInformation" Width="1.5" PointX="6.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceNetworkConnectionType" Width="1.5" PointX="9" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceProperty" Width="1.5" PointX="6.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceQualificationsManifest" Width="1.5" PointX="3.75" PointY="232.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceReference" Width="1.5" PointX="4.5" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ResourceRelationshipNetwork" Width="1.5" PointX="4.5" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Sample" Width="1.5" PointX="3.75" PointY="236.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SampleTest" Width="1.5" PointX="6" PointY="185.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SampleTestResult" Width="1.5" PointX="11.25" PointY="168.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SegmentParameter" Width="1.5" PointX="11.25" PointY="50.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SegmentRequirement" Width="1.5" PointX="4.5" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SegmentResponse" Width="1.5" PointX="1.5" PointY="75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Step" Width="1.5" PointX="6.5" PointY="205" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SupportedAction" Width="1.5" PointX="6.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="9.5" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TagSpecification" Width="1.5" PointX="9" PointY="168.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TimeSpecification" Width="1.5" PointX="1.5" PointY="146.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.ToID" Width="1.5" PointX="9.75" PointY="84.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.TransactionProfile" Width="1.5" PointX="4.5" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Transition" Width="1.5" PointX="4.5" PointY="178.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.UserAttribute" Width="1.5" PointX="6" PointY="201.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Value" Width="1.5" PointX="9.75" PointY="43" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkAlert" Width="1.5" PointX="22.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkAlertDefinition" Width="1.5" PointX="22.75" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkAlertInformation" Width="1.5" PointX="20.5" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkAlertProperty" Width="1.5" PointX="25" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkCapability" Width="1.5" PointX="15" PointY="88.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkCapabilityInformation" Width="1.5" PointX="12.75" PointY="89.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkDefinition" Width="1.5" PointX="7.5" PointY="84" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkDefinitionInformation" Width="1.5" PointX="2.25" PointY="246.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkDirective" Width="1.5" PointX="1.5" PointY="242.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkDirectiveRecord" Width="1.5" PointX="3.75" PointY="242.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecification" Width="1.5" PointX="10.5" PointY="31.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationConnection" Width="1.5" PointX="12.75" PointY="27.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationConnectionType" Width="1.5" PointX="10.5" PointY="28.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationInformation" Width="1.5" PointX="8.25" PointY="31.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationNode" Width="1.5" PointX="12.75" PointY="84.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationNodeType" Width="1.5" PointX="10.5" PointY="135.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationProperty" Width="1.5" PointX="15" PointY="78.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkflowSpecificationType" Width="1.5" PointX="8.25" PointY="135.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkMaster" Width="1.5" PointX="2.25" PointY="248.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkMasterCapability" Width="1.5" PointX="15" PointY="83.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkMasterRecord" Width="1.5" PointX="3.75" PointY="157.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkPerformance" Width="1.5" PointX="1.5" PointY="253.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkPerformanceRecord" Width="1.5" PointX="3.75" PointY="254" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkRequest" Width="1.5" PointX="10.5" PointY="122.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkResponse" Width="1.5" PointX="12.75" PointY="127" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkSceduleRecord" Width="1.5" PointX="3.75" PointY="262.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.WorkSchedule" Width="1.5" PointX="2.25" PointY="258.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentAssetMapping" Width="1.5" PointX="9" PointY="191.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.EquipmentInformation" Width="1.5" PointX="6" PointY="182.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MarerialClassTR" Width="1.5" PointX="6.5" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialClassLinks" Width="1.5" PointX="3.75" PointY="122" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialDefinitionAssemblies" Width="1.5" PointX="3.75" PointY="150.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialDefinitionLinks" Width="1.5" PointX="3.75" PointY="60.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialLotLinks" Width="1.5" PointX="6" PointY="126.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MaterialSubLotLinks" Width="1.5" PointX="8.25" PointY="141.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonelRequirement" Width="1.5" PointX="8.5" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.v_kep_logger" Width="1.5" PointX="10.5" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.v_MaterialLot_Request" Width="1.5" PointX="9.5" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.v_ProductionResponse" Width="1.5" PointX="11.5" PointY="9.75" IsExpanded="true" />
+      <Diagram DiagramId="8ad9386d77ed4ebdbfdaeb17d20cf57d" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.AlarmData" Width="1.5" PointX="6" PointY="203.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ApprovalHistory" Width="1.5" PointX="4.5" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchEquipmentRequirement" Width="1.5" PointX="6.75" PointY="211.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchInformation" Width="1.5" PointX="2.25" PointY="165.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchList" Width="1.5" PointX="4.5" PointY="166.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchListEntry" Width="1.5" PointX="18" PointY="136.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchOtherInformation" Width="1.5" PointX="6.75" PointY="207.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchParameter" Width="1.5" PointX="20.25" PointY="190.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchProductionRecord" Width="1.5" PointX="6" PointY="99.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchProductionRecordEntry" Width="1.5" PointX="3.75" PointY="90.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchSize" Width="1.5" PointX="2.25" PointY="186.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BatchValue" Width="1.5" PointX="18" PointY="191.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Change" Width="1.5" PointX="3.75" PointY="55.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ClassInstanceAssociation" Width="1.5" PointX="10.5" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="3.75" PointY="128.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Constraint" Width="1.5" PointX="9" PointY="212.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ConsumableActual" Width="1.5" PointX="3.75" PointY="73.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ConsumableActualProperty" Width="1.5" PointX="6" PointY="83.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ConsumableExpectedRequirement" Width="1.5" PointX="6.75" PointY="73.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ConsumableExpectedRequirementProperty" Width="1.5" PointX="9" PointY="65.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ControlRecipe" Width="1.5" PointX="1.5" PointY="171.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ControlRecipeRecord" Width="1.5" PointX="3.75" PointY="172.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DataSet" Width="1.5" PointX="3.75" PointY="152.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DataValue" Width="1.5" PointX="8.25" PointY="162.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DelimitedDataBlock" Width="1.5" PointX="1.5" PointY="152.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DirectedLink" Width="1.5" PointX="14" PointY="86.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Enumeration" Width="1.5" PointX="6.75" PointY="170.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EnumerationSet" Width="1.5" PointX="4.5" PointY="169.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Equipment" Width="1.5" PointX="3.75" PointY="200.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentActual" Width="1.5" PointX="22.25" PointY="132" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentActualProperty" Width="1.5" PointX="24.5" PointY="127.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentCapability" Width="1.5" PointX="21.25" PointY="61.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentCapabilityProperty" Width="1.5" PointX="23.5" PointY="103.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentCapabilityTestSpecification" Width="1.5" PointX="11.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentClass" Width="1.5" PointX="1.5" PointY="201.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentClassProperty" Width="1.5" PointX="24.75" PointY="111.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentConnection" Width="1.5" PointX="8.25" PointY="187" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentElement" Width="1.5" PointX="6" PointY="184.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentElementProperty" Width="1.5" PointX="15" PointY="141.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentProoceduralElement" Width="1.5" PointX="13.5" PointY="190.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentProoceduralElementClass" Width="1.5" PointX="8.25" PointY="197.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentProperty" Width="1.5" PointX="27" PointY="103.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentRequirement" Width="1.5" PointX="19.75" PointY="127" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentRequirementProperty" Width="1.5" PointX="23" PointY="139.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentSegmentSpecification" Width="1.5" PointX="6" PointY="114.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentSegmentSpecificationProperty" Width="1.5" PointX="8.25" PointY="131.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentSpecification" Width="1.5" PointX="10.75" PointY="156.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentSpecificationProperty" Width="1.5" PointX="13" PointY="146.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="3.75" PointY="208.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Files" Width="1.5" PointX="11.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Formula" Width="1.5" PointX="2.25" PointY="177.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FromID" Width="1.5" PointX="11.75" PointY="58.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipe" Width="1.5" PointX="14.75" PointY="72.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeFormula" Width="1.5" PointX="11.75" PointY="90.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeHeader" Width="1.5" PointX="2.25" PointY="193.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeInformation" Width="1.5" PointX="12.5" PointY="73" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeMaterial" Width="1.5" PointX="3.75" PointY="70.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeMaterials" Width="1.5" PointX="1.5" PointY="80.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GRecipeProductInformation" Width="1.5" PointX="2.25" PointY="189.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Header" Width="1.5" PointX="2.25" PointY="181.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.HeaderProperty" Width="1.5" PointX="16" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.HierarchyScope" Width="1.5" PointX="4.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Individualapproval" Width="1.5" PointX="6.75" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.JobList" Width="1.5" PointX="10.5" PointY="132.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.JobOrder" Width="1.5" PointX="12.75" PointY="132.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.JobResponse" Width="1.5" PointX="15" PointY="135" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.JobResponsetData" Width="1.5" PointX="17.25" PointY="133.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KEP_logger" Width="1.5" PointX="6.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIDefinition" Width="1.5" PointX="9.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIDefinitionProperty" Width="1.5" PointX="11.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIDefinitionTimeRange" Width="1.5" PointX="11.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIInstance" Width="1.5" PointX="11.75" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIInstanceProperty" Width="1.5" PointX="14" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIInstanceRange" Width="1.5" PointX="14" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIInstanceResourceReference" Width="1.5" PointX="14" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIInstanceTimeRange" Width="1.5" PointX="14" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIValue" Width="1.5" PointX="14" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIValueProperty" Width="1.5" PointX="16.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPIValueTimeRange" Width="1.5" PointX="16.25" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Link" Width="1.5" PointX="9.5" PointY="58.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ListHeader" Width="1.5" PointX="6.75" PointY="165.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ManufacturingBill" Width="1.5" PointX="3.75" PointY="78.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MasterRecipe" Width="1.5" PointX="1.5" PointY="220.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MasterRecipeRecord" Width="1.5" PointX="3.75" PointY="221.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialActual" Width="1.5" PointX="8.25" PointY="111.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialActualProperty" Width="1.5" PointX="19.5" PointY="116.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialCapability" Width="1.5" PointX="11.25" PointY="114.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialCapabilityProperty" Width="1.5" PointX="19.5" PointY="112.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialClass" Width="1.5" PointX="2.25" PointY="83.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialClassProperty" Width="1.5" PointX="4.5" PointY="60.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialConsumedActual" Width="1.5" PointX="11.25" PointY="108.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialConsumedActualProperty" Width="1.5" PointX="13.5" PointY="103.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialConsumedRequirement" Width="1.5" PointX="8.25" PointY="118.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialConsumedRequirementProperty" Width="1.5" PointX="10.5" PointY="128.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialDefinition" Width="1.5" PointX="1.5" PointY="71.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialDefinitionProperty" Width="1.5" PointX="6.75" PointY="68.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialInformation" Width="1.5" PointX="14.25" PointY="118.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialLinkTypes" Width="1.5" PointX="1.5" PointY="66.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialLot" Width="1.5" PointX="3.75" PointY="134.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialLotProperty" Width="1.5" PointX="19" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialProducedActual" Width="1.5" PointX="14.25" PointY="113.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialProducedActualProperty" Width="1.5" PointX="16.5" PointY="105.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialProducedRequirement" Width="1.5" PointX="8.25" PointY="106.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialProducedRequirementProperty" Width="1.5" PointX="10.5" PointY="105.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialRequirement" Width="1.5" PointX="14.25" PointY="106.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialRequirementProperty" Width="1.5" PointX="19.5" PointY="119.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSegmentSpecificationProperty" Width="1.5" PointX="9" PointY="85.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSegmentSpecificftion" Width="1.5" PointX="6.75" PointY="78.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSpecification" Width="1.5" PointX="9.75" PointY="73.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSpecificationProperty" Width="1.5" PointX="12" PointY="77.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSubLot" Width="1.5" PointX="6" PointY="150.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialTestSpecification" Width="1.5" PointX="2.25" PointY="59.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ModificationLog" Width="1.5" PointX="9" PointY="174.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpEquipmentActual" Width="1.5" PointX="22.25" PointY="126.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpEquipmentCapability" Width="1.5" PointX="21.25" PointY="100.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpEquipmentRequirement" Width="1.5" PointX="15" PointY="151" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpEquipmentSpecification" Width="1.5" PointX="10.75" PointY="146.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsCapability" Width="1.5" PointX="2.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsCapabilityInformation" Width="1.5" PointX="2.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsDefinition" Width="1.5" PointX="5.25" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsDefinitionInformation" Width="1.5" PointX="3" PointY="46.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsDefinitionRecord" Width="1.5" PointX="3.75" PointY="158" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsMaterialBill" Width="1.5" PointX="7.5" PointY="51.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsMaterialBillItem" Width="1.5" PointX="9.75" PointY="68.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsPerfomance" Width="1.5" PointX="0.75" PointY="49.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsPerformanceRecord" Width="1.5" PointX="3.75" PointY="225" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsRequest" Width="1.5" PointX="0.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsResponse" Width="1.5" PointX="3" PointY="49.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsScedule" Width="1.5" PointX="1.5" PointY="53.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsSceduleRecord" Width="1.5" PointX="3.75" PointY="227.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OperationsSegment" Width="1.5" PointX="7.5" PointY="88.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpMaterialActual" Width="1.5" PointX="17.25" PointY="117.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpMaterialCapability" Width="1.5" PointX="17.25" PointY="109" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpMaterialRequirement" Width="1.5" PointX="11.25" PointY="121.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpMaterialSpecification" Width="1.5" PointX="9.75" PointY="79.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPersonnelActual" Width="1.5" PointX="19.25" PointY="93.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPersonnelCapability" Width="1.5" PointX="17.25" PointY="75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPersonnelRequirement" Width="1.5" PointX="22" PointY="122" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPersonnelSpecification" Width="1.5" PointX="21.75" PointY="107.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPhysicalAssetActual" Width="1.5" PointX="17.25" PointY="127.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPhysicalAssetCapability" Width="1.5" PointX="22.25" PointY="112.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPhysicalAssetRequirement" Width="1.5" PointX="15" PointY="157" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpPhysicalAssetSpecification" Width="1.5" PointX="10.75" PointY="152.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpProcessSegmentCapability" Width="1.5" PointX="2.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpSegmentData" Width="1.5" PointX="19.5" PointY="86.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpSegmentRequirement" Width="1.5" PointX="9" PointY="98.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OpSegmentResponse" Width="1.5" PointX="3" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OrderedData" Width="1.5" PointX="6" PointY="162.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OtherInformation" Width="1.5" PointX="17" PointY="86.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Parameter" Width="1.5" PointX="15" PointY="131.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Person" Width="1.5" PointX="1.5" PointY="126.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelActual" Width="1.5" PointX="22.25" PointY="89.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelActualProperty" Width="1.5" PointX="24.5" PointY="94.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelCapability" Width="1.5" PointX="17.25" PointY="61.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelCapabilityProperty" Width="1.5" PointX="19.5" PointY="76.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelClass" Width="1.5" PointX="2.25" PointY="142.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelClassProperty" Width="1.5" PointX="4.5" PointY="142.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelIdentificationManifest" Width="1.5" PointX="3.75" PointY="230.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelInformation" Width="1.5" PointX="2.25" PointY="148.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelRequirement" Width="1.5" PointX="14.75" PointY="76.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelRequirementProperty" Width="1.5" PointX="24.25" PointY="100.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelSegmentSpecification" Width="1.5" PointX="16.5" PointY="94" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelSegmentSpecificationProperty" Width="1.5" PointX="18.75" PointY="90.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelSpecification" Width="1.5" PointX="21.75" PointY="85.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonnelSpecificationProperty" Width="1.5" PointX="24" PointY="107.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PersonProperty" Width="1.5" PointX="19.75" PointY="131.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAsset" Width="1.5" PointX="1.5" PointY="208" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetActual" Width="1.5" PointX="6.5" PointY="158.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetActualProperty" Width="1.5" PointX="20.5" PointY="143.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetCapability" Width="1.5" PointX="9" PointY="177.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetCapabilityProperty" Width="1.5" PointX="24.5" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetCapabilityTestSpesification" Width="1.5" PointX="7.5" PointY="194.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetClass" Width="1.5" PointX="2.25" PointY="215.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetClassProperty" Width="1.5" PointX="8.5" PointY="215.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetProperty" Width="1.5" PointX="9.75" PointY="207.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetRequirement" Width="1.5" PointX="6.75" PointY="124" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetRequirementProperty" Width="1.5" PointX="20.25" PointY="139.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetSegmentSpecification" Width="1.5" PointX="4.5" PointY="119.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetSegmentSpecificationProperty" Width="1.5" PointX="6.75" PointY="128.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetSpecification" Width="1.5" PointX="9.5" PointY="169.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PhysicalAssetSpecificationProperty" Width="1.5" PointX="13" PointY="162.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcedureChartElement" Width="1.5" PointX="14" PointY="92.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcedureLogic" Width="1.5" PointX="2.25" PointY="196.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessElement" Width="1.5" PointX="11.75" PointY="85.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessElementLibrary" Width="1.5" PointX="9.5" PointY="62.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessElementParameter" Width="1.5" PointX="14" PointY="81.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessSegment" Width="1.5" PointX="2.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessSegmentCapability" Width="1.5" PointX="9" PointY="140.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProcessSegmentInformation" Width="1.5" PointX="2.25" PointY="30.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductDefinition" Width="1.5" PointX="2.25" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductDefinitionRecord" Width="1.5" PointX="3.75" PointY="234.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductInformation" Width="1.5" PointX="2.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionCapability" Width="1.5" PointX="6.75" PointY="140.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionData" Width="1.5" PointX="3.75" PointY="293" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionParameter" Width="1.5" PointX="2.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionPerformance" Width="1.5" PointX="2.25" PointY="113.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionPerformanceRecord" Width="1.5" PointX="3.75" PointY="237.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionRequest" Width="1.5" PointX="2.25" PointY="99.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionResponse" Width="1.5" PointX="2.25" PointY="109" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionScedule" Width="1.5" PointX="2.25" PointY="104.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionSceduleRecord" Width="1.5" PointX="3.75" PointY="240.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductProductionRuleIDGroup" Width="1.5" PointX="2.25" PointY="118.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductSegment" Width="1.5" PointX="2.25" PointY="121.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PropertyTypes" Width="1.5" PointX="2.25" PointY="62.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.QualificationTestSpecification" Width="1.5" PointX="2.25" PointY="289.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RecipeBuildingBlock" Width="1.5" PointX="2.25" PointY="250" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RecipeElement" Width="1.5" PointX="1.5" PointY="243" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RecipeElementRecord" Width="1.5" PointX="3.75" PointY="244.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceConstraint" Width="1.5" PointX="17" PointY="81.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceConstraintLibrary" Width="1.5" PointX="14.75" PointY="89.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceConstraintProperty" Width="1.5" PointX="19.25" PointY="82.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceNetworkConnection" Width="1.5" PointX="6.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceNetworkConnectionInformation" Width="1.5" PointX="6.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceNetworkConnectionType" Width="1.5" PointX="9" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceProperty" Width="1.5" PointX="6.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceQualificationsManifest" Width="1.5" PointX="3.75" PointY="253.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceReference" Width="1.5" PointX="4.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ResourceRelationshipNetwork" Width="1.5" PointX="4.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Sample" Width="1.5" PointX="3.75" PointY="257.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SampleTest" Width="1.5" PointX="6" PointY="174.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SampleTestResult" Width="1.5" PointX="8.25" PointY="147.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SegmentParameter" Width="1.5" PointX="17.25" PointY="99" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SegmentRequirement" Width="1.5" PointX="4.5" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SegmentResponse" Width="1.5" PointX="1.5" PointY="92.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Step" Width="1.5" PointX="6.5" PointY="221.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SupportedAction" Width="1.5" PointX="16.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TagSpecification" Width="1.5" PointX="6" PointY="179.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TestAccessRights" Width="1.5" PointX="8.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TestDataTypes" Width="1.5" PointX="4.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TimeSpecification" Width="1.5" PointX="1.5" PointY="155" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ToID" Width="1.5" PointX="11.75" PointY="65" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TransactionProfile" Width="1.5" PointX="14.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Transition" Width="1.5" PointX="4.5" PointY="196.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UserAttribute" Width="1.5" PointX="6" PointY="215.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Value" Width="1.5" PointX="11.75" PointY="93.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkAlert" Width="1.5" PointX="16.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkAlertDefinition" Width="1.5" PointX="16.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkAlertInformation" Width="1.5" PointX="14.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkAlertProperty" Width="1.5" PointX="19" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkCapability" Width="1.5" PointX="15" PointY="98.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkCapabilityInformation" Width="1.5" PointX="12.75" PointY="99.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkDefinition" Width="1.5" PointX="7.5" PointY="93.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkDefinitionInformation" Width="1.5" PointX="2.25" PointY="267.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkDirective" Width="1.5" PointX="1.5" PointY="263.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkDirectiveRecord" Width="1.5" PointX="3.75" PointY="264.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecification" Width="1.5" PointX="19.5" PointY="71.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationConnection" Width="1.5" PointX="24.75" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationConnectionType" Width="1.5" PointX="22.5" PointY="81.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationInformation" Width="1.5" PointX="17.25" PointY="71.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationNode" Width="1.5" PointX="21.75" PointY="94.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationNodeType" Width="1.5" PointX="19.5" PointY="67.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationProperty" Width="1.5" PointX="27" PointY="94" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkflowSpecificationType" Width="1.5" PointX="17.25" PointY="67.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkMaster" Width="1.5" PointX="2.25" PointY="270.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkMasterCapability" Width="1.5" PointX="15" PointY="124" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkMasterRecord" Width="1.5" PointX="3.75" PointY="273.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkPerformance" Width="1.5" PointX="1.5" PointY="276.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkPerformanceRecord" Width="1.5" PointX="3.75" PointY="277.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkRequest" Width="1.5" PointX="10.5" PointY="135.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkResponse" Width="1.5" PointX="12.75" PointY="139.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkSceduleRecord" Width="1.5" PointX="3.75" PointY="286.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WorkSchedule" Width="1.5" PointX="2.25" PointY="281.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentAssetMapping" Width="1.5" PointX="9" PointY="204.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EquipmentInformation" Width="1.5" PointX="6" PointY="199.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MarerialClassTR" Width="1.5" PointX="6.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialClassAssemblies" Width="1.5" PointX="4.5" PointY="87.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialClassLinks" Width="1.5" PointX="12.5" PointY="69.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialDefinitionAssemblies" Width="1.5" PointX="3.75" PointY="162" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialDefinitionLinks" Width="1.5" PointX="3.75" PointY="66.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialLotLinks" Width="1.5" PointX="6" PointY="136.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MaterialSubLotLinks" Width="1.5" PointX="8.25" PointY="152.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_EquipmentProperty" Width="1.5" PointX="8.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_kep_logger" Width="1.5" PointX="16.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_MaterialLot_Request" Width="1.5" PointX="10.5" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_PrintProperties" Width="1.5" PointX="4.5" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_ProductionParameter_Files" Width="1.5" PointX="6.5" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_ProductionResponse" Width="1.5" PointX="18.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.v_Property" Width="1.5" PointX="16.5" PointY="19.5" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_AlarmData_Event" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ApprovalHistory_Header" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Individualapproval_ApprovalHistory" ManuallyRouted="false" />
@@ -290,6 +301,7 @@
         <AssociationConnector Association="Model.FK_ListHeader_BatchList" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_BatchListEntry_BatchListEntry" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_BatchListEntry_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_BatchListEntry_EquipmentClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_BatchListEntry_GRecipe" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_BatchListEntry_GRecipeProductInformation" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_BatchParameter_BatchListEntry" ManuallyRouted="false" />
@@ -356,9 +368,11 @@
         <AssociationConnector Association="Model.FK_ClassInstanceAssociation_EquipmentProoceduralElement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ClassInstanceAssociation_EquipmentProoceduralElementClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Comment_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ConsumableActual_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableActual_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableActual_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableActualProperty_ConsumableActual" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ConsumableExpectedRequirement_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableExpectedRequirement_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableExpectedRequirement_SegmentRequirement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ConsumableExpectedRequirementProperty_ConsumableExpectedRequirement" ManuallyRouted="false" />
@@ -377,6 +391,7 @@
         <AssociationConnector Association="Model.FK_DirectedLink_ToID" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Enumeration_EnumerationSet" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Equipment_Equipment1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Equipment_EquipmentClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentActual_Equipment" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentAssetMapping_Equipment" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentCapability_Equipment" ManuallyRouted="false" />
@@ -394,15 +409,27 @@
         <AssociationConnector Association="Model.FK_Sample_Equipment" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_SampleTestResult_Equipment" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_TagSpecification_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentActual_EquipmentClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentActual_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentActualProperty_EquipmentActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentActualProperty_OpEquipmentActual" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentCapability_EquipmentClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentCapability_ProcessSegmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentCapability_ProductionCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentCapabilityProperty_EquipmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentCapabilityProperty_OpEquipmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentClassProperty_EquipmentCapabilityTestSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentProperty_EquipmentCapabilityTestSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentClassID_EquipmentClassParentID" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentClassProperty_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentInformation_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentRequirement_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentSegmentSpecification_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_EquipmentSpecification_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpEquipmentActual_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpEquipmentCapability_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpEquipmentRequirement_EquipmentClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpEquipmentSpecification_EquipmentClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentClassProperty_EquipmentClassProperty1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentProperty_EquipmentClassProperty" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentConnection_EquipmentElement" ManuallyRouted="false" />
@@ -445,6 +472,7 @@
         <AssociationConnector Association="Model.FK_ModificationLog_Header" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_RecipeElement_Header" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_HeaderProperty_Value" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_HierarchyScopeHID_HierarchyScopeParentHID" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_JobOrder_JobList" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_JobOrder_WorkMaster" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_JobOrder_WorkRequest" ManuallyRouted="false" />
@@ -477,12 +505,14 @@
         <AssociationConnector Association="Model.FK_ToID_Link" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ModificationLog_ListHeader" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ManufacturingBill_ManufacturingBill" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ManufacturingBill_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ManufacturingBill_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ManufacturingBill_ProductDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MasterRecipe_ProcedureLogic" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MasterRecipeRecord_MasterRecipe" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_RecipeElement_MasterRecipe" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialActual_MaterialActual" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialActual_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialActual_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialActual_MaterialLot" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialActual_MateriaSubLot" ManuallyRouted="false" />
@@ -490,6 +520,7 @@
         <AssociationConnector Association="Model.FK_MaterialActualProperty_MaterialActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialActualProperty_OpMaterialActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapability_MaterialCapability" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialCapability_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapability_MaterialDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapability_MaterialLot" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapability_MateriaSubLot" ManuallyRouted="false" />
@@ -497,6 +528,26 @@
         <AssociationConnector Association="Model.FK_MaterialCapability_ProductionCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapabilityProperty_MaterialCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialCapabilityProperty_OpMaterialCapability" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_AssemblyClass_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_AssemblyClass_MaterialClass1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialClassID_MaterialClassParentID" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialClassLinks_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialClassLinks_MaterialClass1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialClassProperty_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialConsumedActual_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialConsumedRequirement_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialDefinition_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialInformation_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialProducedActual_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialProducedRequirement_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialRequirement_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialSegmentSpecificftion_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MaterialSpecification_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OperationsMaterialBillItem_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpMaterialActual_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpMaterialCapability_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpMaterialRequirement_MaterialClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpMaterialSpecification_MaterialClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialClassProperty_MaterialClassProperty1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialClassProperty_MaterialTestSpecification1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_MaterialClassProperty_PropertyTypes" ManuallyRouted="false" />
@@ -629,31 +680,39 @@
         <AssociationConnector Association="Model.FK_OpMaterialSpecification_OpMaterialSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpMaterialSpecification_WorkDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelActual_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPersonnelActual_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelActual_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelActualProperty_OpPersonnelActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelCapability_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPersonnelCapability_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelCapability_ProcessSegmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelCapability_WorkCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelCapability_WorkMasterCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelCapabilityProperty_OpPersonnelCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelRequirement_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPersonnelRequirement_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelRequirement_SegmentRequirement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelRequirementProperty_OpPersonnelRequirement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelSpecification_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPersonnelSpecification_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPersonnelSpecification_WorkDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelSpecificationProperty_OpPersonnelSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetActual_OpPhysicalAssetActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetActual_PhysicalAsset" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPhysicalAssetActual_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetActualProperty_OpPhysicalAssetActual" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetCapability_PhysicalAsset" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPhysicalAssetCapability_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetCapability_ProcessSegmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetCapability_WorkCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetCapability_WorkMasterCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetCapabilityProperty_OpProcessSegmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetRequirement_PhysicalAsset" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPhysicalAssetRequirement_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetRequirement_SegmentRequirement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetRequirementProperty_OpPhysicalAssetRequirement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetSpecification_PhysicalAsset" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_OpPhysicalAssetSpecification_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpPhysicalAssetSpecification_WorkDefinition" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetSpecificationProperty_OpPhysicalAssetSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OpProcessSegmentCapability_OpProcessSegmentCapability" ManuallyRouted="false" />
@@ -667,6 +726,7 @@
         <AssociationConnector Association="Model.FK_OtherInformation_ProcessElement" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OtherInformation_Value" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Parameter_Parameter" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Person_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Person_PersonnelInformation" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelActual_Person" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelCapability_Person" ManuallyRouted="false" />
@@ -675,11 +735,19 @@
         <AssociationConnector Association="Model.FK_PersonnelSegmentSpecification_Person" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelSpecification_Person" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonProperty_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelActual_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelActual_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelActualProperty_PersonnelActual" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelCapability_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelCapability_ProcessSegmentCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelCapability_ProductionCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelCapabilityProperty_PersonnelCapability" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelClass_PersonnelInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelClassID_PersonnelClassParentID" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelClassProperty_PersonnelClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelRequirement_PersonnelClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelSegmentSpecification_PersonnelClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PersonnelSpecification_PersonnelClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelClassProperty_PersonnelClassProperty" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonnelClassProperty_QualificationTestSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PersonProperty_PersonnelClassProperty" ManuallyRouted="false" />
@@ -693,6 +761,7 @@
         <AssociationConnector Association="Model.FK_PersonProperty_QualificationTestSpecification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_EquipmentAssetMapping_PhysicalAsset" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAsset_PhysicalAsset1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAsset_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetActual_PhysicalAsset" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetCapability_PhysicalAsset" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetProperty_PhysicalAsset" ManuallyRouted="false" />
@@ -702,12 +771,18 @@
         <AssociationConnector Association="Model.FK_Sample_PhysicalAsset" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_SampleTestResult_PhysicalAsset" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_TagSpecification_PhysicalAsset" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetActual_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetActual_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetActualProperty_PhysicalAssetActual" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetCapability_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetCapability_ProductionCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetCapabilityProperty_PhysicalAssetCapability" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetClassProperty_PhysicalAssetCapabilityTestSpesification" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetProperty_PhysicalAssetCapabilityTestSpesification" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetClassProperty_PhysicalAssetClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetRequirement_PhysicalAssetClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetSegmentSpecification_PhysicalAssetClass" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PhysicalAssetSpecification_PhysicalAssetClass" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetClassProperty_PhysicalAssetClassProperty" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetProperty_PhysicalAssetClassProperty" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PhysicalAssetProperty_PhysicalAssetProperty" ManuallyRouted="false" />
@@ -743,6 +818,7 @@
         <AssociationConnector Association="Model.FK_ProductionData_ProductionData" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ProductionData_SegmentResponse" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ProductionParameter_ProductSegment1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ProductionParameter_PropertyTypes" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_SegmentRequirement_ProductionParameter" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ProductionPerformance_ProductionScedule" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ProductionPerformanceRecord_ProductionPerformance" ManuallyRouted="false" />
@@ -814,7 +890,6 @@
         <AssociationConnector Association="Model.FK_WorkResponse_WorkRequest" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_WorkSceduleRecord_WorkScedule" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_WorkScedule_WorkScedule" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_ProductionParameter_PropertyTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

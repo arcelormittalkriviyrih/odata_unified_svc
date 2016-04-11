@@ -15,7 +15,7 @@ namespace ODataWebApp
     public partial class ModificationLog
     {
         public int ID { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<System.DateTimeOffset> ModifiedDate { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
         public Nullable<int> ListHeader { get; set; }

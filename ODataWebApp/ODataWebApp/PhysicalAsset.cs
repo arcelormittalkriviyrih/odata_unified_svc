@@ -44,6 +44,7 @@ namespace ODataWebApp
         public string VendorID { get; set; }
         public string EquipmentLevel { get; set; }
         public Nullable<int> PhysicalAsset1 { get; set; }
+        public Nullable<int> PhysicalAssetClassID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchProductionRecord> BatchProductionRecord { get; set; }
@@ -62,6 +63,7 @@ namespace ODataWebApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAsset> PhysicalAsset11 { get; set; }
         public virtual PhysicalAsset PhysicalAsset2 { get; set; }
+        public virtual PhysicalAssetClass PhysicalAssetClass { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAssetActual> PhysicalAssetActual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

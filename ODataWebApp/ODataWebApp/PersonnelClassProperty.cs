@@ -26,7 +26,9 @@ namespace ODataWebApp
         public string Value { get; set; }
         public Nullable<int> PersonnelClassProperty1 { get; set; }
         public Nullable<int> QualificationTestSpecificationID { get; set; }
+        public Nullable<int> PersonnelClassID { get; set; }
     
+        public virtual PersonnelClass PersonnelClass { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonnelClassProperty> PersonnelClassProperty11 { get; set; }
         public virtual PersonnelClassProperty PersonnelClassProperty2 { get; set; }

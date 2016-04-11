@@ -17,6 +17,7 @@ namespace ODataWebApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MaterialLinkTypes()
         {
+            this.MaterialClassLinks = new HashSet<MaterialClassLinks>();
             this.MaterialDefinitionLinks = new HashSet<MaterialDefinitionLinks>();
             this.MaterialLotLinks = new HashSet<MaterialLotLinks>();
             this.MaterialSubLotLinks = new HashSet<MaterialSubLotLinks>();
@@ -25,7 +26,8 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
     
-        public virtual MaterialClassLinks MaterialClassLinks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialClassLinks> MaterialClassLinks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialDefinitionLinks> MaterialDefinitionLinks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

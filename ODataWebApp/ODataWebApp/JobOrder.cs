@@ -27,11 +27,12 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string WorkType { get; set; }
         public int WorkMasterID { get; set; }
         public string WorkMasterVersion { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string Priority { get; set; }
         public string Command { get; set; }
         public string CommandRule { get; set; }

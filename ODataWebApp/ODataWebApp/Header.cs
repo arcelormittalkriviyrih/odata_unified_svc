@@ -25,8 +25,8 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
-        public Nullable<System.DateTime> EffectiveDate { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public Nullable<System.DateTimeOffset> EffectiveDate { get; set; }
+        public Nullable<System.DateTimeOffset> ExpirationDate { get; set; }
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string BatchSize { get; set; }

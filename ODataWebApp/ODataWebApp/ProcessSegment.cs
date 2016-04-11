@@ -30,7 +30,8 @@ namespace ODataWebApp
         public string Description { get; set; }
         public string OperationsType { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public string Duration { get; set; }
         public string SegmentDependency { get; set; }
         public Nullable<int> ProcessSegment1 { get; set; }

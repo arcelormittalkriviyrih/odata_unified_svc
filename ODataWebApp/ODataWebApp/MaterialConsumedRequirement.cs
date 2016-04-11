@@ -21,15 +21,18 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinitionID { get; set; }
         public Nullable<int> MaterialLotID { get; set; }
         public Nullable<int> MaterialSubLotID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string RequiredByRequestedSegmentResponce { get; set; }
         public int SegmentRequirementID { get; set; }
     
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         public virtual MaterialLot MaterialLot { get; set; }
         public virtual MaterialSubLot MaterialSubLot { get; set; }

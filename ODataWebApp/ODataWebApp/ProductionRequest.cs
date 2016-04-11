@@ -26,8 +26,9 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
+        public int HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string Priority { get; set; }
         public string RequestState { get; set; }
         public Nullable<int> ProductionSchedule { get; set; }

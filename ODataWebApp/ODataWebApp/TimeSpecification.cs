@@ -22,8 +22,8 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Relative { get; set; }
-        public Nullable<System.DateTime> OffsetTime { get; set; }
-        public Nullable<System.DateTime> OffsetTimeFormat { get; set; }
+        public Nullable<System.DateTimeOffset> OffsetTime { get; set; }
+        public Nullable<System.DateTimeOffset> OffsetTimeFormat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataSet> DataSet { get; set; }

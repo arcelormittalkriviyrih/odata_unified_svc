@@ -22,6 +22,7 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public int MaterialClassID { get; set; }
         public int MaterialDefinitionID { get; set; }
         public int MaterialLotID { get; set; }
         public int MaterialSubLotID { get; set; }
@@ -38,6 +39,7 @@ namespace ODataWebApp
         public Nullable<int> SegmenRequirementID { get; set; }
     
         public virtual JobOrder JobOrder { get; set; }
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         public virtual MaterialLot MaterialLot { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

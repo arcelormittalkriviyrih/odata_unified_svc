@@ -17,9 +17,12 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PublishedDate { get; set; }
         public Nullable<int> Equipment { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
     
         public virtual Equipment Equipment1 { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
     }
 }

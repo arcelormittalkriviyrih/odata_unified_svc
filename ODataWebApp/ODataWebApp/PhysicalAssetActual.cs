@@ -21,14 +21,17 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> PhysicalAssetClassID { get; set; }
         public Nullable<int> PhysicalAssetID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string RequiredByRequestedSegmentResponse { get; set; }
         public int SegmentResponseID { get; set; }
     
         public virtual PhysicalAsset PhysicalAsset { get; set; }
+        public virtual PhysicalAssetClass PhysicalAssetClass { get; set; }
         public virtual SegmentResponse SegmentResponse { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAssetActualProperty> PhysicalAssetActualProperty { get; set; }

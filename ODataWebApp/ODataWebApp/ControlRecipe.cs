@@ -25,7 +25,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Verscion { get; set; }
-        public Nullable<System.DateTime> VersionDate { get; set; }
+        public Nullable<System.DateTimeOffset> VersionDate { get; set; }
         public string Description { get; set; }
         public string BatchID { get; set; }
         public Nullable<int> Header { get; set; }

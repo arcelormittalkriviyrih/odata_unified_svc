@@ -26,8 +26,10 @@ namespace ODataWebApp
         public string Value { get; set; }
         public Nullable<int> PhysicalAssetClassProperty1 { get; set; }
         public string PhysicalAssetCapabilityTestSpecification { get; set; }
+        public Nullable<int> PhysicalAssetClassID { get; set; }
     
         public virtual PhysicalAssetCapabilityTestSpesification PhysicalAssetCapabilityTestSpesification { get; set; }
+        public virtual PhysicalAssetClass PhysicalAssetClass { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAssetClassProperty> PhysicalAssetClassProperty11 { get; set; }
         public virtual PhysicalAssetClassProperty PhysicalAssetClassProperty2 { get; set; }

@@ -14,11 +14,12 @@ namespace ODataWebApp
     
     public partial class v_kep_logger
     {
+        public Nullable<System.Guid> ID { get; set; }
         public int EquipmentID { get; set; }
         public string Description { get; set; }
         public Nullable<int> Controller_ID { get; set; }
         public Nullable<float> Weight_VALUE { get; set; }
-        public Nullable<System.DateTime> Weight_TIMESTAMP { get; set; }
+        public Nullable<System.DateTimeOffset> Weight_TIMESTAMP { get; set; }
         public Nullable<bool> Weight_OK_Value { get; set; }
     }
 }

@@ -35,7 +35,9 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PersonName { get; set; }
+        public Nullable<int> PersonnelClassID { get; set; }
         public Nullable<int> PersonnelInformation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -50,6 +52,7 @@ namespace ODataWebApp
         public virtual ICollection<OpPersonnelRequirement> OpPersonnelRequirement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpPersonnelSpecification> OpPersonnelSpecification { get; set; }
+        public virtual PersonnelClass PersonnelClass { get; set; }
         public virtual PersonnelInformation PersonnelInformation1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonnelActual> PersonnelActual { get; set; }

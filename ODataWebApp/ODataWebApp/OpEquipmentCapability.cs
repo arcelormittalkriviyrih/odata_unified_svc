@@ -21,14 +21,16 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
         public Nullable<int> EquipmentID { get; set; }
         public string Description { get; set; }
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string ConfidenceFactor { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string EquipmentUse { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> OperationCapabilityID { get; set; }
         public Nullable<int> WorkCapabilityID { get; set; }
@@ -38,6 +40,7 @@ namespace ODataWebApp
         public virtual Equipment Equipment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentCapabilityProperty> EquipmentCapabilityProperty { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         public virtual OperationsCapability OperationsCapability { get; set; }
         public virtual OpProcessSegmentCapability OpProcessSegmentCapability { get; set; }
         public virtual WorkCapability WorkCapability { get; set; }

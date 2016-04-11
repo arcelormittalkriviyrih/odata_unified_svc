@@ -22,15 +22,16 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public int BatchProductionRecordEntry { get; set; }
-        public System.DateTime PublishedDate { get; set; }
-        public System.DateTime CreationDate { get; set; }
+        public int EquipmentScope { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> CreationDate { get; set; }
         public string BatchID { get; set; }
         public string BatchProductionRecordSpec { get; set; }
         public string CampaginID { get; set; }
         public string ChangeIndication { get; set; }
         public string Delimiter { get; set; }
         public int EquipmentID { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+        public Nullable<System.DateTimeOffset> ExpirationDate { get; set; }
         public string Language { get; set; }
         public string LastChangedDate { get; set; }
         public int LotID { get; set; }

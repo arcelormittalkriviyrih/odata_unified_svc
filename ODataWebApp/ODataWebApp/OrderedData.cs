@@ -22,7 +22,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string OrderIndex { get; set; }
-        public Nullable<System.DateTime> TimeValue { get; set; }
+        public Nullable<System.DateTimeOffset> TimeValue { get; set; }
         public Nullable<int> DataSet { get; set; }
     
         public virtual DataSet DataSet1 { get; set; }

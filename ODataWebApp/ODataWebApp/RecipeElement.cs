@@ -27,7 +27,7 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Version { get; set; }
-        public Nullable<System.DateTime> VersionDate { get; set; }
+        public Nullable<System.DateTimeOffset> VersionDate { get; set; }
         public string Description { get; set; }
         public string RecipeElementType { get; set; }
         public Nullable<int> BuildingBlockElementID { get; set; }

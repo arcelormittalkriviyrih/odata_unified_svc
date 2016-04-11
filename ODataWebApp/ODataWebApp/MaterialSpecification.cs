@@ -22,6 +22,7 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> MaterialClassID { get; set; }
         public Nullable<int> MaterialDefinitionID { get; set; }
         public string Description { get; set; }
         public string MaterialUse { get; set; }
@@ -31,6 +32,7 @@ namespace ODataWebApp
         public string AssemblyRelationship { get; set; }
         public Nullable<int> ProductSegmentID { get; set; }
     
+        public virtual MaterialClass MaterialClass { get; set; }
         public virtual MaterialDefinition MaterialDefinition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialSpecification> MaterialSpecification1 { get; set; }

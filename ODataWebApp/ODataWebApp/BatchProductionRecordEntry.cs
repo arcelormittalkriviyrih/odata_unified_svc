@@ -44,7 +44,7 @@ namespace ODataWebApp
     
         public int EntryID { get; set; }
         public string ObjectType { get; set; }
-        public System.DateTime TimeStamp { get; set; }
+        public Nullable<System.DateTimeOffset> TimeStamp { get; set; }
         public string ExternalReference { get; set; }
         public string Description { get; set; }
     

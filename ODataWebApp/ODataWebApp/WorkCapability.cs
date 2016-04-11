@@ -26,11 +26,12 @@ namespace ODataWebApp
     
         public int ID { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string ConfidenceFactor { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public string PublishedDate { get; set; }
         public Nullable<int> WorkCapabilityInformation { get; set; }
     

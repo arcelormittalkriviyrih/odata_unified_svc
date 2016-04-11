@@ -21,10 +21,12 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public int PhysicalAssetClassID { get; set; }
         public int PhysicalAssetID { get; set; }
         public string Description { get; set; }
         public string PhysicalAssetUse { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string EquipmentLevel { get; set; }
         public string RequiredByRequestedSegment { get; set; }
         public Nullable<int> SegmenRequirementID { get; set; }
@@ -32,6 +34,7 @@ namespace ODataWebApp
     
         public virtual JobOrder JobOrder { get; set; }
         public virtual PhysicalAsset PhysicalAsset { get; set; }
+        public virtual PhysicalAssetClass PhysicalAssetClass { get; set; }
         public virtual OpSegmentRequirement OpSegmentRequirement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicalAssetRequirementProperty> PhysicalAssetRequirementProperty { get; set; }

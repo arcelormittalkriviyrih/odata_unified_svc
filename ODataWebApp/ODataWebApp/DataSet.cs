@@ -25,8 +25,8 @@ namespace ODataWebApp
         public int ID { get; set; }
         public int BatchProductionRecordEntry { get; set; }
         public string TrendSystemReference { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public int TimeSpecification { get; set; }
         public Nullable<int> DelimitedDataBlock { get; set; }
     

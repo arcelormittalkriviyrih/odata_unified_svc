@@ -18,14 +18,18 @@ namespace ODataWebApp
         public PersonnelInformation()
         {
             this.Person = new HashSet<Person>();
+            this.PersonnelClass = new HashSet<PersonnelClass>();
         }
     
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PublishedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PersonnelClass> PersonnelClass { get; set; }
     }
 }

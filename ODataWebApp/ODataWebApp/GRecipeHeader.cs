@@ -24,8 +24,8 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string DerivedFromID { get; set; }
-        public Nullable<System.DateTime> EffectiveDate { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public Nullable<System.DateTimeOffset> EffectiveDate { get; set; }
+        public Nullable<System.DateTimeOffset> ExpirationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRecipe> GRecipe { get; set; }

@@ -28,8 +28,9 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Version { get; set; }
         public string Description { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string OperationsType { get; set; }
-        public Nullable<System.DateTime> PublishedDate { get; set; }
+        public Nullable<System.DateTimeOffset> PublishedDate { get; set; }
         public string BillOfMaterialsID { get; set; }
         public string BillOfResourcesID { get; set; }
         public Nullable<int> OperationsResponse { get; set; }

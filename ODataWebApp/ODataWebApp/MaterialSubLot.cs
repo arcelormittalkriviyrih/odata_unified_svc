@@ -37,6 +37,7 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string Status { get; set; }
         public string StorageLocation { get; set; }
         public Nullable<int> Quantity { get; set; }

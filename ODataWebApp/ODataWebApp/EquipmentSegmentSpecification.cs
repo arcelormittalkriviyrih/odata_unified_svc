@@ -21,6 +21,7 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> EquipmentClassID { get; set; }
         public Nullable<int> EquipmentID { get; set; }
         public string Description { get; set; }
         public string EquipmentUse { get; set; }
@@ -28,6 +29,7 @@ namespace ODataWebApp
         public int ProcessSegmentID { get; set; }
     
         public virtual Equipment Equipment { get; set; }
+        public virtual EquipmentClass EquipmentClass { get; set; }
         public virtual ProcessSegment ProcessSegment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentSegmentSpecificationProperty> EquipmentSegmentSpecificationProperty { get; set; }

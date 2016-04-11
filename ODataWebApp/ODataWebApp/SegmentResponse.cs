@@ -33,8 +33,9 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> ActualStartTime { get; set; }
-        public Nullable<System.DateTime> ActualEndTime { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
+        public Nullable<System.DateTimeOffset> ActualStartTime { get; set; }
+        public Nullable<System.DateTimeOffset> ActualEndTime { get; set; }
         public Nullable<int> SegmentResponse1 { get; set; }
         public string RequiredByRequestedSegmentResponse { get; set; }
         public string SegmentState { get; set; }

@@ -29,9 +29,10 @@ namespace ODataWebApp
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string Location { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string EquipmentElementLevel { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public Nullable<int> ProcessSegmentCapability1 { get; set; }
         public Nullable<int> ProductionCapabilityID { get; set; }
     

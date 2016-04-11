@@ -29,6 +29,7 @@ namespace ODataWebApp
         public int ID { get; set; }
         public string Description { get; set; }
         public string OperationsType { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string Duration { get; set; }
         public string SegmentDependency { get; set; }
         public Nullable<int> OperationsSegment1 { get; set; }

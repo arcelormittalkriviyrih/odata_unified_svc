@@ -16,8 +16,8 @@ namespace ODataWebApp
     {
         public int EquipmentID { get; set; }
         public int PhysicalAssetID { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
     
         public virtual Equipment Equipment { get; set; }
         public virtual PhysicalAsset PhysicalAsset { get; set; }

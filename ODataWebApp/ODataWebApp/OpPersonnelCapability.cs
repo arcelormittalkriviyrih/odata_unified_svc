@@ -21,14 +21,16 @@ namespace ODataWebApp
         }
     
         public int ID { get; set; }
+        public Nullable<int> PersonnelClassID { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string Description { get; set; }
         public string CapabilityType { get; set; }
         public string Reason { get; set; }
         public string ConfidenceFactor { get; set; }
+        public Nullable<int> HierarchyScope { get; set; }
         public string PersonnelUse { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTimeOffset> StartTime { get; set; }
+        public Nullable<System.DateTimeOffset> EndTime { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> OperationCapabilityID { get; set; }
         public Nullable<int> ProcessSegmentCapabilityID { get; set; }
@@ -37,6 +39,7 @@ namespace ODataWebApp
     
         public virtual OperationsCapability OperationsCapability { get; set; }
         public virtual Person Person { get; set; }
+        public virtual PersonnelClass PersonnelClass { get; set; }
         public virtual OpProcessSegmentCapability OpProcessSegmentCapability { get; set; }
         public virtual WorkCapability WorkCapability { get; set; }
         public virtual WorkMasterCapability WorkMasterCapability { get; set; }
