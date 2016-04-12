@@ -15,6 +15,8 @@ namespace ODataRestierDynamic.DynamicFactory
 
 		public bool Nullable { get; set; }
 
+		public int? MaxLength { get; set; }
+
 		public Type Type { get; set; }
 	}
 }

@@ -90,6 +90,17 @@ namespace ODataRestierDynamic.Models
 			return apiConfiguration;
 		}
 
+		//[Action]
+		//public int ins_MaterialLotByController(int controllerID)
+		//{
+		//	return -1;
+		//}
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+		}
+
 		#endregion
 	}
 }

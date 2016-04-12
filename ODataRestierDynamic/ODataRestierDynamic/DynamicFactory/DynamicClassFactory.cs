@@ -1,4 +1,5 @@
-﻿using ODataRestierDynamic.Models;
+﻿using Microsoft.Restier.Core.Model;
+using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -42,6 +43,121 @@ namespace ODataRestierDynamic.DynamicFactory
 		{
 			var tb = CreateDynamicTypeBuilder<T>(name, properties);
 			return tb.CreateType();
+		}
+
+		/// <summary>
+		/// This is the normal entry point and just return the Type generated at runtime
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <param name="properties"></param>
+		/// <returns></returns>
+		public Type CreateDynamicTypeAction<T>(string name, Dictionary<string, DynamicMethodData> methods) where T : DynamicAction
+		{
+			var tb = CreateDynamicTypeActionBuilder<T>(name, methods);
+			return tb.CreateType();
+		}
+
+		/// <summary>
+		/// Exposes a TypeBuilder that can be returned and created outside of the class
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <param name="properties"></param>
+		/// <returns></returns>
+		public TypeBuilder CreateDynamicTypeActionBuilder<T>(string name, Dictionary<string, DynamicMethodData> methods)
+			where T : DynamicAction
+		{
+			if (_assemblyBuilder == null)
+				_assemblyBuilder = _appDomain.DefineDynamicAssembly(new AssemblyName(_assemblyName),
+					AssemblyBuilderAccess.RunAndSave);
+			//vital to ensure the namespace of the assembly is the same as the module name, else IL inspectors will fail
+			if (_moduleBuilder == null)
+				_moduleBuilder = _assemblyBuilder.DefineDynamicModule(_assemblyName + ".dll");
+
+			//typeof(T) is for the base class, can be omitted if not needed
+			_typeBuilder = _moduleBuilder.DefineType(_assemblyName + "." + name, TypeAttributes.Public
+															| TypeAttributes.Class
+															| TypeAttributes.AutoClass
+															| TypeAttributes.AnsiClass
+															| TypeAttributes.Serializable
+															| TypeAttributes.BeforeFieldInit, typeof(T));
+
+			CreateMethods(_typeBuilder, methods);
+
+			return _typeBuilder;
+		}
+
+		public void CreateMethods(TypeBuilder typeBuilder, Dictionary<string, DynamicMethodData> methods)
+		{
+			methods.ToList().ForEach(p => AddMethodDynamically(typeBuilder, p.Key, p.Value));
+		}
+
+		private void AddMethodDynamically(TypeBuilder typeBuilder, string methodName, DynamicMethodData dynamicMethodData)
+		{
+			MethodBuilder methodBuilder = typeBuilder.DefineMethod(methodName,
+												 MethodAttributes.Public |
+												 MethodAttributes.Static,
+												 dynamicMethodData.ReturnType,
+												 dynamicMethodData.Params);
+
+			ILGenerator ILout = methodBuilder.GetILGenerator();
+
+			int numParams = dynamicMethodData.Params == null ? 0 : dynamicMethodData.Params.Length;
+
+			for (int i = 0; i < numParams; i++)
+			{
+				methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, dynamicMethodData.ParamNames[i].Replace("@", string.Empty));
+			}
+
+			for (byte x = 0; x < numParams; x++)
+			{
+				ILout.Emit(OpCodes.Ldarg_S, x);
+			}
+
+			string methodAction = string.Empty;
+
+			if (numParams > 1)
+			{
+				for (int y = 0; y < (numParams - 1); y++)
+				{
+					switch (methodAction)
+					{
+						case "A": ILout.Emit(OpCodes.Add);
+							break;
+						case "M": ILout.Emit(OpCodes.Mul);
+							break;
+						default: ILout.Emit(OpCodes.Add);
+							break;
+					}
+				}
+			}
+			ILout.Emit(OpCodes.Ret);
+
+			AddActionAttribute(methodBuilder);
+			AddFunctionAttribute(methodBuilder, methodName, dynamicMethodData);
+		}
+
+		private void AddActionAttribute(MethodBuilder methodBuilder)
+		{
+			Type attrType = typeof(ActionAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { });
+			methodBuilder.SetCustomAttribute(attr);
+		}
+
+		private void AddFunctionAttribute(MethodBuilder methodBuilder, string methodName, DynamicMethodData dynamicMethodData)
+		{
+			//Type attrType = typeof(EntityFramework.Functions.ModelDefinedFunctionAttribute);
+			//var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+			//	new[] { typeof(EntityFramework.Functions.FunctionType), typeof(string), typeof(string) }),
+			//	new object[] { dynamicMethodData.FunctionType, methodName, dynamicMethodData.Schema });
+			//methodBuilder.SetCustomAttribute(attr);
+
+			Type attrType = typeof(System.Data.Entity.DbFunctionAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(string), typeof(string) }),
+				new object[] { dynamicMethodData.Schema, methodName });
+			methodBuilder.SetCustomAttribute(attr);
 		}
 
 		/// <summary>
@@ -120,6 +236,13 @@ namespace ODataRestierDynamic.DynamicFactory
 				AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
 			//if (propData.IsForeignKey)
 			//	AddColumnKeyAttribute(propertyBuilder, typeof(ForeignKeyAttribute));
+
+			if (propData.MaxLength.HasValue && propData.MaxLength.Value != -1)
+				AddMaxLengthAttribute(propertyBuilder, propData.MaxLength.Value);
+
+			//if(propData.Nullable)
+			//	AddRequiredAttribute(propertyBuilder);
+
 			AddColumnAttribute(propertyBuilder, name, propData.Order);
 
 			MethodAttributes getterAndSetterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;// | MethodAttributes.Virtual;
@@ -144,6 +267,25 @@ namespace ODataRestierDynamic.DynamicFactory
 				new object[] { name },
 				new PropertyInfo[] { attrType.GetProperty("Order") },
 				new object[] { order });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		private void AddRequiredAttribute(PropertyBuilder propertyBuilder)
+		{
+			Type attrType = typeof(RequiredAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes),
+				new object[]{},
+				new PropertyInfo[] { attrType.GetProperty("AllowEmptyStrings") },
+				new object[] { true });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		private void AddMaxLengthAttribute(PropertyBuilder propertyBuilder, int maxLength)
+		{
+			Type attrType = typeof(MaxLengthAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(int) }),
+				new object[] { maxLength });
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 

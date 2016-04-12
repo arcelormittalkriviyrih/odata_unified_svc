@@ -8,6 +8,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataRestierDynamic.Tests", "ODataRestierDynamic.Tests\ODataRestierDynamic.Tests.csproj", "{427E60B7-1EB3-47C1-BB39-9F6D0479B155}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://109.95.53.22:33362/tfs/bulkteq
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ODataRestierDynamic.Tests\\ODataRestierDynamic.Tests.csproj
+		SccProjectName1 = ODataRestierDynamic.Tests
+		SccLocalPath1 = ODataRestierDynamic.Tests
+		SccProjectUniqueName2 = ODataRestierDynamic\\ODataRestierDynamic.csproj
+		SccProjectName2 = ODataRestierDynamic
+		SccLocalPath2 = ODataRestierDynamic
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

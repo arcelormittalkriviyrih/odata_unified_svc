@@ -18,7 +18,7 @@ namespace ODataRestierDynamic.DynamicFactory
 		public System.Linq.Expressions.Expression Source(QueryExpressionContext context, bool embedded)
 		{
 			//Source query expression dynamically
-			var dbContext = context.QueryContext.ApiContext.GetProperty<DynamicContext>("Microsoft.Restier.EntityFramework.DbContext");
+			var dbContext = context.QueryContext.ApiContext.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
 			if (dbContext != null)
 			{
 				string name = context.ModelReference.EntitySet.Name;

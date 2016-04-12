@@ -29,7 +29,7 @@ namespace ODataRestierDynamic.DynamicFactory
 
 				if (!result)
 				{
-					var dbContext = context.GetProperty<DynamicContext>("Microsoft.Restier.EntityFramework.DbContext");
+					var dbContext = context.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
 					if (dbContext != null)
 					{
 						result = dbContext.TryGetRelevantType(name, out relevantType);

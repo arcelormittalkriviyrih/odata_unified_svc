@@ -19,6 +19,10 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +48,10 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Functions, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Functions.1.2.0\lib\net45\EntityFramework.Functions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -125,8 +133,10 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
+    <Compile Include="DynamicFactory\DynamicAction.cs" />
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
+    <Compile Include="DynamicFactory\DynamicMethodData.cs" />
     <Compile Include="DynamicFactory\DynamicModelBuilder.cs" />
     <Compile Include="DynamicFactory\DynamicModelMapper.cs" />
     <Compile Include="DynamicFactory\DynamicPropertyData.cs" />
@@ -136,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DynamicActions.cs" />
     <Compile Include="Models\DynamicApi.cs" />
     <Compile Include="Models\DynamicContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
