@@ -21,8 +21,12 @@ using System.Collections;
 
 namespace ODataRestierDynamic
 {
+	/// <summary>	A web API configuration. </summary>
 	public static class WebApiConfig
 	{
+		/// <summary>	Registers the specified configuration. </summary>
+		///
+		/// <param name="config">	The configuration. </param>
 		public static void Register(HttpConfiguration config)
 		{
 			// Web API configuration and services
@@ -40,6 +44,10 @@ namespace ODataRestierDynamic
 			);
 		}
 
+		/// <summary>	Registers the dynamic. </summary>
+		///
+		/// <param name="config">	The configuration. </param>
+		/// <param name="server">	The server. </param>
 		public static async void RegisterDynamic(HttpConfiguration config, HttpServer server)
 		{
 			System.Web.OData.Routing.ODataRoute odataRoute = await config.MapRestierRoute<DynamicApi>(

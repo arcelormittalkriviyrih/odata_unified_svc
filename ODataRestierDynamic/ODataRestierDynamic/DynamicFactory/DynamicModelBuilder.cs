@@ -18,13 +18,23 @@ using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>
-	/// Hook for building DB model dynamically.
-	/// </summary>
+	/// <summary>	Hook for building DB model dynamically. </summary>
 	public class DynamicModelBuilder : IModelBuilder, IDelegateHookHandler<IModelBuilder>
 	{
+		/// <summary>	Gets or sets the inner handler. </summary>
+		///
+		/// <value>	The inner handler. </value>
+
 		public IModelBuilder InnerHandler { get; set; }
 
+		/// <summary>	Asynchronously gets an API model for an API. </summary>
+		///
+		/// <param name="context">				The context for processing. </param>
+		/// <param name="cancellationToken">	An optional cancellation token. </param>
+		///
+		/// <returns>
+		/// A task that represents the asynchronous operation whose result is the API model.
+		/// </returns>
 		public async Task<IEdmModel> GetModelAsync(InvocationContext context, System.Threading.CancellationToken cancellationToken)
 		{
 			//Create EDM DB model dynamically if you need
@@ -39,11 +49,6 @@ namespace ODataRestierDynamic.DynamicFactory
 			{
 				var dbContext = context.ApiContext.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
 
-				//var edmAction = new EdmAction("ODataRestierDynamic.Models", "ins_MaterialLotByController", EdmCoreModel.Instance.GetInt32(false));
-				//edmAction.AddParameter("controllerID", EdmCoreModel.Instance.GetInt32(false));
-
-				//model.AddElement(edmAction);
-
 				try
 				{
 					this.BuildActions(model, dbContext.DynamicActions);
@@ -57,6 +62,13 @@ namespace ODataRestierDynamic.DynamicFactory
 			return model;
 		}
 
+		/// <summary>	Attempts to get entity type from the given data. </summary>
+		///
+		/// <param name="model">	 	The model. </param>
+		/// <param name="type">		 	The type. </param>
+		/// <param name="entityType">	[out] Type of the entity. </param>
+		///
+		/// <returns>	true if it succeeds, false if it fails. </returns>
 		private static bool TryGetEntityType(IEdmModel model, Type type, out IEdmEntityType entityType)
 		{
 			var edmType = model.FindDeclaredType(type.FullName);
@@ -64,6 +76,11 @@ namespace ODataRestierDynamic.DynamicFactory
 			return entityType != null;
 		}
 
+		/// <summary>	Builds operation parameters. </summary>
+		///
+		/// <param name="operation">	The operation. </param>
+		/// <param name="method">   	The method. </param>
+		/// <param name="model">		The model. </param>
 		private static void BuildOperationParameters(EdmOperation operation, MethodInfo method, IEdmModel model)
 		{
 			foreach (ParameterInfo parameter in method.GetParameters())
@@ -78,6 +95,13 @@ namespace ODataRestierDynamic.DynamicFactory
 			}
 		}
 
+		/// <summary>	Attempts to get binding parameter from the given data. </summary>
+		///
+		/// <param name="method">		   	The method. </param>
+		/// <param name="model">		   	The model. </param>
+		/// <param name="bindingParameter">	[out] The binding parameter. </param>
+		///
+		/// <returns>	true if it succeeds, false if it fails. </returns>
 		private static bool TryGetBindingParameter(
 			MethodInfo method, IEdmModel model, out ParameterInfo bindingParameter)
 		{
@@ -103,6 +127,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			return true;
 		}
 
+		/// <summary>	Gets return type reference. </summary>
+		///
+		/// <param name="type"> 	The type. </param>
+		/// <param name="model">	The model. </param>
+		///
+		/// <returns>	The return type reference. </returns>
 		private static IEdmTypeReference GetReturnTypeReference(Type type, IEdmModel model)
 		{
 			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
@@ -119,6 +149,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			return GetTypeReference(type, model);
 		}
 
+		/// <summary>	Gets type reference. </summary>
+		///
+		/// <param name="type"> 	The type. </param>
+		/// <param name="model">	The model. </param>
+		///
+		/// <returns>	The type reference. </returns>
 		private static IEdmTypeReference GetTypeReference(Type type, IEdmModel model)
 		{
 			Type elementType;
@@ -136,6 +172,11 @@ namespace ODataRestierDynamic.DynamicFactory
 			return GetPrimitiveTypeReference(type);
 		}
 
+		/// <summary>	Gets primitive type reference. </summary>
+		///
+		/// <param name="type">	The type. </param>
+		///
+		/// <returns>	The primitive type reference. </returns>
 		public static EdmTypeReference GetPrimitiveTypeReference(Type type)
 		{
 			// Only handle primitive type right now
@@ -152,6 +193,15 @@ namespace ODataRestierDynamic.DynamicFactory
 				isNullable);
 		}
 
+		/// <summary>	Gets primitive type kind. </summary>
+		///
+		/// <exception cref="NotSupportedException">	Thrown when the requested operation is not
+		/// 											supported. </exception>
+		///
+		/// <param name="type">		 	The type. </param>
+		/// <param name="isNullable">	[out] The is nullable. </param>
+		///
+		/// <returns>	The primitive type kind. </returns>
 		private static EdmPrimitiveTypeKind? GetPrimitiveTypeKind(Type type, out bool isNullable)
 		{
 			isNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
@@ -248,6 +298,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Not Supported Type = {0}", type.FullName));
 		}
 
+		/// <summary>	Builds entity set path expression. </summary>
+		///
+		/// <param name="returnTypeReference">	The return type reference. </param>
+		/// <param name="bindingParameter">   	The binding parameter. </param>
+		///
+		/// <returns>	An EdmPathExpression. </returns>
 		private static EdmPathExpression BuildEntitySetPathExpression(
 			IEdmTypeReference returnTypeReference, ParameterInfo bindingParameter)
 		{
@@ -261,6 +317,13 @@ namespace ODataRestierDynamic.DynamicFactory
 			return null;
 		}
 
+		/// <summary>	Builds entity set reference expression. </summary>
+		///
+		/// <param name="model">			  	The model. </param>
+		/// <param name="entitySetName">	  	Name of the entity set. </param>
+		/// <param name="returnTypeReference">	The return type reference. </param>
+		///
+		/// <returns>	An EdmEntitySetReferenceExpression. </returns>
 		private static EdmEntitySetReferenceExpression BuildEntitySetReferenceExpression(
 			IEdmModel model, string entitySetName, IEdmTypeReference returnTypeReference)
 		{
@@ -283,6 +346,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			return null;
 		}
 
+		/// <summary>	Searches for the first declared entity set by type reference. </summary>
+		///
+		/// <param name="model">			The model. </param>
+		/// <param name="typeReference">	The type reference. </param>
+		///
+		/// <returns>	The found declared entity set by type reference. </returns>
 		private static IEdmEntitySet FindDeclaredEntitySetByTypeReference(IEdmModel model, IEdmTypeReference typeReference)
 		{
 			IEdmTypeReference elementTypeReference;
@@ -299,6 +368,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			return model.EntityContainer.EntitySets().SingleOrDefault(e => e.EntityType().FullTypeName() == elementTypeReference.FullName());
 		}
 
+		/// <summary>	Attempts to get element type reference from the given data. </summary>
+		///
+		/// <param name="typeReference">	   	The type reference. </param>
+		/// <param name="elementTypeReference">	[out] The element type reference. </param>
+		///
+		/// <returns>	true if it succeeds, false if it fails. </returns>
 		private static bool TryGetElementTypeReference(IEdmTypeReference typeReference, out IEdmTypeReference elementTypeReference)
 		{
 			if (!typeReference.IsCollection())
@@ -311,6 +386,10 @@ namespace ODataRestierDynamic.DynamicFactory
 			return true;
 		}
 
+		/// <summary>	Builds the actions. </summary>
+		///
+		/// <param name="model">	 	The model. </param>
+		/// <param name="targetType">	Type of the target. </param>
 		private void BuildActions(EdmModel model, Type targetType)
 		{
 			var methods = targetType.GetMethods(
@@ -369,8 +448,15 @@ namespace ODataRestierDynamic.DynamicFactory
 			}
 		}
 
+		/// <summary>	The default entity container name. </summary>
 		private const string DefaultEntityContainerName = "DefaultContainer";
 
+		/// <summary>	Ensures that entity container. </summary>
+		///
+		/// <param name="model">  	The model. </param>
+		/// <param name="apiType">	Type of the API. </param>
+		///
+		/// <returns>	An EdmEntityContainer. </returns>
 		public static EdmEntityContainer EnsureEntityContainer(EdmModel model, Type apiType)
 		{
 			var container = (EdmEntityContainer)model.EntityContainer;
@@ -385,22 +471,38 @@ namespace ODataRestierDynamic.DynamicFactory
 
 		#region Class ActionMethodInfo
 
+		/// <summary>	Information about the action method. </summary>
 		private class ActionMethodInfo
 		{
+			/// <summary>	Gets or sets the method. </summary>
+			///
+			/// <value>	The method. </value>
 			public MethodInfo Method { get; set; }
 
+			/// <summary>	Gets or sets the action attribute. </summary>
+			///
+			/// <value>	The action attribute. </value>
 			public ActionAttribute ActionAttribute { get; set; }
 
+			/// <summary>	Gets the name. </summary>
+			///
+			/// <value>	The name. </value>
 			public string Name
 			{
 				get { return this.ActionAttribute.Name ?? this.Method.Name; }
 			}
 
+			/// <summary>	Gets the namespace. </summary>
+			///
+			/// <value>	The namespace. </value>
 			public string Namespace
 			{
 				get { return this.ActionAttribute.Namespace ?? this.Method.DeclaringType.Namespace; }
 			}
 
+			/// <summary>	Gets the set the entity belongs to. </summary>
+			///
+			/// <value>	The entity set. </value>
 			public string EntitySet
 			{
 				get { return this.ActionAttribute.EntitySet; }
@@ -412,8 +514,10 @@ namespace ODataRestierDynamic.DynamicFactory
 
 	#region Class TypeExtensions
 
+	/// <summary>	A type extensions. </summary>
 	internal static partial class TypeExtensions
 	{
+		/// <summary>	The qualified method binding flags. </summary>
 		private const BindingFlags QualifiedMethodBindingFlags = BindingFlags.NonPublic |
 																 BindingFlags.Static |
 																 BindingFlags.Instance |
@@ -421,18 +525,14 @@ namespace ODataRestierDynamic.DynamicFactory
 																 BindingFlags.DeclaredOnly;
 
 		/// <summary>
-		/// Find a base type or implemented interface which has a generic definition
-		/// represented by the parameter, <c>definition</c>.
+		/// Find a base type or implemented interface which has a generic definition represented by the
+		/// parameter, <c>definition</c>.
 		/// </summary>
-		/// <param name="type">
-		/// The subject type.
-		/// </param>
-		/// <param name="definition">
-		/// The generic definition to check with.
-		/// </param>
-		/// <returns>
-		/// The base type or the interface found; otherwise, <c>null</c>.
-		/// </returns>
+		///
+		/// <param name="type">		 	The subject type. </param>
+		/// <param name="definition">	The generic definition to check with. </param>
+		///
+		/// <returns>	The base type or the interface found; otherwise, <c>null</c>. </returns>
 		public static Type FindGenericType(this Type type, Type definition)
 		{
 			if (type == null)
@@ -477,11 +577,25 @@ namespace ODataRestierDynamic.DynamicFactory
 			return null;
 		}
 
+		/// <summary>	A Type extension method that gets qualified method. </summary>
+		///
+		/// <param name="type">		 	The subject type. </param>
+		/// <param name="methodName">	Name of the method. </param>
+		///
+		/// <returns>	The qualified method. </returns>
 		public static MethodInfo GetQualifiedMethod(this Type type, string methodName)
 		{
 			return type.GetMethod(methodName, QualifiedMethodBindingFlags);
 		}
 
+		/// <summary>
+		/// A Type extension method that attempts to get element type from the given data.
+		/// </summary>
+		///
+		/// <param name="type">		  	The subject type. </param>
+		/// <param name="elementType">	[out] Type of the element. </param>
+		///
+		/// <returns>	true if it succeeds, false if it fails. </returns>
 		public static bool TryGetElementType(this Type type, out Type elementType)
 		{
 			// Special case: string implements IEnumerable<char> however it should
@@ -503,6 +617,12 @@ namespace ODataRestierDynamic.DynamicFactory
 			return false;
 		}
 
+		/// <summary>	A Type extension method that query if 'type' is generic definition. </summary>
+		///
+		/// <param name="type">		 	The subject type. </param>
+		/// <param name="definition">	The generic definition to check with. </param>
+		///
+		/// <returns>	true if generic definition, false if not. </returns>
 		private static bool IsGenericDefinition(this Type type, Type definition)
 		{
 			return type.IsGenericType &&

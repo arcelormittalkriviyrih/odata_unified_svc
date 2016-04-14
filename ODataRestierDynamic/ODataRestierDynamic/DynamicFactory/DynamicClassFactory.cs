@@ -11,21 +11,32 @@ using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
+	/// <summary>	A dynamic class factory. </summary>
 	public class DynamicClassFactory
 	{
+		/// <summary>	The application domain. </summary>
 		private AppDomain _appDomain;
+		/// <summary>	The assembly builder. </summary>
 		private AssemblyBuilder _assemblyBuilder;
+		/// <summary>	The module builder. </summary>
 		private ModuleBuilder _moduleBuilder;
+		/// <summary>	The type builder. </summary>
 		private TypeBuilder _typeBuilder;
+		/// <summary>	Name of the assembly. </summary>
 		private string _assemblyName;
 
+		/// <summary>	The default namespace. </summary>
 		public const string cDefaultNamespace = "ODataRestierDynamic.Models";
 
+		/// <summary>	Default constructor. </summary>
 		public DynamicClassFactory()
 			: this(cDefaultNamespace)
 		{
 		}
 
+		/// <summary>	Constructor. </summary>
+		///
+		/// <param name="assemblyName">	Name of the assembly. </param>
 		public DynamicClassFactory(string assemblyName)
 		{
 			_appDomain = System.Threading.Thread.GetDomain();
@@ -33,12 +44,14 @@ namespace ODataRestierDynamic.DynamicFactory
 		}
 
 		/// <summary>
-		/// This is the normal entry point and just return the Type generated at runtime
+		/// This is the normal entry point and just return the Type generated at runtime.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <param name="properties"></param>
-		/// <returns></returns>
+		///
+		/// <typeparam name="T">	. </typeparam>
+		/// <param name="name">		 	. </param>
+		/// <param name="properties">	. </param>
+		///
+		/// <returns>	The new dynamic type. </returns>
 		public Type CreateDynamicType<T>(string name, Dictionary<string, DynamicPropertyData> properties) where T : DynamicEntity
 		{
 			var tb = CreateDynamicTypeBuilder<T>(name, properties);
@@ -46,12 +59,13 @@ namespace ODataRestierDynamic.DynamicFactory
 		}
 
 		/// <summary>
-		/// This is the normal entry point and just return the Type generated at runtime
+		/// This is the normal entry point and just return the Type generated at runtime.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <param name="properties"></param>
-		/// <returns></returns>
+		///
+		/// <param name="name">   	. </param>
+		/// <param name="methods">	The methods. </param>
+		///
+		/// <returns>	The new dynamic type action. </returns>
 		public Type CreateDynamicTypeAction<T>(string name, Dictionary<string, DynamicMethodData> methods) where T : DynamicAction
 		{
 			var tb = CreateDynamicTypeActionBuilder<T>(name, methods);
@@ -59,12 +73,13 @@ namespace ODataRestierDynamic.DynamicFactory
 		}
 
 		/// <summary>
-		/// Exposes a TypeBuilder that can be returned and created outside of the class
+		/// Exposes a TypeBuilder that can be returned and created outside of the class.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <param name="properties"></param>
-		/// <returns></returns>
+		///
+		/// <param name="name">   	. </param>
+		/// <param name="methods">	The methods. </param>
+		///
+		/// <returns>	The new dynamic type action builder. </returns>
 		public TypeBuilder CreateDynamicTypeActionBuilder<T>(string name, Dictionary<string, DynamicMethodData> methods)
 			where T : DynamicAction
 		{
@@ -88,11 +103,20 @@ namespace ODataRestierDynamic.DynamicFactory
 			return _typeBuilder;
 		}
 
+		/// <summary>	Creates the methods. </summary>
+		///
+		/// <param name="typeBuilder">	The type builder. </param>
+		/// <param name="methods">	  	The methods. </param>
 		public void CreateMethods(TypeBuilder typeBuilder, Dictionary<string, DynamicMethodData> methods)
 		{
 			methods.ToList().ForEach(p => AddMethodDynamically(typeBuilder, p.Key, p.Value));
 		}
 
+		/// <summary>	Adds a method dynamically. </summary>
+		///
+		/// <param name="typeBuilder">			The type builder. </param>
+		/// <param name="methodName">			Name of the method. </param>
+		/// <param name="dynamicMethodData">	Information describing the dynamic method. </param>
 		private void AddMethodDynamically(TypeBuilder typeBuilder, string methodName, DynamicMethodData dynamicMethodData)
 		{
 			MethodBuilder methodBuilder = typeBuilder.DefineMethod(methodName,
@@ -138,6 +162,9 @@ namespace ODataRestierDynamic.DynamicFactory
 			AddFunctionAttribute(methodBuilder, methodName, dynamicMethodData);
 		}
 
+		/// <summary>	Adds an action attribute. </summary>
+		///
+		/// <param name="methodBuilder">	The method builder. </param>
 		private void AddActionAttribute(MethodBuilder methodBuilder)
 		{
 			Type attrType = typeof(ActionAttribute);
@@ -145,14 +172,13 @@ namespace ODataRestierDynamic.DynamicFactory
 			methodBuilder.SetCustomAttribute(attr);
 		}
 
+		/// <summary>	Adds a function attribute. </summary>
+		///
+		/// <param name="methodBuilder">		The method builder. </param>
+		/// <param name="methodName">			Name of the method. </param>
+		/// <param name="dynamicMethodData">	Information describing the dynamic method. </param>
 		private void AddFunctionAttribute(MethodBuilder methodBuilder, string methodName, DynamicMethodData dynamicMethodData)
 		{
-			//Type attrType = typeof(EntityFramework.Functions.ModelDefinedFunctionAttribute);
-			//var attr = new CustomAttributeBuilder(attrType.GetConstructor(
-			//	new[] { typeof(EntityFramework.Functions.FunctionType), typeof(string), typeof(string) }),
-			//	new object[] { dynamicMethodData.FunctionType, methodName, dynamicMethodData.Schema });
-			//methodBuilder.SetCustomAttribute(attr);
-
 			Type attrType = typeof(System.Data.Entity.DbFunctionAttribute);
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
 				new[] { typeof(string), typeof(string) }),
@@ -161,12 +187,13 @@ namespace ODataRestierDynamic.DynamicFactory
 		}
 
 		/// <summary>
-		/// Exposes a TypeBuilder that can be returned and created outside of the class
+		/// Exposes a TypeBuilder that can be returned and created outside of the class.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <param name="properties"></param>
-		/// <returns></returns>
+		///
+		/// <param name="name">		 	. </param>
+		/// <param name="properties">	. </param>
+		///
+		/// <returns>	The new dynamic type builder. </returns>
 		public TypeBuilder CreateDynamicTypeBuilder<T>(string name, Dictionary<string, DynamicPropertyData> properties)
 			where T : DynamicEntity
 		{
@@ -185,10 +212,7 @@ namespace ODataRestierDynamic.DynamicFactory
 															| TypeAttributes.Serializable
 															| TypeAttributes.BeforeFieldInit, typeof(T));
 
-			//various class based attributes for WCF and EF
-			//AddDataContractAttribute();
 			AddTableAttribute(name);
-			//AddDataServiceKeyAttribute();
 
 			//if there is a property on the base class and also in the dictionary, remove them from the dictionary
 			var pis = typeof(T).GetProperties();
@@ -197,19 +221,22 @@ namespace ODataRestierDynamic.DynamicFactory
 				properties.Remove(pi.Name);
 			}
 
-			//get the OnPropertyChanged method from the base class
-			//var propertyChangedMethod = typeof(T).GetMethod("OnPropertyChanged", BindingFlags.Instance | BindingFlags.NonPublic);
-
 			CreateProperties(_typeBuilder, properties, null);
 
 			return _typeBuilder;
 		}
 
+		/// <summary>	Adds an attribute. </summary>
+		///
+		/// <param name="attrType">	Type of the attribute. </param>
 		public void AddAttribute(Type attrType)
 		{
 			_typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { }));
 		}
 
+		/// <summary>	Adds a table attribute. </summary>
+		///
+		/// <param name="name">	. </param>
 		public void AddTableAttribute(string name)
 		{
 			Type attrType = typeof(TableAttribute);
@@ -217,6 +244,11 @@ namespace ODataRestierDynamic.DynamicFactory
 				new object[] { name }));
 		}
 
+		/// <summary>	Creates the properties. </summary>
+		///
+		/// <param name="typeBuilder">		   	The type builder. </param>
+		/// <param name="properties">		   	. </param>
+		/// <param name="raisePropertyChanged">	The raise property changed. </param>
 		public void CreateProperties(TypeBuilder typeBuilder, Dictionary<string, DynamicPropertyData> properties, MethodInfo raisePropertyChanged)
 		{
 			//Make all existing foreign keys as primary key if table has no primary key
@@ -229,6 +261,11 @@ namespace ODataRestierDynamic.DynamicFactory
 			properties.ToList().ForEach(p => CreateFieldForType(p.Value, p.Key, raisePropertyChanged));
 		}
 
+		/// <summary>	Creates field for type. </summary>
+		///
+		/// <param name="propData">			   	Information describing the property. </param>
+		/// <param name="name">				   	. </param>
+		/// <param name="raisePropertyChanged">	The raise property changed. </param>
 		private void CreateFieldForType(DynamicPropertyData propData, string name, MethodInfo raisePropertyChanged)
 		{
 			string propertyName = name == _typeBuilder.Name ? name + "1" : name;
@@ -237,8 +274,6 @@ namespace ODataRestierDynamic.DynamicFactory
 
 			PropertyBuilder propertyBuilder = _typeBuilder.DefineProperty(propertyName, PropertyAttributes.HasDefault, propData.Type, null);
 
-			//add the various WCF and EF attributes to the property
-			//AddDataMemberAttribute(propertyBuilder);
 			if (propData.IsPrimaryKey) //|| propData.IsForeignKey)
 				AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
 			//if (propData.IsForeignKey)
@@ -246,9 +281,6 @@ namespace ODataRestierDynamic.DynamicFactory
 
 			if (propData.MaxLength.HasValue && propData.MaxLength.Value != -1)
 				AddMaxLengthAttribute(propertyBuilder, propData.MaxLength.Value);
-
-			//if(propData.Nullable)
-			//	AddRequiredAttribute(propertyBuilder);
 
 			AddColumnAttribute(propertyBuilder, name, propData.Order);
 
@@ -260,12 +292,21 @@ namespace ODataRestierDynamic.DynamicFactory
 			propertyBuilder.SetSetMethod(CreateSetMethod(getterAndSetterAttributes, propertyName, propData.Type, fieldBuilder, raisePropertyChanged));
 		}
 
+		/// <summary>	Adds a column key attribute to 'attrType'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="attrType">		  	Type of the attribute. </param>
 		private void AddColumnKeyAttribute(PropertyBuilder propertyBuilder, Type attrType)
 		{
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { });
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 
+		/// <summary>	Adds a column attribute. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="name">			  	. </param>
+		/// <param name="order">		  	The order. </param>
 		private void AddColumnAttribute(PropertyBuilder propertyBuilder, string name, int order)
 		{
 			Type attrType = typeof(ColumnAttribute);
@@ -277,6 +318,9 @@ namespace ODataRestierDynamic.DynamicFactory
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 
+		/// <summary>	Adds a required attribute. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
 		private void AddRequiredAttribute(PropertyBuilder propertyBuilder)
 		{
 			Type attrType = typeof(RequiredAttribute);
@@ -287,6 +331,10 @@ namespace ODataRestierDynamic.DynamicFactory
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 
+		/// <summary>	Adds a maximum length attribute to 'maxLength'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="maxLength">	  	The maximum length. </param>
 		private void AddMaxLengthAttribute(PropertyBuilder propertyBuilder, int maxLength)
 		{
 			Type attrType = typeof(MaxLengthAttribute);
@@ -296,6 +344,14 @@ namespace ODataRestierDynamic.DynamicFactory
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 
+		/// <summary>	Creates get method. </summary>
+		///
+		/// <param name="attr">		   	The attribute. </param>
+		/// <param name="name">		   	. </param>
+		/// <param name="type">		   	The type. </param>
+		/// <param name="fieldBuilder">	The field builder. </param>
+		///
+		/// <returns>	The new get method. </returns>
 		private MethodBuilder CreateGetMethod(MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder)
 		{
 			var getMethodBuilder = _typeBuilder.DefineMethod("get_" + name, attr, type, Type.EmptyTypes);
@@ -308,6 +364,15 @@ namespace ODataRestierDynamic.DynamicFactory
 			return getMethodBuilder;
 		}
 
+		/// <summary>	Creates set method. </summary>
+		///
+		/// <param name="attr">				   	The attribute. </param>
+		/// <param name="name">				   	. </param>
+		/// <param name="type">				   	The type. </param>
+		/// <param name="fieldBuilder">		   	The field builder. </param>
+		/// <param name="raisePropertyChanged">	The raise property changed. </param>
+		///
+		/// <returns>	The new set method. </returns>
 		private MethodBuilder CreateSetMethod(MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder, MethodInfo raisePropertyChanged)
 		{
 			var setMethodBuilder = _typeBuilder.DefineMethod("set_" + name, attr, null, new Type[] { type });
@@ -329,6 +394,7 @@ namespace ODataRestierDynamic.DynamicFactory
 			return setMethodBuilder;
 		}
 
+		/// <summary>	Saves the assembly. </summary>
 		public void SaveAssembly()
 		{
 			_assemblyBuilder.Save(_assemblyBuilder.GetName().Name + ".dll");

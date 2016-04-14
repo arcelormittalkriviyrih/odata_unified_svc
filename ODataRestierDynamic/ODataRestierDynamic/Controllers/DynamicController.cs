@@ -25,8 +25,12 @@ namespace ODataRestierDynamic.Controllers
 	/// </summary>
 	public class DynamicController : ODataController
 	{
+		/// <summary>	The API. </summary>
 		private DynamicApi api;
 
+		/// <summary>	Gets the API. </summary>
+		///
+		/// <value>	The API. </value>
 		private DynamicApi Api
 		{
 			get
@@ -40,6 +44,9 @@ namespace ODataRestierDynamic.Controllers
 			}
 		}
 
+		/// <summary>	Gets a context for the database. </summary>
+		///
+		/// <value>	The database context. </value>
 		private DynamicContext DbContext
 		{
 			get
@@ -48,10 +55,9 @@ namespace ODataRestierDynamic.Controllers
 			}
 		}
 
-		/// <summary>
-		/// Method for getting object for user rules custom metadata
-		/// </summary>
-		/// <returns></returns>
+		/// <summary>	Method for getting object for user rules custom metadata. </summary>
+		///
+		/// <returns>	The user metadata. </returns>
 		[HttpGet]
 		[ODataRoute("GetUserMetadata")]
 		public IHttpActionResult GetUserMetadata()
@@ -99,12 +105,15 @@ namespace ODataRestierDynamic.Controllers
 			return Ok(result);
 		}
 
-		/// <summary>
-		/// Method for calling all Dynamic Actions which exist in DbContext.
-		/// </summary>
-		/// <param name="name">action name</param>
-		/// <param name="parameters">Parameter names and values provided by a client in a POST request to invoke a particular Action.</param>
-		/// <returns>Command that asynchronously creates an System.Net.Http.HttpResponseMessage.</returns>
+		/// <summary>	Method for calling all Dynamic Actions which exist in DbContext. </summary>
+		///
+		/// <param name="name">		 	action name. </param>
+		/// <param name="parameters">	Parameter names and values provided by a client in a POST request
+		/// 							to invoke a particular Action. </param>
+		///
+		/// <returns>
+		/// Command that asynchronously creates an System.Net.Http.HttpResponseMessage.
+		/// </returns>
 		public IHttpActionResult CallAction(string name, ODataActionParameters parameters)
 		{
 			//int controllerID = (int)parameters["controllerID"];
@@ -146,10 +155,9 @@ namespace ODataRestierDynamic.Controllers
 			return Ok(result);
 		}
 
-		/// <summary>
-		/// Disposes the API and the controller.
-		/// </summary>
-		/// <param name="disposing">Indicates whether disposing is happening.</param>
+		/// <summary>	Disposes the API and the controller. </summary>
+		///
+		/// <param name="disposing">	Indicates whether disposing is happening. </param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

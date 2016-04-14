@@ -20,37 +20,48 @@ using EntityFramework.Functions;
 namespace ODataRestierDynamic.Models
 {
 	/// <summary>
-	///  A DynamicContext instance represents a combination of the Unit Of Work and Repository
-	///     patterns such that it can be used to query from a database and group together
-	///     changes that will then be written back to the store as a unit. DynamicContext
-	///     is conceptually similar to DbContext.
+	/// A DynamicContext instance represents a combination of the Unit Of Work and Repository
+	///    patterns such that it can be used to query from a database and group together changes that
+	///    will then be written back to the store as a unit. DynamicContext is conceptually similar
+	///    to DbContext.
 	/// </summary>
+
 	public partial class DynamicContext : DbContext
 	{
 		#region Const
 
+		/// <summary>	The database context key. </summary>
 		public const string cDbContextKey = "Microsoft.Restier.EntityFramework.DbContext";
 
-		private const string cConfigConnectionName = "DefaultDataSource"; //"B2MML-BatchML";
+		/// <summary>	"B2MML-BatchML"; </summary>
+		private const string cConfigConnectionName = "DefaultDataSource";
 
+		/// <summary>	The default schema name. </summary>
 		public const string cDefaultSchemaName = "dbo";
 
+		/// <summary>	The connection string settings. </summary>
 		internal static readonly ConnectionStringSettings cConnectionStringSettings = WebConfigurationManager.ConnectionStrings[cConfigConnectionName];
 
 		#endregion
 
 		#region Fields
 
+		/// <summary>	The current dynamic model assembly. </summary>
 		private Assembly _currentDynamicModelAssembly = null;
 
+		/// <summary>	The database compiled model. </summary>
 		private static readonly DbCompiledModel _dbCompiledModel = null;
 
+		/// <summary>	The dynamic actions. </summary>
 		private static Type _dynamicActions = null;
 
 		#endregion
 
 		#region Property
 
+		/// <summary>	Gets the dynamic actions. </summary>
+		///
+		/// <value>	The dynamic actions. </value>
 		public Type DynamicActions
 		{
 			get
@@ -63,11 +74,13 @@ namespace ODataRestierDynamic.Models
 
 		#region Constructor
 
+		/// <summary>	Static constructor. </summary>
 		static DynamicContext()
 		{
 			_dbCompiledModel = CreateModel();
 		}
 
+		/// <summary>	Default constructor. </summary>
 		public DynamicContext()
 			: base(cConnectionStringSettings.ConnectionString, _dbCompiledModel)
 		{
@@ -81,6 +94,9 @@ namespace ODataRestierDynamic.Models
 
 		#region Methods
 
+		/// <summary>	Creates the model. </summary>
+		///
+		/// <returns>	The new model. </returns>
 		private static DbCompiledModel CreateModel()
 		{
 			// Create a model + register types to it.
@@ -318,11 +334,33 @@ namespace ODataRestierDynamic.Models
 			return compiledDatabaseModel;
 		}
 
+		/// <summary>
+		/// This method is called when the model for a derived context has been initialized, but before
+		/// the model has been locked down and used to initialize the context.  The default
+		/// implementation of this method does nothing, but it can be overridden in a derived class such
+		/// that the model can be further configured before it is locked down.
+		/// </summary>
+		///
+		/// <exception cref="UnintentionalCodeFirstException">	Thrown when an Unintentional Code First
+		/// 													error condition occurs. </exception>
+		///
+		/// <param name="modelBuilder">	The builder that defines the model for the context being created. </param>
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			throw new UnintentionalCodeFirstException();
 		}
 
+		/// <summary>
+		/// Disposes the context. The underlying
+		/// <see cref="T:System.Data.Entity.Core.Objects.ObjectContext"/> is also disposed if it was
+		/// created is by this context or ownership was passed to this context when this context was
+		/// created. The connection to the database (<see cref="T:System.Data.Common.DbConnection"/>
+		/// object) is also disposed if it was created is by this context or ownership was passed to this
+		/// context when this context was created.
+		/// </summary>
+		///
+		/// <param name="disposing">	<c>true</c> to release both managed and unmanaged resources;
+		/// 							<c>false</c> to release only unmanaged resources. </param>
 		protected override void Dispose(bool disposing)
 		{
 			base.Dispose(disposing);
@@ -331,18 +369,37 @@ namespace ODataRestierDynamic.Models
 			_currentDynamicModelAssembly = null;
 		}
 
+		/// <summary>	Creates a type. </summary>
+		///
+		/// <param name="dynamicClassFactory">	The dynamic class factory. </param>
+		/// <param name="name">				  	The name. </param>
+		/// <param name="property">			  	The property. </param>
+		///
+		/// <returns>	The new type. </returns>
 		private static Type CreateType(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, DynamicPropertyData> property)
 		{
 			var dynamicType = dynamicClassFactory.CreateDynamicType<DynamicEntity>(name, property);
 			return dynamicType;
 		}
 
+		/// <summary>	Creates type action. </summary>
+		///
+		/// <param name="dynamicClassFactory">	The dynamic class factory. </param>
+		/// <param name="name">				  	The name. </param>
+		/// <param name="methods">			  	The methods. </param>
+		///
+		/// <returns>	The new type action. </returns>
 		private static Type CreateTypeAction(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, DynamicMethodData> methods)
 		{
 			var dynamicType = dynamicClassFactory.CreateDynamicTypeAction<DynamicAction>(name, methods);
 			return dynamicType;
 		}
 
+		/// <summary>	Gets model type. </summary>
+		///
+		/// <param name="name">	The name. </param>
+		///
+		/// <returns>	The model type. </returns>
 		public Type GetModelType(string name)
 		{
 			string lvNamespace = string.Format("{0}.{1}", DynamicClassFactory.cDefaultNamespace, name);
@@ -354,6 +411,12 @@ namespace ODataRestierDynamic.Models
 			return type;
 		}
 
+		/// <summary>	Attempts to get relevant type from the given data. </summary>
+		///
+		/// <param name="name">		   	The name. </param>
+		/// <param name="relevantType">	[out] Type of the relevant. </param>
+		///
+		/// <returns>	true if it succeeds, false if it fails. </returns>
 		public bool TryGetRelevantType(string name, out Type relevantType)
 		{
 			relevantType = GetModelType(name);
@@ -361,6 +424,9 @@ namespace ODataRestierDynamic.Models
 			return true;
 		}
 
+		/// <summary>	Logs a query. </summary>
+		///
+		/// <param name="query">	The query. </param>
 		public void LogQuery(string query)
 		{
 			System.Diagnostics.Debug.Write(query);

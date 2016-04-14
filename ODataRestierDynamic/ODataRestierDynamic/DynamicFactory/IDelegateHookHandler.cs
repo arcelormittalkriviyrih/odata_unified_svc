@@ -7,11 +7,14 @@ using System.Web;
 namespace ODataRestierDynamic.DynamicFactory
 {
 	/// <summary>
-	/// Support hook handler chain, could choose to implement the following interface besides the IHookHandler.
+	/// Support hook handler chain, could choose to implement the following interface besides the
+	/// IHookHandler.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
 	public interface IDelegateHookHandler<T> where T : IHookHandler
 	{
+		/// <summary>	Gets or sets the inner handler. </summary>
+		///
+		/// <value>	The inner handler. </value>
 		T InnerHandler { get; set; }
 	}
 }
