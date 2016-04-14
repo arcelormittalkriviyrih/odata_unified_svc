@@ -90,11 +90,11 @@ namespace ODataRestierDynamic.Models
 			return apiConfiguration;
 		}
 
-		//[Action]
-		//public int ins_MaterialLotByController(int controllerID)
-		//{
-		//	return -1;
-		//}
+		[Function]
+		public DynamicMetadataObject[] GetUserMetadata()
+		{
+			return new DynamicMetadataObject[]{};
+		}
 
 		protected override void Dispose(bool disposing)
 		{

@@ -136,6 +136,7 @@
     <Compile Include="DynamicFactory\DynamicAction.cs" />
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
+    <Compile Include="DynamicFactory\DynamicMetadataObject.cs" />
     <Compile Include="DynamicFactory\DynamicMethodData.cs" />
     <Compile Include="DynamicFactory\DynamicModelBuilder.cs" />
     <Compile Include="DynamicFactory\DynamicModelMapper.cs" />

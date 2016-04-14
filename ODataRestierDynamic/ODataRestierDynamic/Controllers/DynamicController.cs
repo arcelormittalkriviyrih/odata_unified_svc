@@ -15,6 +15,8 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Text;
+using DatabaseSchemaReader;
+using ODataRestierDynamic.DynamicFactory;
 
 namespace ODataRestierDynamic.Controllers
 {
@@ -44,6 +46,57 @@ namespace ODataRestierDynamic.Controllers
 			{
 				return Api.Context;
 			}
+		}
+
+		/// <summary>
+		/// Method for getting object for user rules custom metadata
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[ODataRoute("GetUserMetadata")]
+		public IHttpActionResult GetUserMetadata()
+		{
+			List<DynamicMetadataObject> result = new List<DynamicMetadataObject>();
+
+			// https://www.nuget.org/packages/DatabaseSchemaReader/
+			using (var dbReader = new DatabaseReader(DynamicContext.cConnectionStringSettings.ConnectionString, DynamicContext.cConnectionStringSettings.ProviderName, DynamicContext.cDefaultSchemaName))
+			{
+				var schema = dbReader.ReadAll();
+
+				#region Read Tables
+
+				foreach (var table in schema.Tables)
+				{
+					result.Add(new DynamicMetadataObject() { Name = table.Name, ObjectType = DBObjectType.Table, Schema = table.SchemaOwner });
+				}
+
+				#endregion
+
+				#region Read Views
+
+				foreach (var view in schema.Views)
+				{
+					result.Add(new DynamicMetadataObject() { Name = view.Name, ObjectType = DBObjectType.View, Schema = view.SchemaOwner });
+				}
+
+				#endregion
+
+				#region Read Actions
+
+				foreach (var function in schema.Functions)
+				{
+					result.Add(new DynamicMetadataObject() { Name = function.Name, ObjectType = DBObjectType.Function, Schema = function.SchemaOwner });
+				}
+
+				foreach (var procedure in schema.StoredProcedures)
+				{
+					result.Add(new DynamicMetadataObject() { Name = procedure.Name, ObjectType = DBObjectType.Procedure, Schema = procedure.SchemaOwner });
+				}
+
+				#endregion
+			}
+
+			return Ok(result);
 		}
 
 		/// <summary>

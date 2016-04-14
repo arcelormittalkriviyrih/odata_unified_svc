@@ -35,7 +35,7 @@ namespace ODataRestierDynamic.Models
 
 		public const string cDefaultSchemaName = "dbo";
 
-		private static readonly ConnectionStringSettings cConnectionStringSettings = WebConfigurationManager.ConnectionStrings[cConfigConnectionName];
+		internal static readonly ConnectionStringSettings cConnectionStringSettings = WebConfigurationManager.ConnectionStrings[cConfigConnectionName];
 
 		#endregion
 
@@ -301,6 +301,12 @@ namespace ODataRestierDynamic.Models
 
 			try
 			{
+				//Add Metadata object for user rules custom metadata
+				var metadataObject = modelBuilder.Entity<DynamicMetadataObject>();
+				metadataObject.HasKey(a => a.Name);
+				metadataObject.Property(a => a.Type);
+				metadataObject.Property(a => a.Schema);
+
 				var databaseModel = modelBuilder.Build(new System.Data.SqlClient.SqlConnection(cConnectionStringSettings.ConnectionString));
 				compiledDatabaseModel = databaseModel.Compile();
 			}
