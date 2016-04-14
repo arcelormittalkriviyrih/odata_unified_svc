@@ -219,6 +219,13 @@ namespace ODataRestierDynamic.DynamicFactory
 
 		public void CreateProperties(TypeBuilder typeBuilder, Dictionary<string, DynamicPropertyData> properties, MethodInfo raisePropertyChanged)
 		{
+			//Make all existing foreign keys as primary key if table has no primary key
+			if (properties.Values.FirstOrDefault(x => x.IsPrimaryKey) == null)
+			{
+				List<DynamicPropertyData> foreignRows = properties.Values.Where(x => x.IsForeignKey).ToList<DynamicPropertyData>();
+				foreignRows.ForEach(p => p.IsPrimaryKey = true);
+			}
+
 			properties.ToList().ForEach(p => CreateFieldForType(p.Value, p.Key, raisePropertyChanged));
 		}
 
@@ -232,7 +239,7 @@ namespace ODataRestierDynamic.DynamicFactory
 
 			//add the various WCF and EF attributes to the property
 			//AddDataMemberAttribute(propertyBuilder);
-			if (propData.IsPrimaryKey || propData.IsForeignKey)
+			if (propData.IsPrimaryKey) //|| propData.IsForeignKey)
 				AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
 			//if (propData.IsForeignKey)
 			//	AddColumnKeyAttribute(propertyBuilder, typeof(ForeignKeyAttribute));

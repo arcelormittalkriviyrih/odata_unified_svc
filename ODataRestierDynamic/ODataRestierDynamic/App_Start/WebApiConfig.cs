@@ -7,6 +7,17 @@ using Microsoft.Restier.WebApi;
 using Microsoft.Restier.WebApi.Batch;
 using ODataRestierDynamic.Models;
 using System.Web.OData.Routing.Conventions;
+using System.Web.Http.Controllers;
+using System.Web.OData.Routing;
+using System.Web.OData.Formatter.Deserialization;
+using System.Web.OData;
+using Microsoft.OData.Edm;
+using Microsoft.OData.Core;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Globalization;
+using System.Diagnostics.Contracts;
+using System.Collections;
 
 namespace ODataRestierDynamic
 {
@@ -19,8 +30,6 @@ namespace ODataRestierDynamic
 			// Web API routes
 			config.MapHttpAttributeRoutes();
 			config.EnableUnqualifiedNameCall(true);
-
-			//System.Web.OData.MetadataController
 
 			RegisterDynamic(config, GlobalConfiguration.DefaultServer);
 
@@ -37,49 +46,15 @@ namespace ODataRestierDynamic
 				"DynamicApi", "api/Dynamic",
 				new RestierBatchHandler(server));
 
-			//var attributeRoutingConvention = odataRoute.PathRouteConstraint.RoutingConventions.First(t => t is AttributeRoutingConvention);
-			//var idx = odataRoute.PathRouteConstraint.RoutingConventions.IndexOf(attributeRoutingConvention);
+			//for overriding standart metadata class
+			//System.Web.OData.MetadataController
 
-			//var attributeRoutingConvention = odataRoute.PathRouteConstraint.RoutingConventions.First(t => t is AttributeRoutingConvention) as AttributeRoutingConvention;
-			//var idx = odataRoute.PathRouteConstraint.RoutingConventions.IndexOf(attributeRoutingConvention);
-			var dynamicActionRoutingConvention = new DynamicAttributeRoutingConvention();
-			odataRoute.PathRouteConstraint.RoutingConventions.Add(dynamicActionRoutingConvention);
-
-			//var attributeRoutingConvention = odataRoute.PathRouteConstraint.RoutingConventions.First(t => t is ActionRoutingConvention) as ActionRoutingConvention;
-			//var idx = odataRoute.PathRouteConstraint.RoutingConventions.IndexOf(attributeRoutingConvention);
-			//var dynamicActionRoutingConvention = new DynamicActionRoutingConvention() { InnerHandler = attributeRoutingConvention };
-			//odataRoute.PathRouteConstraint.RoutingConventions.RemoveAt(idx);
-			//odataRoute.PathRouteConstraint.RoutingConventions.Insert(idx, dynamicActionRoutingConvention);
-		}
-	}
-
-	public class DynamicAttributeRoutingConvention : IODataRoutingConvention
-	{
-		public string SelectAction(System.Web.OData.Routing.ODataPath odataPath, System.Web.Http.Controllers.HttpControllerContext controllerContext, ILookup<string, System.Web.Http.Controllers.HttpActionDescriptor> actionMap)
-		{
-			throw new NotImplementedException();
-		}
-
-		public string SelectController(System.Web.OData.Routing.ODataPath odataPath, System.Net.Http.HttpRequestMessage request)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public class DynamicActionRoutingConvention : ActionRoutingConvention
-	{
-		public ActionRoutingConvention InnerHandler { get; set; }
-
-		public override string SelectController(System.Web.OData.Routing.ODataPath odataPath, System.Net.Http.HttpRequestMessage request)
-		{
-			return this.InnerHandler.SelectController(odataPath, request);
-		}
-
-		public override string SelectAction(System.Web.OData.Routing.ODataPath odataPath, System.Web.Http.Controllers.HttpControllerContext controllerContext, ILookup<string, System.Web.Http.Controllers.HttpActionDescriptor> actionMap)
-		{
-			var action = this.InnerHandler.SelectAction(odataPath, controllerContext, actionMap);
-
-			return action;
+			// Register an Action selector that can include template parameters in the name
+			IHttpActionSelector actionSelectorService = config.Services.GetActionSelector();
+			config.Services.Replace(typeof(IHttpActionSelector), new DynamicODataActionSelector(actionSelectorService));
+			// Register an Action invoker that can include template parameters in the name
+			IHttpActionInvoker actionInvokerService = config.Services.GetActionInvoker();
+			config.Services.Replace(typeof(IHttpActionInvoker), new DynamicODataActionInvoker(actionInvokerService));
 		}
 	}
 }

@@ -18,16 +18,11 @@ using System.Text;
 
 namespace ODataRestierDynamic.Controllers
 {
+	/// <summary>
+	/// Dynamic OData controllers that support writing and reading data using the OData formats.
+	/// </summary>
 	public class DynamicController : ODataController
 	{
-		public DynamicController()
-		{
-			//Func<int, int> func = x => 2 * x;
-			//this.Foo = func;
-			//int i = obj.Foo(123); // now you see it
-			//obj.Foo = null; // now you don't
-		}
-
 		private DynamicApi api;
 
 		private DynamicApi Api
@@ -51,27 +46,12 @@ namespace ODataRestierDynamic.Controllers
 			}
 		}
 
-		//// Attribute routing to enable $count
-		//[ODataRoute("Equipment/$count")]
-		//public IHttpActionResult GetCount()
-		//{
-		//	return Ok(DbContext.Equipment.Count());
-		//}
-
-		//[HttpPost]
-		//[ODataRoute("fn_diagramobjects")]
-		//public IHttpActionResult fn_diagramobjects(ODataActionParameters parameters)
-		//{
-		//	return this.CallAction("fn_diagramobjects", parameters);
-		//}
-
-		[HttpPost]
-		[ODataRoute("ins_MaterialLotByController")]
-		public IHttpActionResult ins_MaterialLotByController(ODataActionParameters parameters)
-		{
-			return this.CallAction("ins_MaterialLotByController", parameters);
-		}
-
+		/// <summary>
+		/// Method for calling all Dynamic Actions which exist in DbContext.
+		/// </summary>
+		/// <param name="name">action name</param>
+		/// <param name="parameters">Parameter names and values provided by a client in a POST request to invoke a particular Action.</param>
+		/// <returns>Command that asynchronously creates an System.Net.Http.HttpResponseMessage.</returns>
 		public IHttpActionResult CallAction(string name, ODataActionParameters parameters)
 		{
 			//int controllerID = (int)parameters["controllerID"];
@@ -112,11 +92,6 @@ namespace ODataRestierDynamic.Controllers
 
 			return Ok(result);
 		}
-
-		public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
-		{
-			return base.ExecuteAsync(controllerContext, cancellationToken);
-		} 
 
 		/// <summary>
 		/// Disposes the API and the controller.

@@ -19,6 +19,12 @@ using EntityFramework.Functions;
 
 namespace ODataRestierDynamic.Models
 {
+	/// <summary>
+	///  A DynamicContext instance represents a combination of the Unit Of Work and Repository
+	///     patterns such that it can be used to query from a database and group together
+	///     changes that will then be written back to the store as a unit. DynamicContext
+	///     is conceptually similar to DbContext.
+	/// </summary>
 	public partial class DynamicContext : DbContext
 	{
 		#region Const
@@ -97,9 +103,6 @@ namespace ODataRestierDynamic.Models
 
 					foreach (var table in schema.Tables)
 					{
-						//if (!cTestTableNames.Contains(table.Name))
-						//	continue;
-
 						var property = new Dictionary<string, DynamicPropertyData>();
 						foreach (var col in table.Columns)
 						{
@@ -161,8 +164,6 @@ namespace ODataRestierDynamic.Models
 							//	if (item.Value.Nullable)
 							//		entity.TypeConfiguration.Property(p => p == item.Key).IsOptional();
 							//}
-
-							//_tables.Add(table.Name, tableType);
 						}
 						catch
 						{
@@ -230,7 +231,6 @@ namespace ODataRestierDynamic.Models
 
 						var viewType = CreateType(dynamicClassFactory, view.Name, property);
 						var entity = modelBuilder.Entity(viewType);
-						//_views.Add(view.Name, viewType);
 					}
 
 					#endregion

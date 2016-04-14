@@ -146,9 +146,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DynamicActions.cs" />
     <Compile Include="Models\DynamicApi.cs" />
     <Compile Include="Models\DynamicContext.cs" />
+    <Compile Include="Models\DynamicODataActionInvoker.cs" />
+    <Compile Include="Models\DynamicODataActionSelector.cs" />
+    <Compile Include="Models\ODataMessageWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
