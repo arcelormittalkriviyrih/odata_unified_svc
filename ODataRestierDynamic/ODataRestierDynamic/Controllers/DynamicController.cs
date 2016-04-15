@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Text;
 using DatabaseSchemaReader;
 using ODataRestierDynamic.DynamicFactory;
+using ODataRestierDynamic.Log;
 
 namespace ODataRestierDynamic.Controllers
 {
@@ -127,29 +128,30 @@ namespace ODataRestierDynamic.Controllers
 
 			int result = -1;
 
-			List<SqlParameter> paramList = new List<SqlParameter>();
-			List<string> parameterNames = new List<string>();
-			if (parameters != null)
-			{
-				foreach (var item in parameters)
-				{
-					paramList.Add(new SqlParameter(item.Key, item.Value));
-					parameterNames.Add("@" + item.Key);
-				}
-			}
-
-			//EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
-			string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
-
-			var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
 			try
 			{
+				List<SqlParameter> paramList = new List<SqlParameter>();
+				List<string> parameterNames = new List<string>();
+				if (parameters != null)
+				{
+					foreach (var item in parameters)
+					{
+						paramList.Add(new SqlParameter(item.Key, item.Value));
+						parameterNames.Add("@" + item.Key);
+					}
+				}
+
+				//EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
+				string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
+
+				var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
+
 				result = objContext.ExecuteStoreCommand(commandText, paramList.ToArray());
-				//var objectResult = objContext.ExecuteStoreQuery<int>(commandText.ToString(), paramList.ToArray());
 			}
-			catch
+			catch(Exception exception)
 			{
-				throw;
+				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+				throw exception;
 			}
 
 			return Ok(result);

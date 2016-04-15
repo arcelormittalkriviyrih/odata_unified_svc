@@ -1,6 +1,7 @@
 ﻿using Microsoft.OData.Core;
 using Microsoft.OData.Edm;
 using Microsoft.Restier.WebApi;
+using ODataRestierDynamic.Log;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -138,9 +139,10 @@ namespace ODataRestierDynamic.Models
 					}
 				}
 			}
-			catch
+			catch(Exception exception)
 			{
-				throw;
+				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+				throw exception;
 			}
 
 			return payload;

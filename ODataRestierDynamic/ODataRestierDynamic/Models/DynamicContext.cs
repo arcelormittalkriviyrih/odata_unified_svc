@@ -16,6 +16,7 @@ using System.Configuration;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Objects;
 using EntityFramework.Functions;
+using ODataRestierDynamic.Log;
 
 namespace ODataRestierDynamic.Models
 {
@@ -102,6 +103,7 @@ namespace ODataRestierDynamic.Models
 			// Create a model + register types to it.
 			var modelBuilder = new DbModelBuilder();
 			modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>(); //For generating Entities without 's' at the end
+			DbCompiledModel compiledDatabaseModel = null;
 
 			try
 			{
@@ -169,22 +171,8 @@ namespace ODataRestierDynamic.Models
 							}
 						}
 
-						try
-						{
-							var tableType = CreateType(dynamicClassFactory, table.Name, property);
-							var entity = modelBuilder.Entity(tableType);
-							//foreach (var item in property)
-							//{
-							//	modelBuilder.Entity<String>().Property(p => p == item.Key).IsOptional();
-
-							//	if (item.Value.Nullable)
-							//		entity.TypeConfiguration.Property(p => p == item.Key).IsOptional();
-							//}
-						}
-						catch
-						{
-							throw;
-						}
+						var tableType = CreateType(dynamicClassFactory, table.Name, property);
+						var entity = modelBuilder.Entity(tableType);
 					}
 
 					#endregion
@@ -307,28 +295,23 @@ namespace ODataRestierDynamic.Models
 				}
 
 				#endregion
-			}
-			catch
-			{
-				throw;
-			}
 
-			DbCompiledModel compiledDatabaseModel = null;
+				#region Add Metadata object for user rules custom metadata
 
-			try
-			{
-				//Add Metadata object for user rules custom metadata
 				var metadataObject = modelBuilder.Entity<DynamicMetadataObject>();
 				metadataObject.HasKey(a => a.Name);
 				metadataObject.Property(a => a.Type);
-				metadataObject.Property(a => a.Schema);
+				metadataObject.Property(a => a.Schema); 
+
+				#endregion
 
 				var databaseModel = modelBuilder.Build(new System.Data.SqlClient.SqlConnection(cConnectionStringSettings.ConnectionString));
 				compiledDatabaseModel = databaseModel.Compile();
 			}
-			catch
+			catch (Exception exception)
 			{
-				throw;
+				DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
+				throw exception;
 			}
 
 			return compiledDatabaseModel;

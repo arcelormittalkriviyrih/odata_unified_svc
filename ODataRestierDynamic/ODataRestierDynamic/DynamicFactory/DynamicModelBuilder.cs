@@ -5,6 +5,7 @@ using Microsoft.OData.Edm.Library;
 using Microsoft.OData.Edm.Library.Expressions;
 using Microsoft.Restier.Core;
 using Microsoft.Restier.Core.Model;
+using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
@@ -47,15 +48,15 @@ namespace ODataRestierDynamic.DynamicFactory
 			//extend model here
 			if (model != null)
 			{
-				var dbContext = context.ApiContext.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
-
 				try
 				{
+					var dbContext = context.ApiContext.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
 					this.BuildActions(model, dbContext.DynamicActions);
 				}
-				catch
+				catch (Exception exception)
 				{
-					throw;
+					DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+					throw exception;
 				}
 			}
 
