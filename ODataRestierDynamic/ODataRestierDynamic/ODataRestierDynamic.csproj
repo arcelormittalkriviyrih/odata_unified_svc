@@ -138,6 +138,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="DynamicFactory\DynamicAction.cs" />
+    <Compile Include="DynamicFactory\DynamicChangeSetPreparer.cs" />
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
     <Compile Include="DynamicFactory\DynamicMetadataObject.cs" />

@@ -42,43 +42,56 @@ namespace ODataRestierDynamic.Models
 		/// <returnsThe newly started task.></returns>
 		public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> InvokeActionAsync(HttpActionContext actionContext, System.Threading.CancellationToken cancellationToken)
 		{
-			if (_innerInvoker != null)
+			System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> result = null;
+
+			try
 			{
-				var controllerContext = actionContext.ControllerContext;
-				if (controllerContext.Controller is RestierController)
+				if (_innerInvoker != null)
 				{
-					var request = controllerContext.Request;
-					IEdmModel model = request.ODataProperties().Model;
-					ODataPath odataPath = request.ODataProperties().Path;
-					var routeData = controllerContext.RouteData;
-
-					if (routeData != null)
+					var controllerContext = actionContext.ControllerContext;
+					if (controllerContext.Controller is RestierController)
 					{
-						var actionMethodName = routeData.Values["action"] as string;
-						if (actionMethodName == "PostAction")
-						{
-							var actionPathSegment = odataPath.Segments.Last() as UnboundActionPathSegment;
-							if (actionPathSegment != null)
-							{
-								Stream stream = request.Content.ReadAsStreamAsync().Result;
-								ODataMessageWrapper message = new ODataMessageWrapper(stream);
-								message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
-								ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
-								ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
-								ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
+						var request = controllerContext.Request;
+						IEdmModel model = request.ODataProperties().Model;
+						ODataPath odataPath = request.ODataProperties().Path;
+						var routeData = controllerContext.RouteData;
 
-								var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
-								dynamicController.ControllerContext = controllerContext;
-								var result = dynamicController.CallAction(actionPathSegment.ActionName, payload).ExecuteAsync(cancellationToken);
-								return result;
+						if (routeData != null)
+						{
+							var actionMethodName = routeData.Values["action"] as string;
+							if (actionMethodName == "PostAction")
+							{
+								var actionPathSegment = odataPath.Segments.Last() as UnboundActionPathSegment;
+								if (actionPathSegment != null)
+								{
+									Stream stream = request.Content.ReadAsStreamAsync().Result;
+									ODataMessageWrapper message = new ODataMessageWrapper(stream);
+									message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
+									ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
+									ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
+									ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
+
+									var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
+									dynamicController.ControllerContext = controllerContext;
+									result = dynamicController.CallAction(actionPathSegment.ActionName, payload).ExecuteAsync(cancellationToken);
+								}
 							}
 						}
 					}
-				}
 
-				return _innerInvoker.InvokeActionAsync(actionContext, cancellationToken);
+					if (result == null)
+					{
+						result = _innerInvoker.InvokeActionAsync(actionContext, cancellationToken);
+					}
+				}
 			}
-			throw new NotImplementedException();
+			catch (Exception exception)
+			{
+				DynamicLogger.Instance.WriteLoggerLogError("InvokeActionAsync", exception);
+				throw exception;
+			}
+
+			return result;
 		}
 
 		/// <summary>
@@ -139,7 +152,7 @@ namespace ODataRestierDynamic.Models
 					}
 				}
 			}
-			catch(Exception exception)
+			catch (Exception exception)
 			{
 				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
 				throw exception;

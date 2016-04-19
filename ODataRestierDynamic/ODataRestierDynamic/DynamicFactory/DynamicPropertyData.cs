@@ -37,5 +37,12 @@ namespace ODataRestierDynamic.DynamicFactory
 		///
 		/// <value>	The type. </value>
 		public Type Type { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this object is computed identifier.
+		/// </summary>
+		///
+		/// <value>	true if this object is computed identifier, false if not. </value>
+		public bool IsComputedID { get; set; }
 	}
 }

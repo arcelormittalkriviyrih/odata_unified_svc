@@ -6,6 +6,7 @@ using log4net.Layout;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -64,6 +65,11 @@ namespace ODataRestierDynamic.Log
 		private static string m_LogFilePath = ConfigurationManager.AppSettings["LogFilePath"];
 
 		/// <summary>
+		/// Flag for enable write log to file.
+		/// </summary>
+		private static bool m_EnableWriteLogToFile = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToFile"]);
+
+		/// <summary>
 		/// Returns path to log file for this web service
 		/// </summary>
 		private string GetPathToLogFile()
@@ -93,6 +99,7 @@ namespace ODataRestierDynamic.Log
 			lock (LockLogObject)
 			{
 				Logger.Info(text);
+				WriteLog(text, EventLogEntryType.Information);
 			}
 
 			return lvResult;
@@ -109,6 +116,7 @@ namespace ODataRestierDynamic.Log
 			lock (LockLogObject)
 			{
 				Logger.Error(text);
+				WriteLog(text, EventLogEntryType.Error);
 			}
 
 			return lvResult;
@@ -125,11 +133,31 @@ namespace ODataRestierDynamic.Log
 
 			lock (LockLogObject)
 			{
-				Logger.Error(text, exception);
+				WriteLog(exception.Message, EventLogEntryType.Error, exception);
 				lvResult = StackTraceException(exception);
 			}
 
 			return lvResult;
+		}
+
+		/// <summary>	Writes a log. </summary>
+		///
+		/// <param name="text">					String to write into the log. </param>
+		/// <param name="eventLogEntryType">	Type of the event log entry. </param>
+		private void WriteLog(string text, EventLogEntryType eventLogEntryType, Exception exception = null)
+		{
+			if (m_EnableWriteLogToEventViewer)
+				vpEventLog.WriteEntry(text, eventLogEntryType);
+
+			if (m_EnableWriteLogToFile)
+			{
+				if (eventLogEntryType == EventLogEntryType.Information)
+					Logger.Info(text, exception);
+				else if (eventLogEntryType == EventLogEntryType.Warning)
+					Logger.Warn(text, exception);
+				else if(eventLogEntryType == EventLogEntryType.Error)
+					Logger.Error(text, exception);
+			}
 		}
 
 		/// <summary>
@@ -184,6 +212,67 @@ namespace ODataRestierDynamic.Log
 
 		#endregion
 
+		#region Event Viewer
+
+		/// <summary>
+		/// Log event viewer group name
+		/// </summary>
+		private static string m_SystemEventSourceName = ConfigurationManager.AppSettings["SystemEventSourceName"];
+
+		/// <summary>
+		/// Log event viewer name
+		/// </summary>
+		private static string m_SystemEventLogName = ConfigurationManager.AppSettings["SystemEventLogName"];
+
+		/// <summary>
+		/// Flag for enable write log to Event Viewer.
+		/// </summary>
+		private static bool m_EnableWriteLogToEventViewer = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToEventViewer"]);
+
+		/// <summary>
+		/// Creates the system event source of the service if it does not exist.
+		/// </summary>
+		private static void AdjustSystemEventSource()
+		{
+			if (!EventLog.SourceExists(m_SystemEventLogName))
+			{
+				EventSourceCreationData lvData = new EventSourceCreationData(m_SystemEventSourceName, m_SystemEventLogName);
+				EventLog.CreateEventSource(lvData);
+			}
+		}
+
+		#region vpEventLog
+
+		/// <summary>
+		/// The value of the vpEventLog property.
+		/// </summary>
+		private EventLog m_EventLog;
+
+		/// <summary>
+		/// Gets the event log which is used by the service.
+		/// </summary>
+		public EventLog vpEventLog
+		{
+			get
+			{
+				lock (this)
+				{
+					if (m_EventLog == null)
+					{
+						m_EventLog = new EventLog();
+						m_EventLog.Source = m_SystemEventSourceName;
+						m_EventLog.Log = m_SystemEventLogName;
+						m_EventLog.ModifyOverflowPolicy(OverflowAction.OverwriteAsNeeded, 7);
+					}
+					return m_EventLog;
+				}
+			}
+		}
+
+		#endregion
+
+		#endregion
+
 		#region Properties
 
 		#region Logger
@@ -235,6 +324,7 @@ namespace ODataRestierDynamic.Log
 		static DynamicLogger()
 		{
 			ConfigureFileLogger(m_LogFilePath);
+			AdjustSystemEventSource();
 		}
 
 		/// <summary>	Default constructor. </summary>

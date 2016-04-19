@@ -165,7 +165,8 @@ namespace ODataRestierDynamic.Models
 									Order = table.Columns.IndexOf(col) + 1,
 									Nullable = col.Nullable,
 									Type = colType,
-									MaxLength = col.Length
+									MaxLength = col.Length,
+									IsComputedID = col.IsPrimaryKey && col.IdentityDefinition == null
 								};
 								property.Add(col.Name, dynamicPropertyData);
 							}
@@ -289,6 +290,7 @@ namespace ODataRestierDynamic.Models
 					}
 
 					_dynamicActions = CreateTypeAction(dynamicClassFactory, "DbActions", methods);
+					// https://www.nuget.org/packages/EntityFramework.Functions
 					modelBuilder.AddFunctions(_dynamicActions, false);
 
 					#endregion
@@ -301,7 +303,7 @@ namespace ODataRestierDynamic.Models
 				var metadataObject = modelBuilder.Entity<DynamicMetadataObject>();
 				metadataObject.HasKey(a => a.Name);
 				metadataObject.Property(a => a.Type);
-				metadataObject.Property(a => a.Schema); 
+				metadataObject.Property(a => a.Schema);
 
 				#endregion
 

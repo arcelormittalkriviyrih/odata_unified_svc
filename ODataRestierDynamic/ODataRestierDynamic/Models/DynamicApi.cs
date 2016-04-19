@@ -19,6 +19,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using MagicDbModelBuilder;
+using Microsoft.Restier.Core.Submit;
 
 namespace ODataRestierDynamic.Models
 {
@@ -31,13 +32,12 @@ namespace ODataRestierDynamic.Models
 		private DynamicModelBuilder _dynamicModelBuilder = null;
 		/// <summary>	The dynamic model mapper. </summary>
 		private DynamicModelMapper _dynamicModelMapper = null;
-
 		/// <summary>	The dynamic query expression expander. </summary>
 		private DynamicQueryExpressionExpander _dynamicQueryExpressionExpander = null;
 		/// <summary>	The dynamic query expression sourcer. </summary>
 		private DynamicQueryExpressionSourcer _dynamicQueryExpressionSourcer = null;
-
-		//private static DynamicContext _dynamicContext = null;
+		/// <summary>	The dynamic change set preparer. </summary>
+		private DynamicChangeSetPreparer _dynamicChangeSetPreparer = null;
 
 		/// <summary>	List of names of the test tables. </summary>
 		private static string[] cTestTableNames = new string[] { "TestDataTypesOffset", "PropertyTypes", "KEP_logger", "Equipment" };
@@ -94,6 +94,13 @@ namespace ODataRestierDynamic.Models
 				_dynamicQueryExpressionSourcer = new DynamicQueryExpressionSourcer();
 				_dynamicQueryExpressionSourcer.InnerHandler = apiConfiguration.GetHookHandler<IQueryExpressionSourcer>();
 				apiConfiguration.AddHookHandler<IQueryExpressionSourcer>(_dynamicQueryExpressionSourcer);
+			}
+
+			if (_dynamicChangeSetPreparer == null)
+			{
+				_dynamicChangeSetPreparer = new DynamicChangeSetPreparer();
+				_dynamicChangeSetPreparer.InnerHandler = apiConfiguration.GetHookHandler<IChangeSetPreparer>();
+				apiConfiguration.AddHookHandler<IChangeSetPreparer>(_dynamicChangeSetPreparer);
 			}
 
 			return apiConfiguration;

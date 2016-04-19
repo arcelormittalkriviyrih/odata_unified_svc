@@ -282,6 +282,9 @@ namespace ODataRestierDynamic.DynamicFactory
 			if (propData.MaxLength.HasValue && propData.MaxLength.Value != -1)
 				AddMaxLengthAttribute(propertyBuilder, propData.MaxLength.Value);
 
+			if(propData.IsComputedID)
+				AddDatabaseGeneratedAttribute(propertyBuilder, DatabaseGeneratedOption.None);
+
 			AddColumnAttribute(propertyBuilder, name, propData.Order);
 
 			MethodAttributes getterAndSetterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;// | MethodAttributes.Virtual;
@@ -299,6 +302,21 @@ namespace ODataRestierDynamic.DynamicFactory
 		private void AddColumnKeyAttribute(PropertyBuilder propertyBuilder, Type attrType)
 		{
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		/// <summary>	Adds a database generated attribute to 'option'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="option">		  	The option. </param>
+		private void AddDatabaseGeneratedAttribute(PropertyBuilder propertyBuilder, DatabaseGeneratedOption option)
+		{
+			Type attrType = typeof(DatabaseGeneratedAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(DatabaseGeneratedOption) }),
+				new object[] { option },
+				new PropertyInfo[] { },
+				new object[] { });
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 

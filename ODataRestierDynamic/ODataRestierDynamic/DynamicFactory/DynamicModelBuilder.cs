@@ -49,7 +49,7 @@ namespace ODataRestierDynamic.DynamicFactory
 			if (model != null)
 			{
 				try
-				{
+				{				
 					var dbContext = context.ApiContext.GetProperty<DynamicContext>(DynamicContext.cDbContextKey);
 					this.BuildActions(model, dbContext.DynamicActions);
 				}
