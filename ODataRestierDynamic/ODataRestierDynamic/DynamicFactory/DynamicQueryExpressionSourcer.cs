@@ -30,9 +30,11 @@ namespace ODataRestierDynamic.DynamicFactory
 			{
 				string name = context.ModelReference.EntitySet.Name;
 				Type type = dbContext.GetModelType(name);
-				var dbSet = dbContext.Set(type);
-
-				return Expression.Constant(dbSet);
+				if (type != null)
+				{
+					var dbSet = dbContext.Set(type);
+					return Expression.Constant(dbSet);
+				}
 			}
 
 			if (this.InnerHandler != null)

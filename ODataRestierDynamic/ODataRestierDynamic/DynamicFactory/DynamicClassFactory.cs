@@ -1,4 +1,5 @@
 ﻿using Microsoft.Restier.Core.Model;
+using ODataRestierDynamic.CustomAttributes;
 using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
@@ -285,6 +286,9 @@ namespace ODataRestierDynamic.DynamicFactory
 			if(propData.IsComputedID)
 				AddDatabaseGeneratedAttribute(propertyBuilder, DatabaseGeneratedOption.None);
 
+			if (!string.IsNullOrEmpty(propData.SequenceScript))
+				AddSequenceAttribute(propertyBuilder, propData.SequenceScript);
+
 			AddColumnAttribute(propertyBuilder, name, propData.Order);
 
 			MethodAttributes getterAndSetterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;// | MethodAttributes.Virtual;
@@ -315,6 +319,21 @@ namespace ODataRestierDynamic.DynamicFactory
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
 				new[] { typeof(DatabaseGeneratedOption) }),
 				new object[] { option },
+				new PropertyInfo[] { },
+				new object[] { });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		/// <summary>	Adds a sequence attribute to 'script'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="script">		  	The script. </param>
+		private void AddSequenceAttribute(PropertyBuilder propertyBuilder, string script)
+		{
+			Type attrType = typeof(SequenceAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(string) }),
+				new object[] { script },
 				new PropertyInfo[] { },
 				new object[] { });
 			propertyBuilder.SetCustomAttribute(attr);

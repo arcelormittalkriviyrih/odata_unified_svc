@@ -44,5 +44,10 @@ namespace ODataRestierDynamic.DynamicFactory
 		///
 		/// <value>	true if this object is computed identifier, false if not. </value>
 		public bool IsComputedID { get; set; }
+
+		/// <summary>	Gets or sets the sequence script needed for adding new entity. </summary>
+		///
+		/// <value>	The sequence script needed for adding new entity. </value>
+		public string SequenceScript { get; set; }
 	}
 }

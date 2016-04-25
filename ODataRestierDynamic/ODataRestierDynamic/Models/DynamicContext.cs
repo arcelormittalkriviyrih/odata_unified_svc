@@ -17,6 +17,10 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Objects;
 using EntityFramework.Functions;
 using ODataRestierDynamic.Log;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using ODataRestierDynamic.CustomAttributes;
 
 namespace ODataRestierDynamic.Models
 {
@@ -158,6 +162,12 @@ namespace ODataRestierDynamic.Models
 										colType = typeof(Nullable<bool>);
 									}
 								}
+
+								//Sequense logic
+								string sequenceScript = null;
+								if (col.IsPrimaryKey && !string.IsNullOrEmpty(col.DefaultValue) && col.DefaultValue.StartsWith("(NEXT VALUE FOR"))
+									sequenceScript = col.DefaultValue.Substring(1, col.DefaultValue.Length - 2);
+
 								DynamicPropertyData dynamicPropertyData = new DynamicPropertyData()
 								{
 									IsPrimaryKey = col.IsPrimaryKey,
@@ -166,7 +176,8 @@ namespace ODataRestierDynamic.Models
 									Nullable = col.Nullable,
 									Type = colType,
 									MaxLength = col.Length,
-									IsComputedID = col.IsPrimaryKey && col.IdentityDefinition == null
+									IsComputedID = col.IsPrimaryKey && col.IdentityDefinition == null,
+									SequenceScript = sequenceScript
 								};
 								property.Add(col.Name, dynamicPropertyData);
 							}
@@ -319,6 +330,53 @@ namespace ODataRestierDynamic.Models
 			return compiledDatabaseModel;
 		}
 
+		/// <summary>	Saves the changes asynchronous. </summary>
+		///
+		/// <param name="cancellationToken">	A <see cref="T:System.Threading.CancellationToken"/> to
+		/// 									observe while waiting for the task to complete. </param>
+		///
+		/// <returns>	A System.Threading.Tasks.Task&lt;int&gt; </returns>
+		public override System.Threading.Tasks.Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken)
+		{
+			var pendingChanges = ChangeTracker.Entries();
+			foreach (var entry in pendingChanges)
+			{
+				if (entry.State == EntityState.Added)
+				{
+					var entity = entry.Entity;
+					foreach (var property in entity.GetType().GetProperties())
+					{
+						var sequenceAttribute = (SequenceAttribute)property.GetCustomAttribute(typeof(SequenceAttribute));
+						if (sequenceAttribute != null)
+						{
+							string sequenceScript = sequenceAttribute.Script;
+							var value = property.GetValue(entity);
+							if (value is int && (int)value == 0)
+							{
+								value = this.GetNextID(sequenceScript);
+								property.SetValue(entity, value);
+							}
+						}
+					}
+				}
+			}
+
+			return base.SaveChangesAsync(cancellationToken);
+		}
+
+		/// <summary>	Gets the next identifier. </summary>
+		///
+		/// <param name="sequenceScript">	The sequence script. </param>
+		///
+		/// <returns>	The next identifier. </returns>
+		private int GetNextID(string sequenceScript)
+		{
+			var objContext = ((IObjectContextAdapter)this).ObjectContext;
+			var result = objContext.ExecuteStoreQuery<int>(string.Format("SELECT {0}", sequenceScript));
+
+			return result.First();
+		}
+
 		/// <summary>
 		/// This method is called when the model for a derived context has been initialized, but before
 		/// the model has been locked down and used to initialize the context.  The default
@@ -392,6 +450,16 @@ namespace ODataRestierDynamic.Models
 			var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 			//var dynamicModelAssembly = loadedAssemblies.LastOrDefault(assembly => assembly.GetName().Name == DynamicClassFactory.cDefaultNamespace);
 			//Type type = dynamicModelAssembly.GetType(lvNamespace);
+
+			if (type == null)
+			{
+				PropertyInfo property = this.GetType().GetProperty(name);
+				if (property != null)
+				{
+					object strongTypedDbSet = property.GetValue(this);
+					type = strongTypedDbSet.GetType().GetGenericArguments()[0];
+				}
+			}
 
 			return type;
 		}

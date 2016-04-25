@@ -23,8 +23,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-	<OutputPath>bin\</OutputPath>
-	<DeployManagedRuntimeVersion>v4.0</DeployManagedRuntimeVersion>
+    <OutputPath>bin\</OutputPath>
+    <DeployManagedRuntimeVersion>v4.0</DeployManagedRuntimeVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
+    <Compile Include="CustomAttributes\SequenceAttribute.cs" />
     <Compile Include="DynamicFactory\DynamicAction.cs" />
     <Compile Include="DynamicFactory\DynamicChangeSetPreparer.cs" />
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
