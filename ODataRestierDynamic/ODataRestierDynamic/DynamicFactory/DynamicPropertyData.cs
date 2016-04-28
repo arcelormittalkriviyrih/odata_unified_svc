@@ -49,5 +49,10 @@ namespace ODataRestierDynamic.DynamicFactory
 		///
 		/// <value>	The sequence script needed for adding new entity. </value>
 		public string SequenceScript { get; set; }
+
+		/// <summary>	Gets or sets the name of the column. </summary>
+		///
+		/// <value>	The name of the column. </value>
+		public string ColumnName { get; set; }
 	}
 }

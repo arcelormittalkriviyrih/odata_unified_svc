@@ -117,15 +117,6 @@ namespace ODataRestierDynamic.Controllers
 		/// </returns>
 		public IHttpActionResult CallAction(string name, ODataActionParameters parameters)
 		{
-			//int controllerID = (int)parameters["controllerID"];
-			//int result = -1; //DbContext.ins_MaterialLotByController(controllerID);
-
-			//result = DbContext.DynamicActions.ins_MaterialLotByController(1);
-
-			//var controllerIDParameter = new ObjectParameter("ControllerID", 1);
-			//var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
-			//result = objContext.ExecuteFunction("ins_MaterialLotByController", controllerIDParameter);
-
 			int result = -1;
 
 			try

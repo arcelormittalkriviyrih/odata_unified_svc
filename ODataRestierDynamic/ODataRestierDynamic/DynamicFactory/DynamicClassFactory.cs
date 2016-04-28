@@ -255,7 +255,7 @@ namespace ODataRestierDynamic.DynamicFactory
 			//Make all existing foreign keys as primary key if table has no primary key
 			if (properties.Values.FirstOrDefault(x => x.IsPrimaryKey) == null)
 			{
-				List<DynamicPropertyData> foreignRows = properties.Values.Where(x => x.IsForeignKey).ToList<DynamicPropertyData>();
+				List<DynamicPropertyData> foreignRows = properties.Values.Where(x => x.IsForeignKey && x.Order != -1).ToList<DynamicPropertyData>();
 				foreignRows.ForEach(p => p.IsPrimaryKey = true);
 			}
 
@@ -269,16 +269,14 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="raisePropertyChanged">	The raise property changed. </param>
 		private void CreateFieldForType(DynamicPropertyData propData, string name, MethodInfo raisePropertyChanged)
 		{
-			string propertyName = name == _typeBuilder.Name ? name + "1" : name;
+			FieldBuilder fieldBuilder = _typeBuilder.DefineField("_" + name.ToLowerInvariant(), propData.Type, FieldAttributes.Private);
 
-			FieldBuilder fieldBuilder = _typeBuilder.DefineField("_" + propertyName.ToLowerInvariant(), propData.Type, FieldAttributes.Private);
+			PropertyBuilder propertyBuilder = _typeBuilder.DefineProperty(name, PropertyAttributes.HasDefault, propData.Type, null);
 
-			PropertyBuilder propertyBuilder = _typeBuilder.DefineProperty(propertyName, PropertyAttributes.HasDefault, propData.Type, null);
-
-			if (propData.IsPrimaryKey) //|| propData.IsForeignKey)
+			if (propData.IsPrimaryKey)
 				AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
-			//if (propData.IsForeignKey)
-			//	AddColumnKeyAttribute(propertyBuilder, typeof(ForeignKeyAttribute));
+			if (propData.IsForeignKey && propData.Order == -1)
+				AddColumnForeignKeyAttribute(propertyBuilder, propData.ColumnName);
 
 			if (propData.MaxLength.HasValue && propData.MaxLength.Value != -1)
 				AddMaxLengthAttribute(propertyBuilder, propData.MaxLength.Value);
@@ -289,14 +287,15 @@ namespace ODataRestierDynamic.DynamicFactory
 			if (!string.IsNullOrEmpty(propData.SequenceScript))
 				AddSequenceAttribute(propertyBuilder, propData.SequenceScript);
 
-			AddColumnAttribute(propertyBuilder, name, propData.Order);
+			if (propData.Order != -1)
+				AddColumnAttribute(propertyBuilder, propData.ColumnName, propData.Order);
 
 			MethodAttributes getterAndSetterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;// | MethodAttributes.Virtual;
 
 			//creates the Get Method for the property
-			propertyBuilder.SetGetMethod(CreateGetMethod(getterAndSetterAttributes, propertyName, propData.Type, fieldBuilder));
+			propertyBuilder.SetGetMethod(CreateGetMethod(getterAndSetterAttributes, name, propData.Type, fieldBuilder));
 			//creates the Set Method for the property and also adds the invocation of the property change
-			propertyBuilder.SetSetMethod(CreateSetMethod(getterAndSetterAttributes, propertyName, propData.Type, fieldBuilder, raisePropertyChanged));
+			propertyBuilder.SetSetMethod(CreateSetMethod(getterAndSetterAttributes, name, propData.Type, fieldBuilder, raisePropertyChanged));
 		}
 
 		/// <summary>	Adds a column key attribute to 'attrType'. </summary>
@@ -306,6 +305,21 @@ namespace ODataRestierDynamic.DynamicFactory
 		private void AddColumnKeyAttribute(PropertyBuilder propertyBuilder, Type attrType)
 		{
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		/// <summary>	Adds a column foreign key attribute to 'colName'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="colName">		  	Name of the col. </param>
+		private void AddColumnForeignKeyAttribute(PropertyBuilder propertyBuilder, string colName)
+		{
+			Type attrType = typeof(ForeignKeyAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(string) }),
+				new object[] { colName },
+				new PropertyInfo[] { },
+				new object[] { });
 			propertyBuilder.SetCustomAttribute(attr);
 		}
 
