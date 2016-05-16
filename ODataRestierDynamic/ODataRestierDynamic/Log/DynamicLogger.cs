@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 
 namespace ODataRestierDynamic.Log
@@ -262,7 +263,14 @@ namespace ODataRestierDynamic.Log
 						m_EventLog = new EventLog();
 						m_EventLog.Source = m_SystemEventSourceName;
 						m_EventLog.Log = m_SystemEventLogName;
-						m_EventLog.ModifyOverflowPolicy(OverflowAction.OverwriteAsNeeded, 7);
+
+						//WI-139
+						WindowsIdentity identity = WindowsIdentity.GetCurrent();
+						WindowsPrincipal principal = new WindowsPrincipal(identity);
+						if (principal.IsInRole(WindowsBuiltInRole.Administrator))
+						{
+							m_EventLog.ModifyOverflowPolicy(OverflowAction.OverwriteAsNeeded, 7);
+						}
 					}
 					return m_EventLog;
 				}
