@@ -18,6 +18,8 @@ using System.Net.Http.Headers;
 using System.Globalization;
 using System.Diagnostics.Contracts;
 using System.Collections;
+using System.Net.Http;
+using ODataRestierDynamic.DynamicFactory;
 
 namespace ODataRestierDynamic
 {
@@ -56,6 +58,7 @@ namespace ODataRestierDynamic
 
 			//for overriding standart metadata class
 			//System.Web.OData.MetadataController
+			odataRoute.PathRouteConstraint.RoutingConventions.Add(new MediadataRoutingConvention());
 
 			// Register an Action selector that can include template parameters in the name
 			IHttpActionSelector actionSelectorService = config.Services.GetActionSelector();

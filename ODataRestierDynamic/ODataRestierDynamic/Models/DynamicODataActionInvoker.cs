@@ -23,6 +23,8 @@ namespace ODataRestierDynamic.Models
 	/// </summary>
 	public class DynamicODataActionInvoker : IHttpActionInvoker
 	{
+		internal const string cPostActionName = "PostAction";
+
 		private readonly IHttpActionInvoker _innerInvoker;
 
 		/// <summary>
@@ -59,7 +61,7 @@ namespace ODataRestierDynamic.Models
 						if (routeData != null)
 						{
 							var actionMethodName = routeData.Values["action"] as string;
-							if (actionMethodName == "PostAction")
+							if (actionMethodName == cPostActionName)
 							{
 								var actionPathSegment = odataPath.Segments.Last() as UnboundActionPathSegment;
 								if (actionPathSegment != null)
@@ -74,6 +76,25 @@ namespace ODataRestierDynamic.Models
 									var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
 									dynamicController.ControllerContext = controllerContext;
 									result = dynamicController.CallAction(actionPathSegment.ActionName, payload).ExecuteAsync(cancellationToken);
+								}
+							}
+
+							if (odataPath != null && odataPath.Segments.Count == 3 && 
+								odataPath.Segments[0].ToString() == ODataRestierDynamic.Controllers.MediaDataController.cFilesEntityName && 
+								odataPath.Segments.Last() is ValuePathSegment)
+							{
+								var mediaDataController = new ODataRestierDynamic.Controllers.MediaDataController();
+								mediaDataController.ControllerContext = controllerContext;
+								var keyValuePathSegment = odataPath.Segments.First(x => x is KeyValuePathSegment);
+								int key = int.Parse(((KeyValuePathSegment)keyValuePathSegment).Value);
+
+								if (actionMethodName.Equals(System.Net.WebRequestMethods.Http.Get, StringComparison.InvariantCultureIgnoreCase))
+								{
+									result = mediaDataController.GetMediaResource(key);
+								}
+								else if (actionMethodName.Equals(cPostActionName, StringComparison.InvariantCultureIgnoreCase))
+								{
+									result = mediaDataController.PostMediaResource(key);
 								}
 							}
 						}

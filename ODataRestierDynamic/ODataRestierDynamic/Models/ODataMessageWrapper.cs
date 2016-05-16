@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web;
+using System.Runtime;
 
 namespace ODataRestierDynamic.Models
 {
