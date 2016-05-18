@@ -21,8 +21,6 @@ namespace ODataRestierDynamic.DynamicFactory
 		private AssemblyBuilder _assemblyBuilder;
 		/// <summary>	The module builder. </summary>
 		private ModuleBuilder _moduleBuilder;
-		/// <summary>	The type builder. </summary>
-		private TypeBuilder _typeBuilder;
 		/// <summary>	Name of the assembly. </summary>
 		private string _assemblyName;
 
@@ -92,16 +90,16 @@ namespace ODataRestierDynamic.DynamicFactory
 				_moduleBuilder = _assemblyBuilder.DefineDynamicModule(_assemblyName + ".dll");
 
 			//typeof(T) is for the base class, can be omitted if not needed
-			_typeBuilder = _moduleBuilder.DefineType(_assemblyName + "." + name, TypeAttributes.Public
+			var typeBuilder = _moduleBuilder.DefineType(_assemblyName + "." + name, TypeAttributes.Public
 															| TypeAttributes.Class
 															| TypeAttributes.AutoClass
 															| TypeAttributes.AnsiClass
 															| TypeAttributes.Serializable
 															| TypeAttributes.BeforeFieldInit, typeof(T));
 
-			CreateMethods(_typeBuilder, methods);
+			CreateMethods(typeBuilder, methods);
 
-			return _typeBuilder;
+			return typeBuilder;
 		}
 
 		/// <summary>	Creates the methods. </summary>
@@ -206,42 +204,45 @@ namespace ODataRestierDynamic.DynamicFactory
 				_moduleBuilder = _assemblyBuilder.DefineDynamicModule(_assemblyName + ".dll");
 
 			//typeof(T) is for the base class, can be omitted if not needed
-			_typeBuilder = _moduleBuilder.DefineType(_assemblyName + "." + name, TypeAttributes.Public
+			var typeBuilder = _moduleBuilder.DefineType(_assemblyName + "." + name, TypeAttributes.Public
 															| TypeAttributes.Class
 															| TypeAttributes.AutoClass
 															| TypeAttributes.AnsiClass
 															| TypeAttributes.Serializable
 															| TypeAttributes.BeforeFieldInit, typeof(T));
 
-			AddTableAttribute(name);
+			AddTableAttribute(typeBuilder, name);
 
-			//if there is a property on the base class and also in the dictionary, remove them from the dictionary
-			var pis = typeof(T).GetProperties();
-			foreach (var pi in pis)
+			if (properties != null && properties.Count > 0)
 			{
-				properties.Remove(pi.Name);
+				//if there is a property on the base class and also in the dictionary, remove them from the dictionary
+				var pis = typeof(T).GetProperties();
+				foreach (var pi in pis)
+				{
+					properties.Remove(pi.Name);
+				}
+
+				CreateProperties(typeBuilder, properties, null);
 			}
 
-			CreateProperties(_typeBuilder, properties, null);
-
-			return _typeBuilder;
+			return typeBuilder;
 		}
 
 		/// <summary>	Adds an attribute. </summary>
 		///
 		/// <param name="attrType">	Type of the attribute. </param>
-		public void AddAttribute(Type attrType)
+		public void AddAttribute(TypeBuilder typeBuilder, Type attrType)
 		{
-			_typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { }));
+			typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes), new object[] { }));
 		}
 
 		/// <summary>	Adds a table attribute. </summary>
 		///
 		/// <param name="name">	. </param>
-		public void AddTableAttribute(string name)
+		public void AddTableAttribute(TypeBuilder typeBuilder, string name)
 		{
 			Type attrType = typeof(TableAttribute);
-			_typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(new[] { typeof(string) }),
+			typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(new[] { typeof(string) }),
 				new object[] { name }));
 		}
 
@@ -252,14 +253,17 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="raisePropertyChanged">	The raise property changed. </param>
 		public void CreateProperties(TypeBuilder typeBuilder, Dictionary<string, DynamicPropertyData> properties, MethodInfo raisePropertyChanged)
 		{
-			//Make all existing foreign keys as primary key if table has no primary key
-			if (properties.Values.FirstOrDefault(x => x.IsPrimaryKey) == null)
-			{
-				List<DynamicPropertyData> foreignRows = properties.Values.Where(x => x.IsForeignKey && x.Order != -1).ToList<DynamicPropertyData>();
-				foreignRows.ForEach(p => p.IsPrimaryKey = true);
-			}
+			properties.ToList().ForEach(p => CreateFieldForType(typeBuilder, p.Value, p.Key, raisePropertyChanged));
+		}
 
-			properties.ToList().ForEach(p => CreateFieldForType(p.Value, p.Key, raisePropertyChanged));
+		/// <summary>	Creates the properties. </summary>
+		///
+		/// <param name="typeBuilder">		   	The type builder. </param>
+		/// <param name="properties">		   	. </param>
+		/// <param name="raisePropertyChanged">	The raise property changed. </param>
+		public void CreateProperty(TypeBuilder typeBuilder, KeyValuePair<string, DynamicPropertyData> property, MethodInfo raisePropertyChanged)
+		{
+			CreateFieldForType(typeBuilder, property.Value, property.Key, raisePropertyChanged);
 		}
 
 		/// <summary>	Creates field for type. </summary>
@@ -267,35 +271,47 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="propData">			   	Information describing the property. </param>
 		/// <param name="name">				   	. </param>
 		/// <param name="raisePropertyChanged">	The raise property changed. </param>
-		private void CreateFieldForType(DynamicPropertyData propData, string name, MethodInfo raisePropertyChanged)
+		private void CreateFieldForType(TypeBuilder typeBuilder, DynamicPropertyData propData, string name, MethodInfo raisePropertyChanged)
 		{
-			FieldBuilder fieldBuilder = _typeBuilder.DefineField("_" + name.ToLowerInvariant(), propData.Type, FieldAttributes.Private);
+			FieldBuilder fieldBuilder = typeBuilder.DefineField("_" + name.ToLowerInvariant(), propData.Type, FieldAttributes.Private);
 
-			PropertyBuilder propertyBuilder = _typeBuilder.DefineProperty(name, PropertyAttributes.HasDefault, propData.Type, null);
+			PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(name, PropertyAttributes.HasDefault, propData.Type, null);
 
-			if (propData.IsPrimaryKey)
-				AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
-			if (propData.IsForeignKey && propData.Order == -1)
-				AddColumnForeignKeyAttribute(propertyBuilder, propData.ColumnName);
+			if (propData is FieldPropertyData)
+			{
+				var fieldPropData = propData as FieldPropertyData;
 
-			if (propData.MaxLength.HasValue && propData.MaxLength.Value != -1)
-				AddMaxLengthAttribute(propertyBuilder, propData.MaxLength.Value);
+				if (fieldPropData.IsPrimaryKey)
+					AddColumnKeyAttribute(propertyBuilder, typeof(KeyAttribute));
 
-			if(propData.IsComputedID)
-				AddDatabaseGeneratedAttribute(propertyBuilder, DatabaseGeneratedOption.None);
+				if (fieldPropData.MaxLength.HasValue && fieldPropData.MaxLength.Value != -1)
+					AddMaxLengthAttribute(propertyBuilder, fieldPropData.MaxLength.Value);
 
-			if (!string.IsNullOrEmpty(propData.SequenceScript))
-				AddSequenceAttribute(propertyBuilder, propData.SequenceScript);
+				if (fieldPropData.IsComputedID)
+					AddDatabaseGeneratedAttribute(propertyBuilder, DatabaseGeneratedOption.None);
 
-			if (propData.Order != -1)
-				AddColumnAttribute(propertyBuilder, propData.ColumnName, propData.Order);
+				if (!string.IsNullOrEmpty(fieldPropData.SequenceScript))
+					AddSequenceAttribute(propertyBuilder, fieldPropData.SequenceScript);
+
+				AddColumnAttribute(propertyBuilder, fieldPropData.ColumnName, fieldPropData.Order);
+			}
+			else if (propData is ForeignKeyPropertyData)
+			{
+				var foreignKeyPropData = propData as ForeignKeyPropertyData;
+				AddColumnForeignKeyAttribute(propertyBuilder, foreignKeyPropData.ColumnName);
+			}
+			else if (propData is InversePropertyData)
+			{
+				var inversePropData = propData as InversePropertyData;
+				AddColumnInversePropertyAttribute(propertyBuilder, inversePropData.ColumnName);
+			}
 
 			MethodAttributes getterAndSetterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;// | MethodAttributes.Virtual;
 
 			//creates the Get Method for the property
-			propertyBuilder.SetGetMethod(CreateGetMethod(getterAndSetterAttributes, name, propData.Type, fieldBuilder));
+			propertyBuilder.SetGetMethod(CreateGetMethod(typeBuilder, getterAndSetterAttributes, name, propData.Type, fieldBuilder));
 			//creates the Set Method for the property and also adds the invocation of the property change
-			propertyBuilder.SetSetMethod(CreateSetMethod(getterAndSetterAttributes, name, propData.Type, fieldBuilder, raisePropertyChanged));
+			propertyBuilder.SetSetMethod(CreateSetMethod(typeBuilder, getterAndSetterAttributes, name, propData.Type, fieldBuilder, raisePropertyChanged));
 		}
 
 		/// <summary>	Adds a column key attribute to 'attrType'. </summary>
@@ -318,6 +334,21 @@ namespace ODataRestierDynamic.DynamicFactory
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
 				new[] { typeof(string) }),
 				new object[] { colName },
+				new PropertyInfo[] { },
+				new object[] { });
+			propertyBuilder.SetCustomAttribute(attr);
+		}
+
+		/// <summary>	Adds a column inverse property attribute to 'propName'. </summary>
+		///
+		/// <param name="propertyBuilder">	The property builder. </param>
+		/// <param name="propName">		  	Name of the property. </param>
+		private void AddColumnInversePropertyAttribute(PropertyBuilder propertyBuilder, string propName)
+		{
+			Type attrType = typeof(InversePropertyAttribute);
+			var attr = new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(string) }),
+				new object[] { propName },
 				new PropertyInfo[] { },
 				new object[] { });
 			propertyBuilder.SetCustomAttribute(attr);
@@ -376,7 +407,7 @@ namespace ODataRestierDynamic.DynamicFactory
 		{
 			Type attrType = typeof(RequiredAttribute);
 			var attr = new CustomAttributeBuilder(attrType.GetConstructor(Type.EmptyTypes),
-				new object[]{},
+				new object[] { },
 				new PropertyInfo[] { attrType.GetProperty("AllowEmptyStrings") },
 				new object[] { true });
 			propertyBuilder.SetCustomAttribute(attr);
@@ -403,9 +434,9 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="fieldBuilder">	The field builder. </param>
 		///
 		/// <returns>	The new get method. </returns>
-		private MethodBuilder CreateGetMethod(MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder)
+		private MethodBuilder CreateGetMethod(TypeBuilder typeBuilder, MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder)
 		{
-			var getMethodBuilder = _typeBuilder.DefineMethod("get_" + name, attr, type, Type.EmptyTypes);
+			var getMethodBuilder = typeBuilder.DefineMethod("get_" + name, attr, type, Type.EmptyTypes);
 
 			var getMethodILGenerator = getMethodBuilder.GetILGenerator();
 			getMethodILGenerator.Emit(OpCodes.Ldarg_0);
@@ -424,9 +455,9 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="raisePropertyChanged">	The raise property changed. </param>
 		///
 		/// <returns>	The new set method. </returns>
-		private MethodBuilder CreateSetMethod(MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder, MethodInfo raisePropertyChanged)
+		private MethodBuilder CreateSetMethod(TypeBuilder typeBuilder, MethodAttributes attr, string name, Type type, FieldBuilder fieldBuilder, MethodInfo raisePropertyChanged)
 		{
-			var setMethodBuilder = _typeBuilder.DefineMethod("set_" + name, attr, null, new Type[] { type });
+			var setMethodBuilder = typeBuilder.DefineMethod("set_" + name, attr, null, new Type[] { type });
 
 			var setMethodILGenerator = setMethodBuilder.GetILGenerator();
 			setMethodILGenerator.Emit(OpCodes.Ldarg_0);

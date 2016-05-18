@@ -22,6 +22,8 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using ODataRestierDynamic.CustomAttributes;
 using DatabaseSchemaReader.DataSchema;
+using System.Reflection.Emit;
+using ODataRestierDynamic.Helpers;
 
 namespace ODataRestierDynamic.Models
 {
@@ -122,19 +124,173 @@ namespace ODataRestierDynamic.Models
 
 					#region Read Tables
 
-					Dictionary<string, Type> doneTables = new Dictionary<string, Type>();
+					var tableBuildHelperList = new List<TableBuildHelper>();
 					List<string> failedTableColumns = new List<string>();
 					foreach (var table in schema.Tables)
 					{
-						AddTableToModel(modelBuilder, dynamicClassFactory, doneTables, failedTableColumns, table);
+						var tableBuildHelper = new TableBuildHelper();
+						tableBuildHelper.Name = table.Name;
+						tableBuildHelper.Properties = new List<TablePropertyBuildHelper>();
+
+						#region Field properties
+
+						foreach (var col in table.Columns)
+						{
+							if (col.DataType == null)
+							{
+								failedTableColumns.Add(string.Format("{0} - {1}", table.Name, col.ToString()));
+							}
+							else
+							{
+								Type colType = Type.GetType(col.DataType.NetDataType);
+								if (col.Nullable)
+								{
+									if (col.DataType.IsInt)
+									{
+										colType = typeof(Nullable<int>);
+									}
+									else if (col.DataType.IsDateTime)
+									{
+										colType = typeof(Nullable<DateTime>);
+									}
+									else if (col.DataType.IsFloat)
+									{
+										colType = typeof(Nullable<float>);
+									}
+									else if (col.DataType.IsNumeric)
+									{
+										colType = typeof(Nullable<decimal>);
+									}
+									else if (col.DataType.TypeName == "datetimeoffset")
+									{
+										colType = typeof(Nullable<DateTimeOffset>);
+									}
+									else if (col.DataType.NetDataTypeCSharpName == "bool")
+									{
+										colType = typeof(Nullable<bool>);
+									}
+								}
+
+								//Sequense logic
+								string sequenceScript = null;
+								if (col.IsPrimaryKey && !string.IsNullOrEmpty(col.DefaultValue) && col.DefaultValue.StartsWith("(NEXT VALUE FOR"))
+									sequenceScript = col.DefaultValue.Substring(1, col.DefaultValue.Length - 2);
+
+								FieldPropertyData fieldPropertyData = new FieldPropertyData()
+								{
+									IsPrimaryKey = col.IsPrimaryKey,
+									IsForeignKey = col.IsForeignKey,
+									Order = table.Columns.IndexOf(col) + 1,
+									Nullable = col.Nullable,
+									Type = colType,
+									MaxLength = col.Length,
+									IsComputedID = col.IsPrimaryKey && col.IdentityDefinition == null,
+									SequenceScript = sequenceScript,
+									ColumnName = col.Name
+								};
+
+								string name = col.Name;
+								while (table.Name == name || tableBuildHelper.Properties.Exists(p => p.Name == name))
+									name = name + "1";
+
+								var tablePropertyBuildHelper = new TablePropertyBuildHelper();
+								tablePropertyBuildHelper.Name = name;
+								tablePropertyBuildHelper.Data = fieldPropertyData;
+								tableBuildHelper.Properties.Add(tablePropertyBuildHelper);
+							}
+						}
+
+						#endregion
+
+						//Make all existing foreign keys as primary key if entity has no primary key
+						if (tableBuildHelper.Properties.FirstOrDefault(x => ((FieldPropertyData)x.Data).IsPrimaryKey) == null)
+						{
+							var foreignRows = tableBuildHelper.Properties.Where(x => (((FieldPropertyData)x.Data).IsForeignKey)).ToList();
+							foreignRows.ForEach(p => ((FieldPropertyData)p.Data).IsPrimaryKey = true);
+						}
+
+						var tableTypeBuilder = CreateTypeBuilder(dynamicClassFactory, table.Name, null);
+						tableBuildHelper.TypeBuilder = tableTypeBuilder;
+						tableBuildHelperList.Add(tableBuildHelper);
 					}
+
+					#region Navigation properties
+
+					foreach (var table in schema.Tables)
+					{
+						foreach (var foreignKey in table.ForeignKeys)
+						{
+							var tableBuildHelper = tableBuildHelperList.Find(table.Name);
+							var columnType = tableBuildHelperList.Find(foreignKey.RefersToTable).TypeBuilder;
+
+							//Foreign Key property
+							{
+								ForeignKeyPropertyData foreignKeyPropertyData = new ForeignKeyPropertyData()
+								{
+									Type = columnType,
+									ColumnName = tableBuildHelper.Properties.Find(foreignKey.Columns[0]).Name
+								};
+
+								string propName = foreignKey.RefersToTable;
+								while (table.Name == propName || tableBuildHelper.Properties.Exists(propName))
+								{
+									propName = propName + "1";
+								}
+
+								var tablePropertyBuildHelper = new TablePropertyBuildHelper();
+								tablePropertyBuildHelper.Name = propName;
+								tablePropertyBuildHelper.Data = foreignKeyPropertyData;
+								tableBuildHelper.Properties.Add(tablePropertyBuildHelper);
+							}
+
+							var fkTableBuildHelper = tableBuildHelperList.Find(foreignKey.RefersToTable);
+							var fkColumnType = typeof(ICollection<>).MakeGenericType(tableBuildHelper.TypeBuilder);
+
+							//if (table.Name == "BatchProductionRecord") //foreignKey.Columns[0] == "Events")
+							//Inverse property
+							{
+								InversePropertyData inversePropertyData = new InversePropertyData()
+								{
+									Type = fkColumnType,
+									ColumnName = tableBuildHelper.Properties.Last().Name //propName
+								};
+
+								string propName = foreignKey.TableName;
+								while (foreignKey.RefersToTable == propName || fkTableBuildHelper.Properties.Exists(propName))
+								{
+									propName = propName + "1";
+								}
+
+								var tablePropertyBuildHelper = new TablePropertyBuildHelper();
+								tablePropertyBuildHelper.Name = propName;
+								tablePropertyBuildHelper.Data = inversePropertyData;
+								fkTableBuildHelper.Properties.Add(tablePropertyBuildHelper);
+							}
+						}
+					}
+
+					#endregion
+
+					#region Create poperties and table types from type builder and add to DB model
+
+					foreach (var table in tableBuildHelperList)
+					{
+						foreach (var property in table.Properties)
+						{
+							dynamicClassFactory.CreateProperty(table.TypeBuilder, new KeyValuePair<string, DynamicPropertyData>(property.Name, property.Data), null);
+						}
+
+						var tableType = table.TypeBuilder.CreateType();
+						var entity = modelBuilder.Entity(tableType);
+					}
+
+					#endregion
 
 					#endregion
 
 					#region Read Views
 
 					List<string> failedViewColumns = new List<string>();
-
 					foreach (var view in schema.Views)
 					{
 						AddViewToModel(modelBuilder, dynamicClassFactory, failedViewColumns, view);
@@ -170,132 +326,6 @@ namespace ODataRestierDynamic.Models
 			}
 
 			return compiledDatabaseModel;
-		}
-
-		/// <summary>	Adds a table to model. </summary>
-		///
-		/// <param name="modelBuilder">		  	The builder that defines the model for the context being
-		/// 									created. </param>
-		/// <param name="dynamicClassFactory">	The dynamic class factory. </param>
-		/// <param name="doneTables">		  	The done tables. </param>
-		/// <param name="failedTableColumns"> 	The failed table columns. </param>
-		/// <param name="curTable">			  	The current table. </param>
-		///
-		/// <returns>	A Type. </returns>
-		private static Type AddTableToModel(
-			DbModelBuilder modelBuilder,
-			DynamicClassFactory dynamicClassFactory,
-			Dictionary<string, Type> doneTables,
-			List<string> failedTableColumns,
-			DatabaseTable curTable)
-		{
-			if (doneTables.ContainsKey(curTable.Name))
-				return doneTables[curTable.Name];
-
-			var property = new Dictionary<string, DynamicPropertyData>();
-
-			#region Column properties
-
-			foreach (var col in curTable.Columns)
-			{
-				if (col.DataType == null)
-				{
-					failedTableColumns.Add(string.Format("{0} - {1}", curTable.Name, col.ToString()));
-				}
-				else
-				{
-					Type colType = Type.GetType(col.DataType.NetDataType);
-					if (col.Nullable)
-					{
-						if (col.DataType.IsInt)
-						{
-							colType = typeof(Nullable<int>);
-						}
-						else if (col.DataType.IsDateTime)
-						{
-							colType = typeof(Nullable<DateTime>);
-						}
-						else if (col.DataType.IsFloat)
-						{
-							colType = typeof(Nullable<float>);
-						}
-						else if (col.DataType.IsNumeric)
-						{
-							colType = typeof(Nullable<decimal>);
-						}
-						else if (col.DataType.TypeName == "datetimeoffset")
-						{
-							colType = typeof(Nullable<DateTimeOffset>);
-						}
-						else if (col.DataType.NetDataTypeCSharpName == "bool")
-						{
-							colType = typeof(Nullable<bool>);
-						}
-					}
-
-					//Sequense logic
-					string sequenceScript = null;
-					if (col.IsPrimaryKey && !string.IsNullOrEmpty(col.DefaultValue) && col.DefaultValue.StartsWith("(NEXT VALUE FOR"))
-						sequenceScript = col.DefaultValue.Substring(1, col.DefaultValue.Length - 2);
-
-					DynamicPropertyData dynamicPropertyData = new DynamicPropertyData()
-					{
-						IsPrimaryKey = col.IsPrimaryKey,
-						IsForeignKey = col.IsForeignKey,
-						Order = curTable.Columns.IndexOf(col) + 1,
-						Nullable = col.Nullable,
-						Type = colType,
-						MaxLength = col.Length,
-						IsComputedID = col.IsPrimaryKey && col.IdentityDefinition == null,
-						SequenceScript = sequenceScript,
-						ColumnName = col.Name
-					};
-
-					string name = col.Name;
-					while (property.ContainsKey(name) || curTable.Name == name)
-					{
-						name = name + "1";
-					}
-					property.Add(name, dynamicPropertyData);
-				}
-			}
-
-			#endregion
-
-			#region Navigation properties
-
-			foreach (var col in curTable.Columns.Where(x => x.ForeignKeyTable != null))
-			{
-				if (col.ForeignKeyTable != curTable && (curTable.Name != "OperationsDefinition" && col.ForeignKeyTable.Name != "OpSegmentResponse"))
-				{
-					var fkColumnType = AddTableToModel(modelBuilder, dynamicClassFactory, doneTables, failedTableColumns, col.ForeignKeyTable);
-					DynamicPropertyData navigationPropertyData = new DynamicPropertyData()
-					{
-						IsForeignKey = true,
-						Order = -1,
-						Type = fkColumnType,
-						ColumnName = col.Name
-					};
-
-					string name = col.ForeignKeyTableName;
-					while (property.ContainsKey(name) || curTable.Name == name)
-					{
-						name = name + "1";
-					}
-					property.Add(name, navigationPropertyData);
-				}
-			}
-
-			#endregion
-
-			if (!doneTables.ContainsKey(curTable.Name))
-			{
-				var tableType = CreateType(dynamicClassFactory, curTable.Name, property);
-				var entity = modelBuilder.Entity(tableType);
-				doneTables.Add(curTable.Name, tableType);
-			}
-
-			return doneTables[curTable.Name];
 		}
 
 		/// <summary>	Adds a view to model. </summary>
@@ -350,7 +380,7 @@ namespace ODataRestierDynamic.Models
 							colType = typeof(Nullable<bool>);
 						}
 					}
-					DynamicPropertyData dynamicPropertyData = new DynamicPropertyData()
+					DynamicPropertyData dynamicPropertyData = new FieldPropertyData()
 					{
 						IsPrimaryKey = col.IsPrimaryKey,
 						IsForeignKey = col.IsForeignKey,
@@ -368,6 +398,13 @@ namespace ODataRestierDynamic.Models
 					}
 					property.Add(name, dynamicPropertyData);
 				}
+			}
+
+			//Make all existing foreign keys as primary key if entity has no primary key
+			if (property.Values.FirstOrDefault(x => ((FieldPropertyData)x).IsPrimaryKey) == null)
+			{
+				var foreignRows = property.Values.Where(x => (((FieldPropertyData)x).IsForeignKey)).ToList();
+				foreignRows.ForEach(p => ((FieldPropertyData)p).IsPrimaryKey = true);
 			}
 
 			var viewType = CreateType(dynamicClassFactory, view.Name, property);
@@ -536,6 +573,19 @@ namespace ODataRestierDynamic.Models
 		{
 			var dynamicType = dynamicClassFactory.CreateDynamicType<DynamicEntity>(name, property);
 			return dynamicType;
+		}
+
+		/// <summary>	Creates a type builder. </summary>
+		///
+		/// <param name="dynamicClassFactory">	The dynamic class factory. </param>
+		/// <param name="name">				  	The name. </param>
+		/// <param name="property">			  	The property. </param>
+		///
+		/// <returns>	The new type builder. </returns>
+		private static TypeBuilder CreateTypeBuilder(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, DynamicPropertyData> property)
+		{
+			var dynamicTypeBuilder = dynamicClassFactory.CreateDynamicTypeBuilder<DynamicEntity>(name, property);
+			return dynamicTypeBuilder;
 		}
 
 		/// <summary>	Creates type action. </summary>

@@ -286,7 +286,7 @@ namespace ODataRestierDynamic.Controllers
 
 				foreach (MultipartFileData file in provider.FileData)
 				{
-					var dataPropInfo = entity.GetType().GetProperty(file.Headers.ContentDisposition.Name);
+					var dataPropInfo = entity.GetType().GetProperty(file.Headers.ContentDisposition.Name.Trim('"'));
 					if (dataPropInfo != null)
 					{
 						byte[] fileContent = File.ReadAllBytes(file.LocalFileName);

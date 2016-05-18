@@ -149,6 +149,7 @@
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
     <Compile Include="DynamicFactory\MediadataRoutingConvention.cs" />
+    <Compile Include="Helpers\ModelBuildHelper.cs" />
     <Compile Include="Models\DynamicMetadataObject.cs" />
     <Compile Include="DynamicFactory\DynamicMethodData.cs" />
     <Compile Include="DynamicFactory\DynamicModelBuilder.cs" />

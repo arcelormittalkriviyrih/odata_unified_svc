@@ -6,7 +6,21 @@ using System.Web;
 namespace ODataRestierDynamic.DynamicFactory
 {
 	/// <summary>	Base class for dynamic property data. Needed for dynamic object factory. </summary>
-	public class DynamicPropertyData
+	public abstract class DynamicPropertyData
+	{
+		/// <summary>	Gets or sets the type. </summary>
+		///
+		/// <value>	The type. </value>
+		public Type Type { get; set; }
+
+		/// <summary>	Gets or sets the name of the column. </summary>
+		///
+		/// <value>	The name of the column. </value>
+		public string ColumnName { get; set; }
+	}
+
+	/// <summary>	Class for field property data. Needed for dynamic object factory. </summary>
+	public class FieldPropertyData : DynamicPropertyData
 	{
 		/// <summary>	Gets or sets a value indicating whether this object is primary key. </summary>
 		///
@@ -33,11 +47,6 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <value>	The length of the maximum. </value>
 		public int? MaxLength { get; set; }
 
-		/// <summary>	Gets or sets the type. </summary>
-		///
-		/// <value>	The type. </value>
-		public Type Type { get; set; }
-
 		/// <summary>
 		/// Gets or sets a value indicating whether this object is computed identifier.
 		/// </summary>
@@ -49,10 +58,17 @@ namespace ODataRestierDynamic.DynamicFactory
 		///
 		/// <value>	The sequence script needed for adding new entity. </value>
 		public string SequenceScript { get; set; }
+	}
 
-		/// <summary>	Gets or sets the name of the column. </summary>
-		///
-		/// <value>	The name of the column. </value>
-		public string ColumnName { get; set; }
+	/// <summary>	Class for foreign key property data. Needed for dynamic object factory. </summary>
+	public class ForeignKeyPropertyData : DynamicPropertyData
+	{
+
+	}
+
+	/// <summary>	Class for inverse property data. Needed for dynamic object factory. </summary>
+	public class InversePropertyData : DynamicPropertyData
+	{
+
 	}
 }
