@@ -3,9 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <ProjectFile Condition=" '$(ProjectFile)' == '' ">ODataRestierDynamic\ODataRestierDynamic\ODataRestierDynamic.csproj</ProjectFile>
     <DeployServiceUrl Condition=" '$(DeployServiceUrl)' == '' ">localhost</DeployServiceUrl>
-	<DeployIisAppPath Condition=" '$(DeployIisAppPath)' == '' ">Default Web Site/ODataRestierDynamicKerberos</DeployIisAppPath>
-	<UserName Condition=" '$(UserName)' == '' ">Administrator</UserName>
-	<Password Condition=" '$(Password)' == '' ">pass</Password>
+	<DeployIisAppPath Condition=" '$(DeployIisAppPath)' == '' ">Default Web Site/ODataRestierDynamicKerberos</DeployIisAppPath>	
   </PropertyGroup>
 
   <Target Name="VerifyProperties">
@@ -22,12 +20,10 @@
                              DeployTarget=MSDeployPublish;
                              CreatePackageOnPublish=True;
                              AllowUntrustedCertificate=True;
-                             MSDeployPublishMethod=WMSVC;
+                             MSDeployPublishMethod=MsDepSvc;
 							 DeployIisAppPath=$(DeployIisAppPath);
                              MSDeployServiceUrl=$(DeployServiceUrl);
-                             SkipExtraFilesOnServer=False;
-                             UserName=$(UserName);
-                             Password=$(Password);"
+                             SkipExtraFilesOnServer=False;"
              ContinueOnError="false" />
   </Target>
 </Project>
