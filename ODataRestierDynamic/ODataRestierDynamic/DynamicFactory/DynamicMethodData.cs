@@ -11,12 +11,7 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <summary>	Gets or sets options for controlling the operation. </summary>
 		///
 		/// <value>	The parameters. </value>
-		public Type[] Params { get; set; }
-
-		/// <summary>	Gets or sets a list of names of the parameters. </summary>
-		///
-		/// <value>	A list of names of the parameters. </value>
-		public string[] ParamNames { get; set; }
+		public DynamicParameterData[] Params { get; set; }
 
 		/// <summary>	Gets or sets the type of the return. </summary>
 		///
@@ -32,5 +27,34 @@ namespace ODataRestierDynamic.DynamicFactory
 		///
 		/// <value>	The schema. </value>
 		public string Schema { get; set; }
+	}
+
+	/// <summary>	A dynamic parameter data. For generating by DynamicClassFactory. </summary>
+	public class DynamicParameterData
+	{
+		/// <summary>	Gets or sets the type of the parameter. </summary>
+		///
+		/// <value>	The parameter Type. </value>
+		public Type Type { get; set; }
+
+		/// <summary>	Gets or sets a name of the parameter. </summary>
+		///
+		/// <value>	A name of the parameter. </value>
+		public string Name { get; set; }
+
+		/// <summary>	Gets or sets an input type of parameter. </summary>
+		///
+		/// <value>	Is parameter input. </value>
+		public bool isIn { get; set; }
+
+		/// <summary>	Gets or sets an output type of parameter. </summary>
+		///
+		/// <value>	Is parameter output. </value>
+		public bool isOut { get; set; }
+
+		/// <summary>	Gets or sets the length. </summary>
+		///
+		/// <value>	The length. </value>
+		public int? Length { get; set; }
 	}
 }

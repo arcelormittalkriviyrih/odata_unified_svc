@@ -140,6 +140,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ActionResult.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\MediaDataController.cs" />

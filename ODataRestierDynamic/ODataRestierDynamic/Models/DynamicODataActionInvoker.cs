@@ -75,7 +75,7 @@ namespace ODataRestierDynamic.Models
 
 									var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
 									dynamicController.ControllerContext = controllerContext;
-									result = dynamicController.CallAction(actionPathSegment.ActionName, payload).ExecuteAsync(cancellationToken);
+									result = dynamicController.CallAction(actionPathSegment.ActionName, payload, cancellationToken);
 								}
 							}
 

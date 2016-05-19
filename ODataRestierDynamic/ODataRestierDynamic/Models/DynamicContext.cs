@@ -63,6 +63,9 @@ namespace ODataRestierDynamic.Models
 		/// <summary>	The dynamic actions. </summary>
 		private static Type _dynamicActions = null;
 
+		/// <summary>	The dynamic action methods. </summary>
+		private static Dictionary<string, DynamicMethodData> _dynamicActionMethods = new Dictionary<string, DynamicMethodData>();
+
 		#endregion
 
 		#region Property
@@ -75,6 +78,17 @@ namespace ODataRestierDynamic.Models
 			get
 			{
 				return _dynamicActions;
+			}
+		}
+
+		/// <summary>	Gets the dynamic action methods. </summary>
+		///
+		/// <value>	The dynamic action methods. </value>
+		public Dictionary<string, DynamicMethodData> DynamicActionMethods
+		{
+			get
+			{
+				return _dynamicActionMethods;
 			}
 		}
 
@@ -426,8 +440,6 @@ namespace ODataRestierDynamic.Models
 			DatabaseSchema schema,
 			DynamicClassFactory dynamicClassFactory)
 		{
-			Dictionary<string, DynamicMethodData> methods = new Dictionary<string, DynamicMethodData>();
-
 			foreach (var function in schema.Functions)
 			{
 				if (function.ReturnType != null)
@@ -438,15 +450,20 @@ namespace ODataRestierDynamic.Models
 					dynamicMethodData.Schema = function.SchemaOwner;
 					if (function.Arguments.Count > 0)
 					{
-						dynamicMethodData.Params = new Type[function.Arguments.Count];
-						dynamicMethodData.ParamNames = new string[function.Arguments.Count];
+						dynamicMethodData.Params = new DynamicParameterData[function.Arguments.Count];
 						for (int i = 0; i < function.Arguments.Count; i++)
 						{
-							dynamicMethodData.Params[i] = function.Arguments[i].DataType.GetNetType();
-							dynamicMethodData.ParamNames[i] = function.Arguments[i].Name;
+							dynamicMethodData.Params[i] = new DynamicParameterData() 
+							{ 
+								Name = function.Arguments[i].Name, 
+								Type = function.Arguments[i].DataType.GetNetType(),
+								isIn = function.Arguments[i].In,
+								isOut = function.Arguments[i].Out,
+								Length = function.Arguments[i].Length
+							};
 						}
 					}
-					methods.Add(function.Name, dynamicMethodData);
+					_dynamicActionMethods.Add(function.Name, dynamicMethodData);
 				}
 			}
 
@@ -461,19 +478,24 @@ namespace ODataRestierDynamic.Models
 					dynamicMethodData.Schema = procedure.SchemaOwner;
 					if (procedure.Arguments.Count > 0)
 					{
-						dynamicMethodData.Params = new Type[procedure.Arguments.Count];
-						dynamicMethodData.ParamNames = new string[procedure.Arguments.Count];
+						dynamicMethodData.Params = new DynamicParameterData[procedure.Arguments.Count];
 						for (int i = 0; i < procedure.Arguments.Count; i++)
 						{
-							dynamicMethodData.Params[i] = procedure.Arguments[i].DataType.GetNetType();
-							dynamicMethodData.ParamNames[i] = procedure.Arguments[i].Name;
+							dynamicMethodData.Params[i] = new DynamicParameterData() 
+							{ 
+								Name = procedure.Arguments[i].Name,
+								Type = procedure.Arguments[i].DataType.GetNetType(),
+								isIn = procedure.Arguments[i].In,
+								isOut = procedure.Arguments[i].Out,
+								Length = procedure.Arguments[i].Length
+							};
 						}
 					}
-					methods.Add(procedure.Name, dynamicMethodData);
+					_dynamicActionMethods.Add(procedure.Name, dynamicMethodData);
 				}
 			}
 
-			var dynamicActionsType = CreateTypeAction(dynamicClassFactory, "DbActions", methods);
+			var dynamicActionsType = CreateTypeAction(dynamicClassFactory, "DbActions", _dynamicActionMethods);
 			// https://www.nuget.org/packages/EntityFramework.Functions
 			modelBuilder.AddFunctions(dynamicActionsType, false);
 

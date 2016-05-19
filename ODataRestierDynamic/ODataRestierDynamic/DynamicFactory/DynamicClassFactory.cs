@@ -118,11 +118,12 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="dynamicMethodData">	Information describing the dynamic method. </param>
 		private void AddMethodDynamically(TypeBuilder typeBuilder, string methodName, DynamicMethodData dynamicMethodData)
 		{
+			Type[] paramTypes = (dynamicMethodData.Params == null || dynamicMethodData.Params.Length == 0) ? null : dynamicMethodData.Params.Select(t => t.Type).ToArray();
 			MethodBuilder methodBuilder = typeBuilder.DefineMethod(methodName,
 												 MethodAttributes.Public |
 												 MethodAttributes.Static,
 												 dynamicMethodData.ReturnType,
-												 dynamicMethodData.Params);
+												 paramTypes);
 
 			ILGenerator ILout = methodBuilder.GetILGenerator();
 
@@ -130,7 +131,13 @@ namespace ODataRestierDynamic.DynamicFactory
 
 			for (int i = 0; i < numParams; i++)
 			{
-				methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, dynamicMethodData.ParamNames[i].Replace("@", string.Empty));
+				var paramAttribute = ParameterAttributes.None;
+				if (dynamicMethodData.Params[i].isIn)
+					paramAttribute |= ParameterAttributes.In;
+				if (dynamicMethodData.Params[i].isOut)
+					paramAttribute |= ParameterAttributes.Out;
+
+				methodBuilder.DefineParameter(i + 1, paramAttribute, dynamicMethodData.Params[i].Name.Replace("@", string.Empty));
 			}
 
 			for (byte x = 0; x < numParams; x++)

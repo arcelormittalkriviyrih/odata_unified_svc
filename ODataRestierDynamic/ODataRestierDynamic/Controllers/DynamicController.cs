@@ -18,6 +18,10 @@ using System.Text;
 using DatabaseSchemaReader;
 using ODataRestierDynamic.DynamicFactory;
 using ODataRestierDynamic.Log;
+using System.Net;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using ODataRestierDynamic.Actions;
 
 namespace ODataRestierDynamic.Controllers
 {
@@ -106,6 +110,26 @@ namespace ODataRestierDynamic.Controllers
 			return Ok(result);
 		}
 
+		/// <summary>	Call action. </summary>
+		///
+		/// <param name="name">					action name. </param>
+		/// <param name="parameters">			Parameter names and values provided by a client in a POST
+		/// 									request to invoke a particular Action. </param>
+		/// <param name="cancellationToken">	The cancellation token. </param>
+		///
+		/// <returns>	A Task&lt;System.Net.Http.HttpResponseMessage&gt; </returns>
+		public Task<System.Net.Http.HttpResponseMessage> CallAction(string name, ODataActionParameters parameters, System.Threading.CancellationToken cancellationToken)
+		{
+			if (!DbContext.DynamicActionMethods.ContainsKey(name))
+				return NotFound().ExecuteAsync(cancellationToken);
+
+			bool hasOutputParams = DbContext.DynamicActionMethods[name].Params.Where(p => p.isOut).Count() > 0;
+			if (hasOutputParams)
+				return CallActionOutput(name, parameters);
+			else
+				return CallActionResult(name, parameters).ExecuteAsync(cancellationToken);
+		}
+
 		/// <summary>	Method for calling all Dynamic Actions which exist in DbContext. </summary>
 		///
 		/// <param name="name">		 	action name. </param>
@@ -115,7 +139,7 @@ namespace ODataRestierDynamic.Controllers
 		/// <returns>
 		/// Command that asynchronously creates an System.Net.Http.HttpResponseMessage.
 		/// </returns>
-		public IHttpActionResult CallAction(string name, ODataActionParameters parameters)
+		public IHttpActionResult CallActionResult(string name, ODataActionParameters parameters)
 		{
 			int result = -1;
 
@@ -134,18 +158,91 @@ namespace ODataRestierDynamic.Controllers
 
 				//EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
 				string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
-
 				var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
-
 				result = objContext.ExecuteStoreCommand(commandText, paramList.ToArray());
 			}
-			catch(Exception exception)
+			catch (Exception exception)
 			{
-				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+				DynamicLogger.Instance.WriteLoggerLogError("CallAction", exception);
 				throw exception;
 			}
 
 			return Ok(result);
+		}
+
+		/// <summary>	Call action output. </summary>
+		///
+		/// <exception cref="Exception">	Thrown when an exception error condition occurs. </exception>
+		///
+		/// <param name="name">		 	action name. </param>
+		/// <param name="parameters">	Parameter names and values provided by a client in a POST request
+		/// 							to invoke a particular Action. </param>
+		///
+		/// <returns>	A Task&lt;System.Net.Http.HttpResponseMessage&gt; </returns>
+		public async Task<System.Net.Http.HttpResponseMessage> CallActionOutput(string name, ODataActionParameters parameters)
+		{
+			HttpResponseMessage response;
+
+			try
+			{
+				ActionResult returnActionType = new ActionResult();
+				returnActionType.Name = name;
+				returnActionType.ActionParameters = new List<ActionParameter>();
+
+				var actionMethod = DbContext.DynamicActionMethods[name];
+
+				List<SqlParameter> paramList = new List<SqlParameter>();
+				List<string> parameterNames = new List<string>();
+				if (parameters != null)
+				{
+					foreach (var item in parameters)
+					{
+						var sqlParameter = new SqlParameter(item.Key, item.Value);
+						var nameParameter = "@" + item.Key;
+						var paramInfo = actionMethod.Params.First(p => p.Name == nameParameter);
+						if (paramInfo.isOut)
+						{
+							sqlParameter.Direction = paramInfo.isIn ? System.Data.ParameterDirection.InputOutput : System.Data.ParameterDirection.Output;
+							nameParameter += " OUTPUT";
+							returnActionType.ActionParameters.Add(new ActionParameter() { Name = item.Key, Value = item.Value });
+						}
+						if (paramInfo.Length.HasValue)
+						{
+							sqlParameter.Size = paramInfo.Length.Value;
+						}
+
+						paramList.Add(sqlParameter);
+						parameterNames.Add(nameParameter);
+					}
+				}
+
+				//EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
+				string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
+				var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
+				var paramArray = paramList.ToArray();
+				returnActionType.Return = await objContext.ExecuteStoreCommandAsync(commandText, paramArray);
+
+				foreach (var sqlParameter in paramArray)
+				{
+					if (sqlParameter.Direction == System.Data.ParameterDirection.InputOutput ||
+						sqlParameter.Direction == System.Data.ParameterDirection.Output)
+					{
+						var parameter = returnActionType.ActionParameters.First(p => p.Name == sqlParameter.ParameterName);
+						parameter.Value = sqlParameter.Value;
+					}
+				}
+
+				string json = JsonConvert.SerializeObject(returnActionType);
+				response = this.Request.CreateResponse(HttpStatusCode.OK);
+				response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+			}
+			catch (Exception exception)
+			{
+				DynamicLogger.Instance.WriteLoggerLogError("CallActionOutput", exception);
+				throw exception;
+			}
+
+			return response;
 		}
 
 		/// <summary>	Disposes the API and the controller. </summary>
