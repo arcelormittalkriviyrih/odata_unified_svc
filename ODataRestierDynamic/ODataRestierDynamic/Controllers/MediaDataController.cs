@@ -304,9 +304,8 @@ namespace ODataRestierDynamic.Controllers
 				}
 
 				// Send OK Response along with saved file names to the client.
-				response = Request.CreateResponse(HttpStatusCode.OK);
-				response.Content = new StringContent(key.ToString());
-				//response = await Ok(key).ExecuteAsync(System.Threading.CancellationToken.None);
+				response = Request.CreateResponse(HttpStatusCode.NoContent);
+				//response.Content = new StringContent(key.ToString());
 			}
 			catch (System.Exception exception)
 			{
