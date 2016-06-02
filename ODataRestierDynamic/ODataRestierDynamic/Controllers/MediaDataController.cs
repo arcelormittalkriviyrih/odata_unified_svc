@@ -1,4 +1,7 @@
-﻿using Microsoft.OData.Core;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.OData.Core;
 using ODataRestierDynamic.DynamicFactory;
 using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
@@ -11,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
@@ -22,6 +26,9 @@ namespace ODataRestierDynamic.Controllers
 	{
 		/// <summary>	Name of the files entity. </summary>
 		internal const string cFilesEntityName = "Files";
+
+		/// <summary>	Name of the template entity. </summary>
+		private const string cTemplateEntityName = "v_PrintTemplate";
 
 		/// <summary>	The API. </summary>
 		private DynamicApi api;
@@ -51,6 +58,29 @@ namespace ODataRestierDynamic.Controllers
 			{
 				return Api.Context;
 			}
+		}
+
+		/// <summary>	Gets template entities. </summary>
+		///
+		/// <returns>	The template entities. </returns>
+		private async Task<IQueryable<DynamicEntity>> GetTemplateEntities()
+		{
+			IQueryable<DynamicEntity> templateEntities = null;
+
+			Type relevantType = null;
+			var task = Task.Run(() => DbContext.TryGetRelevantType(cTemplateEntityName, out relevantType));
+			var typeFound = await task;
+
+			if (typeFound)
+			{
+				var dbSet = DbContext.Set(relevantType);
+				if (dbSet != null)
+				{
+					templateEntities = dbSet as IQueryable<DynamicEntity>;
+				}
+			}
+
+			return templateEntities;
 		}
 
 		/// <summary>
@@ -192,13 +222,7 @@ namespace ODataRestierDynamic.Controllers
 				// if the range header is present but null, then the header value must be invalid
 				if (this.Request.Headers.Contains("Range"))
 				{
-					//var error = new ODataError
-					//{
-					//	Message = ExceptionMessage.ControllerRangeNotSatisfiable,
-					//	MessageLanguage = ExceptionMessage.ErrorMessageLanguage,
-					//	ErrorCode = string.Format(CultureInfo.CurrentCulture, ExceptionMessage.ControllerRangeNotSatisfiableErrorCode, stream.Length - 1L)
-					//};
-					return this.Request.CreateErrorResponse(HttpStatusCode.RequestedRangeNotSatisfiable, "");
+					return this.Request.CreateErrorResponse(HttpStatusCode.RequestedRangeNotSatisfiable, "GetMediaResource");
 				}
 
 				// if no range was requested, return the entire stream
@@ -315,6 +339,182 @@ namespace ODataRestierDynamic.Controllers
 			}
 
 			return response;
+		}
+
+		/// <summary>	(An Action that handles HTTP GET requests) generates a template. </summary>
+		///
+		/// <returns>	The template. </returns>
+		[HttpGet]
+		public async Task<System.Net.Http.HttpResponseMessage> GenerateTemplate()
+		{
+			Contract.Ensures(Contract.Result<Task<HttpResponseMessage>>() != null);
+
+			// get template entities
+			var templateEntities = await this.GetTemplateEntities();
+			if (templateEntities == null)
+				return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+			#region Generate Excel File OpenXMLSDK-MOT
+
+			string fileSaveLocation = Path.GetTempFileName();
+			var properties = templateEntities.ElementType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.Name != "ID");
+			using (var workbook = SpreadsheetDocument.Create(fileSaveLocation, DocumentFormat.OpenXml.SpreadsheetDocumentType.Workbook))
+			{
+				var workbookPart = workbook.AddWorkbookPart();
+				WorkbookStylesPart stylesPart = workbookPart.AddNewPart<WorkbookStylesPart>();
+				stylesPart.Stylesheet = CreateStylesheet();
+				stylesPart.Stylesheet.Save();
+				workbook.WorkbookPart.Workbook = new DocumentFormat.OpenXml.Spreadsheet.Workbook();
+				workbook.WorkbookPart.Workbook.Sheets = new DocumentFormat.OpenXml.Spreadsheet.Sheets();
+
+				var sheetPart = workbook.WorkbookPart.AddNewPart<WorksheetPart>();
+				var sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+				sheetPart.Worksheet = new DocumentFormat.OpenXml.Spreadsheet.Worksheet(sheetData);
+				SheetFormatProperties sheetFormatProperties = new SheetFormatProperties() { DefaultColumnWidth = 25.00D, DefaultRowHeight = 0D };
+				sheetPart.Worksheet.SheetFormatProperties = sheetFormatProperties;
+
+				DocumentFormat.OpenXml.Spreadsheet.Sheets sheets = workbook.WorkbookPart.Workbook.GetFirstChild<DocumentFormat.OpenXml.Spreadsheet.Sheets>();
+				string relationshipId = workbook.WorkbookPart.GetIdOfPart(sheetPart);
+
+				uint sheetId = 1;
+				if (sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Count() > 0)
+				{
+					sheetId = sheets.Elements<DocumentFormat.OpenXml.Spreadsheet.Sheet>().Select(s => s.SheetId.Value).Max() + 1;
+				}
+
+				DocumentFormat.OpenXml.Spreadsheet.Sheet sheet = new DocumentFormat.OpenXml.Spreadsheet.Sheet() { Id = relationshipId, SheetId = sheetId, Name = cTemplateEntityName };
+				sheets.Append(sheet);
+
+				DocumentFormat.OpenXml.Spreadsheet.Row headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+				List<String> columns = new List<string>();
+				foreach (PropertyInfo column in properties)
+				{
+					columns.Add(column.Name);
+
+					DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
+					cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
+					cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(column.Name);
+					cell.StyleIndex = Convert.ToUInt32(1);
+					headerRow.AppendChild(cell);
+				}
+
+				sheetData.AppendChild(headerRow);
+
+				foreach (var entity in templateEntities)
+				{
+					DocumentFormat.OpenXml.Spreadsheet.Row newRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+					foreach (string col in columns)
+					{
+						DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
+						cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
+						object value = templateEntities.ElementType.GetProperty(col).GetValue(entity);
+						cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(value == null ? string.Empty : value.ToString());
+						newRow.AppendChild(cell);
+					}
+
+					sheetData.AppendChild(newRow);
+				}
+			}
+
+			var bytes = File.ReadAllBytes(fileSaveLocation);
+			File.Delete(fileSaveLocation);
+			var stream = new MemoryStream(bytes);
+			if (stream == null)
+				return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+			#endregion
+
+			var mediaNameStr = "Template.xlsx";
+			var mediaType = this.GetContentTypeForStream("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", mediaNameStr);
+
+			// get the range and stream media type
+			var range = this.Request.Headers.Range;
+			HttpResponseMessage response;
+
+			if (range == null)
+			{
+				// if the range header is present but null, then the header value must be invalid
+				if (this.Request.Headers.Contains("Range"))
+				{
+					return this.Request.CreateErrorResponse(HttpStatusCode.RequestedRangeNotSatisfiable, "GenerateTemplate");
+				}
+
+				// if no range was requested, return the entire stream
+				response = this.Request.CreateResponse(HttpStatusCode.OK);
+
+				response.Headers.AcceptRanges.Add("bytes");
+				response.Content = new StreamContent(stream);
+				response.Content.Headers.ContentType = mediaType;
+
+				return response;
+			}
+
+			var partialStream = EnsureStreamCanSeek(stream);
+
+			response = this.Request.CreateResponse(HttpStatusCode.PartialContent);
+			response.Headers.AcceptRanges.Add("bytes");
+
+			try
+			{
+				// return the requested range(s)
+				response.Content = new ByteRangeStreamContent(partialStream, range, mediaType);
+			}
+			catch (InvalidByteRangeException exception)
+			{
+				DynamicLogger.Instance.WriteLoggerLogError("GenerateTemplate", exception);
+				response.Dispose();
+				return Request.CreateErrorResponse(exception);
+			}
+
+			// change status code if the entire stream was requested
+			if (response.Content.Headers.ContentLength.Value == partialStream.Length)
+				response.StatusCode = HttpStatusCode.OK;
+
+			return response;
+		}
+
+		/// <summary>	Creates the stylesheet. </summary>
+		///
+		/// <returns>	The new stylesheet. </returns>
+		private static Stylesheet CreateStylesheet()
+		{
+			Stylesheet stylesheet = new Stylesheet();
+
+			Font font0 = new Font();         // Default font
+
+			Font font1 = new Font();         // Bold font
+			Bold bold = new Bold();
+			font1.Append(bold);
+
+			Fonts fonts = new Fonts();      // <APENDING Fonts>
+			fonts.Append(font0);
+			fonts.Append(font1);
+
+			// <Fills>
+			Fill fill0 = new Fill();        // Default fill
+
+			Fills fills = new Fills();      // <APENDING Fills>
+			fills.Append(fill0);
+
+			// <Borders>
+			Border border0 = new Border();     // Defualt border
+
+			Borders borders = new Borders();    // <APENDING Borders>
+			borders.Append(border0);
+
+			CellFormat cellformat0 = new CellFormat() { FontId = 0, FillId = 0, BorderId = 0 }; // Default style : Mandatory | Style ID =0
+
+			CellFormat cellformat1 = new CellFormat() { FontId = 1 };
+			CellFormats cellformats = new CellFormats();
+			cellformats.Append(cellformat0);
+			cellformats.Append(cellformat1);
+
+			stylesheet.Append(fonts);
+			stylesheet.Append(fills);
+			stylesheet.Append(borders);
+			stylesheet.Append(cellformats);
+
+			return stylesheet;
 		}
 	}
 }
