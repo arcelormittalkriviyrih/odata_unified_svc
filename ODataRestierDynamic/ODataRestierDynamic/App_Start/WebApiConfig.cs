@@ -20,6 +20,7 @@ using System.Diagnostics.Contracts;
 using System.Collections;
 using System.Net.Http;
 using ODataRestierDynamic.DynamicFactory;
+using System.Web.Http.ExceptionHandling;
 
 namespace ODataRestierDynamic
 {
@@ -66,6 +67,9 @@ namespace ODataRestierDynamic
 			// Register an Action invoker that can include template parameters in the name
 			IHttpActionInvoker actionInvokerService = config.Services.GetActionInvoker();
 			config.Services.Replace(typeof(IHttpActionInvoker), new DynamicODataActionInvoker(actionInvokerService));
+			// Register an Exception handler that can include template parameters in the name
+			IExceptionHandler exceptionHandler = config.Services.GetExceptionHandler();
+			config.Services.Replace(typeof(IExceptionHandler), new DynamicExceptionHandler(exceptionHandler));
 		}
 	}
 }
