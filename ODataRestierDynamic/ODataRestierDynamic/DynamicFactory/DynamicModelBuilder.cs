@@ -211,6 +211,9 @@ namespace ODataRestierDynamic.DynamicFactory
 				type = type.GetGenericArguments()[0];
 			}
 
+			//Task #197 all parameters for Actions nullable!!!
+			isNullable = true;
+
 			if (type == typeof(string))
 			{
 				return EdmPrimitiveTypeKind.String;

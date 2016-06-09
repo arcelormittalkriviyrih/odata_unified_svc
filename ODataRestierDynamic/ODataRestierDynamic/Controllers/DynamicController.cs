@@ -151,7 +151,7 @@ namespace ODataRestierDynamic.Controllers
 				{
 					foreach (var item in parameters)
 					{
-						paramList.Add(new SqlParameter(item.Key, item.Value));
+						paramList.Add(new SqlParameter(item.Key, item.Value == null ? DBNull.Value : item.Value));
 						parameterNames.Add("@" + item.Key);
 					}
 				}
@@ -197,7 +197,7 @@ namespace ODataRestierDynamic.Controllers
 				{
 					foreach (var item in parameters)
 					{
-						var sqlParameter = new SqlParameter(item.Key, item.Value);
+						var sqlParameter = new SqlParameter(item.Key, item.Value == null ? DBNull.Value : item.Value);
 						var nameParameter = "@" + item.Key;
 						var paramInfo = actionMethod.Params.First(p => p.Name == nameParameter);
 						if (paramInfo.isOut)
