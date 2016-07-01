@@ -151,8 +151,9 @@ namespace ODataRestierDynamic.Controllers
 				{
 					foreach (var item in parameters)
 					{
-						paramList.Add(new SqlParameter(item.Key, item.Value == null ? DBNull.Value : item.Value));
-						parameterNames.Add("@" + item.Key);
+						string paramName = string.Format("{0}_param", item.Key.ToLower());
+						paramList.Add(new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value));
+						parameterNames.Add(string.Format("@{0} = @{1}", item.Key, paramName));
 					}
 				}
 
@@ -197,13 +198,13 @@ namespace ODataRestierDynamic.Controllers
 				{
 					foreach (var item in parameters)
 					{
-						var sqlParameter = new SqlParameter(item.Key, item.Value == null ? DBNull.Value : item.Value);
-						var nameParameter = "@" + item.Key;
-						var paramInfo = actionMethod.Params.First(p => p.Name == nameParameter);
+						string paramName = string.Format("{0}_param", item.Key.ToLower());
+						var sqlParameter = new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value);
+						var paramInfo = actionMethod.Params.First(p => p.Name == ("@" + item.Key));
 						if (paramInfo.isOut)
 						{
 							sqlParameter.Direction = paramInfo.isIn ? System.Data.ParameterDirection.InputOutput : System.Data.ParameterDirection.Output;
-							nameParameter += " OUTPUT";
+							paramName += " OUTPUT";
 							returnActionType.ActionParameters.Add(new ActionParameter() { Name = item.Key, Value = item.Value });
 						}
 						if (paramInfo.Length.HasValue)
@@ -212,7 +213,7 @@ namespace ODataRestierDynamic.Controllers
 						}
 
 						paramList.Add(sqlParameter);
-						parameterNames.Add(nameParameter);
+						parameterNames.Add(string.Format("@{0} = @{1}", item.Key, paramName));
 					}
 				}
 
