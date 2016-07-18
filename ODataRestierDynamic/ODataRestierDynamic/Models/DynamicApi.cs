@@ -115,6 +115,15 @@ namespace ODataRestierDynamic.Models
 			return new DynamicMetadataObject[]{};
 		}
 
+		/// <summary>	Gets user procedure. </summary>
+		///
+		/// <returns>	An array of dynamic metadata object. </returns>
+		[Function]
+		public DynamicMetadataObject[] GetUserProcedure()
+		{
+			return new DynamicMetadataObject[] { };
+		}
+
 		/// <summary>
 		/// Releases the unmanaged resources used by the ODataRestierDynamic.Models.DynamicApi and
 		/// optionally releases the managed resources.

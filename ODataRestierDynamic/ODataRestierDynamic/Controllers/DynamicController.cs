@@ -22,6 +22,7 @@ using System.Net;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ODataRestierDynamic.Actions;
+using System.Data;
 
 namespace ODataRestierDynamic.Controllers
 {
@@ -105,6 +106,49 @@ namespace ODataRestierDynamic.Controllers
 				}
 
 				#endregion
+			}
+
+			return Ok(result);
+		}
+
+		/// <summary>	Method for getting object for user rules custom procedures. </summary>
+		///
+		/// <returns>	The user procedure. </returns>
+		[HttpGet]
+		[ODataRoute("GetUserProcedure")]
+		public IHttpActionResult GetUserProcedure()
+		{
+			List<DynamicMetadataObject> result = new List<DynamicMetadataObject>();
+
+			using (SqlConnection connection = new SqlConnection(DynamicContext.cConnectionStringSettings.ConnectionString))
+			{
+				string queryUserProcedures = @"
+select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTINE_SCHEMA, ROUTINE_NAME, ROUTINE_TYPE, CREATED, LAST_ALTERED 
+  from INFORMATION_SCHEMA.ROUTINES 
+ where HAS_PERMS_BY_NAME(SPECIFIC_NAME,'OBJECT','EXECUTE') = 1
+ order by SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME";
+				SqlCommand commandUserProcedures = new SqlCommand(queryUserProcedures, connection);
+				connection.Open();
+
+				DataTable dataTable = new DataTable("UserProcedures");
+
+				// create data adapter
+				using (SqlDataAdapter dataAdapter = new SqlDataAdapter(commandUserProcedures))
+				{
+					// this will query your database and return the result to your datatable
+					dataAdapter.Fill(dataTable);
+					connection.Close();
+				}
+
+				foreach (DataRow row in dataTable.Rows)
+				{
+					result.Add(new DynamicMetadataObject()
+					{
+						Name = row["ROUTINE_NAME"].ToString(),
+						ObjectType = row["ROUTINE_TYPE"].ToString() == "PROCEDURE" ? DBObjectType.Procedure : DBObjectType.Function,
+						Schema = row["SPECIFIC_SCHEMA"].ToString()
+					});
+				}
 			}
 
 			return Ok(result);
