@@ -7,6 +7,7 @@ using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
@@ -29,6 +30,36 @@ namespace ODataRestierDynamic.Controllers
 
 		/// <summary>	Name of the template entity. </summary>
 		private const string cTemplateEntityName = "v_PrintTemplate";
+
+		/// <summary>	Field of the id. </summary>
+		private const string cFieldID = "ID";
+
+		/// <summary>	Field name. </summary>
+		private const string cFieldName = "Name";
+
+		/// <summary>	Field file name. </summary>
+		private const string cFieldFileName = "FileName";
+
+		/// <summary>	Field file type. </summary>
+		private const string cFieldFileType = "FileType";
+
+		/// <summary>	Field of the data. </summary>
+		private const string cFieldData = "Data";
+
+		/// <summary>	Field of the preview id. </summary>
+		private const string cFieldPreviewID = "PreviewID";
+
+		/// <summary>	File type excel label. </summary>
+		private const string cExcelLabelFileType = "Excel label";
+
+		/// <summary>	File type excel preview. </summary>
+		private const string cExcelPreviewFileType = "Excel preview";
+
+		/// <summary> Utility name for generating excel preview. </summary>
+		private static string m_GenerateExcelPreviewUtilityName = ConfigurationManager.AppSettings["GenerateExcelPreviewUtilityPath"];
+
+		/// <summary> Excel preview temp path. </summary>
+		private static string m_ExcelPreviewTempPath = ConfigurationManager.AppSettings["ExcelPreviewTempPath"];
 
 		/// <summary>	The API. </summary>
 		private DynamicApi api;
@@ -283,6 +314,9 @@ namespace ODataRestierDynamic.Controllers
 
 			try
 			{
+				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+				await Request.Content.ReadAsMultipartAsync(provider);
+
 				// Look up the entity
 				DynamicEntity entity = await this.GetEntityByKeyAsync(key);
 				if (entity == null)
@@ -290,13 +324,10 @@ namespace ODataRestierDynamic.Controllers
 					entity = await this.CreateNewEntity();
 					if (key != -1)
 					{
-						var idPropInfo = entity.GetType().GetProperty("ID");
+						var idPropInfo = entity.GetType().GetProperty(cFieldID);
 						idPropInfo.SetValue(entity, key);
 					}
 				}
-
-				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
-				await Request.Content.ReadAsMultipartAsync(provider);
 
 				foreach (var keyProp in provider.FormData.AllKeys)
 				{
@@ -316,20 +347,47 @@ namespace ODataRestierDynamic.Controllers
 						byte[] fileContent = File.ReadAllBytes(file.LocalFileName);
 						dataPropInfo.SetValue(entity, fileContent);
 					}
-					File.Delete(file.LocalFileName);
 				}
 
 				await this.DbContext.SaveChangesAsync();
 
 				if (key == -1)
 				{
-					var idPropInfo = entity.GetType().GetProperty("ID");
+					var idPropInfo = entity.GetType().GetProperty(cFieldID);
 					key = (int)idPropInfo.GetValue(entity);
+				}
+
+				// Generate Excel preview if Excel Label file type
+				if (provider.FormData.AllKeys.Contains(cFieldFileType) && provider.FormData[cFieldFileType].ToString() == cExcelLabelFileType)
+				{
+					int previewId = -1;
+					if (entity != null)
+					{
+						var previewIdPropInfo = entity.GetType().GetProperty(cFieldPreviewID);
+						if (previewIdPropInfo != null)
+						{
+							object value = previewIdPropInfo.GetValue(entity);
+							if (value != null && value is int)
+							{
+								previewId = (int)value;
+							}
+						}
+					}
+					previewId = await this.GenerateExcelPreview(previewId, provider.FormData, provider.FileData.First());
+					if (previewId != -1)
+					{
+						var previewIdPropInfo = entity.GetType().GetProperty(cFieldPreviewID);
+						if (previewIdPropInfo != null)
+						{
+							previewIdPropInfo.SetValue(entity, previewId);
+							await this.DbContext.SaveChangesAsync();
+						}
+					}
 				}
 
 				// Send OK Response along with saved file names to the client.
 				response = Request.CreateResponse(HttpStatusCode.NoContent);
-				response.Headers.Add("ID", key.ToString());
+				response.Headers.Add(cFieldID, key.ToString());
 				//response.Content = new StringContent(key.ToString());
 			}
 			catch (System.Exception exception)
@@ -337,8 +395,105 @@ namespace ODataRestierDynamic.Controllers
 				DynamicLogger.Instance.WriteLoggerLogError("PostMediaResource", exception);
 				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exception);
 			}
+			finally
+			{
+				if (provider != null)
+				{
+					foreach (MultipartFileData file in provider.FileData)
+					{
+						if (File.Exists(file.LocalFileName))
+							File.Delete(file.LocalFileName);
+					}
+				}
+			}
 
 			return response;
+		}
+
+		private async Task<int> GenerateExcelPreview(int previewId, System.Collections.Specialized.NameValueCollection formData, MultipartFileData file)
+		{
+			try
+			{
+				if (!File.Exists(m_GenerateExcelPreviewUtilityName))
+				{
+					throw new FileNotFoundException(
+						string.Format("GenerateExcelPreview: Excel preview generate utility not found in path {0}.", m_GenerateExcelPreviewUtilityName));
+				}
+
+				string fileNameGuid = formData.AllKeys.Contains(cFieldFileName) ? Path.GetFileNameWithoutExtension(formData[cFieldFileName]) : Path.GetRandomFileName();
+				string outputFileName = Path.Combine(m_ExcelPreviewTempPath, fileNameGuid + ".png");
+
+				//xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
+
+				var startInfo = new System.Diagnostics.ProcessStartInfo(m_GenerateExcelPreviewUtilityName);
+				startInfo.UseShellExecute = false;
+				startInfo.Arguments = "\"" + file.LocalFileName + "\" \"" + outputFileName + "\"";
+				startInfo.RedirectStandardInput = true;
+				startInfo.RedirectStandardOutput = true;
+				startInfo.CreateNoWindow = true;
+
+				var process = System.Diagnostics.Process.Start(startInfo);
+				process.WaitForExit(30000);
+				if (process.HasExited == false)
+					process.Kill();
+				int exitcode = process.ExitCode;
+				process.Close();
+
+				if (!File.Exists(outputFileName))
+				{
+					throw new Exception("GenerateExcelPreview: Something gone wrong in Excel Preview Utility");
+				}
+
+				// Look up the entity
+				DynamicEntity entity = await this.GetEntityByKeyAsync(previewId);
+				if (entity == null)
+				{
+					entity = await this.CreateNewEntity();
+					if (previewId != -1)
+					{
+						var idPropInfo = entity.GetType().GetProperty(cFieldID);
+						idPropInfo.SetValue(entity, previewId);
+					}
+				}
+
+				foreach (var keyProp in formData.AllKeys)
+				{
+					var fieldPropInfo = entity.GetType().GetProperty(keyProp);
+					if (fieldPropInfo != null)
+					{
+						var value = formData[keyProp];
+						if (keyProp == cFieldFileName)
+							value = Path.GetFileName(outputFileName);
+						if (keyProp == cFieldFileType)
+							value = cExcelPreviewFileType;
+						if (keyProp == cFieldName)
+							value = "Preview_" + value;
+						fieldPropInfo.SetValue(entity, value);
+					}
+				}
+
+				var dataPropInfo = entity.GetType().GetProperty(cFieldData);
+				if (dataPropInfo != null)
+				{
+					byte[] fileContent = File.ReadAllBytes(outputFileName);
+					dataPropInfo.SetValue(entity, fileContent);
+				}
+				File.Delete(outputFileName);
+
+				await this.DbContext.SaveChangesAsync();
+
+				if (previewId == -1)
+				{
+					var idPropInfo = entity.GetType().GetProperty(cFieldID);
+					previewId = (int)idPropInfo.GetValue(entity);
+				}
+			}
+			catch (System.Exception exception)
+			{
+				DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
+			}
+
+			return previewId;
 		}
 
 		/// <summary>	(An Action that handles HTTP GET requests) generates a template. </summary>

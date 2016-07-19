@@ -99,7 +99,6 @@ namespace ODataRestierDynamic.Log
 
 			lock (LockLogObject)
 			{
-				Logger.Info(text);
 				WriteLog(text, EventLogEntryType.Information);
 			}
 
@@ -116,7 +115,6 @@ namespace ODataRestierDynamic.Log
 
 			lock (LockLogObject)
 			{
-				Logger.Error(text);
 				WriteLog(text, EventLogEntryType.Error);
 			}
 
@@ -134,7 +132,7 @@ namespace ODataRestierDynamic.Log
 
 			lock (LockLogObject)
 			{
-				WriteLog(exception.Message, EventLogEntryType.Error, exception);
+				WriteLog(text + ": " + exception.Message, EventLogEntryType.Error, exception);
 				lvResult = StackTraceException(exception);
 			}
 
