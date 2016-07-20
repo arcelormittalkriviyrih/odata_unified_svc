@@ -423,21 +423,21 @@ namespace ODataRestierDynamic.Controllers
 				string fileNameGuid = formData.AllKeys.Contains(cFieldFileName) ? Path.GetFileNameWithoutExtension(formData[cFieldFileName]) : Path.GetRandomFileName();
 				string outputFileName = Path.Combine(m_ExcelPreviewTempPath, fileNameGuid + ".png");
 
-				//xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
+				xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
 
-				var startInfo = new System.Diagnostics.ProcessStartInfo(m_GenerateExcelPreviewUtilityName);
-				startInfo.UseShellExecute = false;
-				startInfo.Arguments = "\"" + file.LocalFileName + "\" \"" + outputFileName + "\"";
-				startInfo.RedirectStandardInput = true;
-				startInfo.RedirectStandardOutput = true;
-				startInfo.CreateNoWindow = true;
+				//var startInfo = new System.Diagnostics.ProcessStartInfo(m_GenerateExcelPreviewUtilityName);
+				//startInfo.UseShellExecute = false;
+				//startInfo.Arguments = "\"" + file.LocalFileName + "\" \"" + outputFileName + "\"";
+				//startInfo.RedirectStandardInput = true;
+				//startInfo.RedirectStandardOutput = true;
+				//startInfo.CreateNoWindow = true;
 
-				var process = System.Diagnostics.Process.Start(startInfo);
-				process.WaitForExit(30000);
-				if (process.HasExited == false)
-					process.Kill();
-				int exitcode = process.ExitCode;
-				process.Close();
+				//var process = System.Diagnostics.Process.Start(startInfo);
+				//process.WaitForExit(30000);
+				//if (process.HasExited == false)
+				//	process.Kill();
+				//int exitcode = process.ExitCode;
+				//process.Close();
 
 				if (!File.Exists(outputFileName))
 				{
