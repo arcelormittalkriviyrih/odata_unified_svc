@@ -47,8 +47,14 @@ namespace ODataRestierDynamic.Models
 		/// <summary>	The default schema name. </summary>
 		public const string cDefaultSchemaName = "dbo";
 
+		/// <summary>	The default schema name. </summary>
+		private const string cDatabaseCommandTimeoutName = "DatabaseCommandTimeout";
+
 		/// <summary>	The connection string settings. </summary>
 		internal static readonly ConnectionStringSettings cConnectionStringSettings = WebConfigurationManager.ConnectionStrings[cConfigConnectionName];
+
+		/// <summary>	The database command timeout in seconds. </summary>
+		private static readonly int cDatabaseCommandTimeout = int.Parse(WebConfigurationManager.AppSettings[cDatabaseCommandTimeoutName]);
 
 		#endregion
 
@@ -109,6 +115,7 @@ namespace ODataRestierDynamic.Models
 			//Database.SetInitializer(new NullDatabaseInitializer<DynamicContext>()); // Never create a database
 			Database.SetInitializer<DynamicContext>(null); // Prevent creation of migration table
 			Database.Log = LogQuery;
+			Database.CommandTimeout = cDatabaseCommandTimeout;
 			this._currentDynamicModelAssembly = AppDomain.CurrentDomain.GetAssemblies().LastOrDefault(assembly => assembly.GetName().Name == DynamicClassFactory.cDefaultNamespace);
 		}
 
