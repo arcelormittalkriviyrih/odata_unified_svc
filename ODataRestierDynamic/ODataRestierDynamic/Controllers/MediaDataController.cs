@@ -54,10 +54,7 @@ namespace ODataRestierDynamic.Controllers
 
 		/// <summary>	File type excel preview. </summary>
 		private const string cExcelPreviewFileType = "Excel preview";
-
-		/// <summary> Utility name for generating excel preview. </summary>
-		private static string m_GenerateExcelPreviewUtilityName = ConfigurationManager.AppSettings["GenerateExcelPreviewUtilityPath"];
-
+        		
 		/// <summary> Excel preview temp path. </summary>
 		private static string m_ExcelPreviewTempPath = ConfigurationManager.AppSettings["ExcelPreviewTempPath"];
 
@@ -414,11 +411,11 @@ namespace ODataRestierDynamic.Controllers
 		{
 			try
 			{
-				if (!File.Exists(m_GenerateExcelPreviewUtilityName))
-				{
-					throw new FileNotFoundException(
-						string.Format("GenerateExcelPreview: Excel preview generate utility not found in path {0}.", m_GenerateExcelPreviewUtilityName));
-				}
+				//if (!File.Exists(m_GenerateExcelPreviewUtilityName))
+				//{
+				//	throw new FileNotFoundException(
+				//		string.Format("GenerateExcelPreview: Excel preview generate utility not found in path {0}.", m_GenerateExcelPreviewUtilityName));
+				//}
 
 				string fileNameGuid = formData.AllKeys.Contains(cFieldFileName) ? Path.GetFileNameWithoutExtension(formData[cFieldFileName]) : Path.GetRandomFileName();
 				string outputFileName = Path.Combine(m_ExcelPreviewTempPath, fileNameGuid + ".png");
