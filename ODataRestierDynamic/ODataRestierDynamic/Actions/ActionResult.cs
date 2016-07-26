@@ -44,5 +44,12 @@ namespace ODataRestierDynamic.Actions
 		/// <value>	The value. </value>
 		[XmlText]
 		public object Value { get; set; }
+
+		/// <summary>	Gets or sets the parameter name. </summary>
+		///
+		/// <value>	The parameter name. </value>
+		[XmlIgnore]
+		[Newtonsoft.Json.JsonIgnore]
+		public string ParamName { get; set; }
 	}
 }

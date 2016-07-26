@@ -248,8 +248,8 @@ select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTIN
 						if (paramInfo.isOut)
 						{
 							sqlParameter.Direction = paramInfo.isIn ? System.Data.ParameterDirection.InputOutput : System.Data.ParameterDirection.Output;
+							returnActionType.ActionParameters.Add(new ActionParameter() { Name = item.Key, Value = item.Value, ParamName = paramName });
 							paramName += " OUTPUT";
-							returnActionType.ActionParameters.Add(new ActionParameter() { Name = item.Key, Value = item.Value });
 						}
 						if (paramInfo.Length.HasValue)
 						{
@@ -272,7 +272,7 @@ select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTIN
 					if (sqlParameter.Direction == System.Data.ParameterDirection.InputOutput ||
 						sqlParameter.Direction == System.Data.ParameterDirection.Output)
 					{
-						var parameter = returnActionType.ActionParameters.First(p => p.Name == sqlParameter.ParameterName);
+						var parameter = returnActionType.ActionParameters.First(p => p.ParamName == sqlParameter.ParameterName);
 						parameter.Value = sqlParameter.Value;
 					}
 				}
