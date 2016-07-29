@@ -160,7 +160,16 @@ namespace ODataRestierDynamic.DynamicFactory
 						continue;
 					}
 
-					Type type = propertyEntry.CurrentValue.GetType();
+                    Type type = typeof(string);
+                    if (propertyEntry.EntityEntry != null && propertyEntry.EntityEntry.Entity != null)
+                    {
+                        type = propertyEntry.EntityEntry.Entity.GetType().GetProperty(propertyPair.Key).PropertyType;
+                    }
+                    else if (propertyEntry.CurrentValue != null)
+                    {
+                        type = propertyEntry.CurrentValue.GetType();
+                    }
+
 					if (propertyEntry is DbComplexPropertyEntry)
 					{
 						var dic = value as IReadOnlyDictionary<string, object>;
