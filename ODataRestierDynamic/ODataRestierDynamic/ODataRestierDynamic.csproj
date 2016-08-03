@@ -196,6 +196,7 @@
     <Compile Include="Models\DynamicContext.cs" />
     <Compile Include="Models\DynamicODataActionInvoker.cs" />
     <Compile Include="Models\DynamicODataActionSelector.cs" />
+    <Compile Include="Models\DynamicServiceInfoObject.cs" />
     <Compile Include="Models\ODataMessageWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
