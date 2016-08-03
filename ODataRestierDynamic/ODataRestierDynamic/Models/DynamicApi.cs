@@ -124,14 +124,23 @@ namespace ODataRestierDynamic.Models
 			return new DynamicMetadataObject[] { };
 		}
 
-		/// <summary>
-		/// Releases the unmanaged resources used by the ODataRestierDynamic.Models.DynamicApi and
-		/// optionally releases the managed resources.
-		/// </summary>
-		///
-		/// <param name="disposing">	true to release both managed and unmanaged resources; false to
-		/// 							release only unmanaged resources. </param>
-		protected override void Dispose(bool disposing)
+        /// <summary>	Gets service info. </summary>
+        ///
+        /// <returns>	A dynamic service info object. </returns>
+        [Function]
+        public DynamicServiceInfoObject GetServiceInfo()
+        {
+            return new DynamicServiceInfoObject { };
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the ODataRestierDynamic.Models.DynamicApi and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">	true to release both managed and unmanaged resources; false to
+        /// 							release only unmanaged resources. </param>
+        protected override void Dispose(bool disposing)
 		{
 			base.Dispose(disposing);
 		}

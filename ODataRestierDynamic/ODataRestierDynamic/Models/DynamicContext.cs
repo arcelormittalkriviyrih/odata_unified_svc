@@ -335,9 +335,19 @@ namespace ODataRestierDynamic.Models
 				metadataObject.Property(a => a.Type);
 				metadataObject.Property(a => a.Schema);
 
-				#endregion
+                #endregion
 
-				var databaseModel = modelBuilder.Build(new System.Data.SqlClient.SqlConnection(cConnectionStringSettings.ConnectionString));
+                #region Add service info object to model
+
+                var serviceInfoObject = modelBuilder.Entity<DynamicServiceInfoObject>();
+                serviceInfoObject.HasKey(a => a.IISVersion);
+                serviceInfoObject.Property(a => a.TargetFramework);
+                serviceInfoObject.Property(a => a.AppDomainAppPath);
+                serviceInfoObject.Property(a => a.AssemblyDictionary);
+
+                #endregion
+
+                var databaseModel = modelBuilder.Build(new System.Data.SqlClient.SqlConnection(cConnectionStringSettings.ConnectionString));
 				compiledDatabaseModel = databaseModel.Compile();
 			}
 			catch (Exception exception)
