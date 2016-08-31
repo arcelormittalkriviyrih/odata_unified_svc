@@ -68,9 +68,6 @@
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MagicDbModelBuilder">
-      <HintPath>dll\MagicDbModelBuilder.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.OData.Core, Version=6.15.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.OData.Core.6.15.0\lib\portable-net45+win+wpa81\Microsoft.OData.Core.dll</HintPath>
@@ -173,6 +170,11 @@
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\MediaDataController.cs" />
     <Compile Include="CustomAttributes\SequenceAttribute.cs" />
+    <Compile Include="DynamicDbModelBuilder\ComplexTypeConfigurationWrapper.cs" />
+    <Compile Include="DynamicDbModelBuilder\ConfigurationRegistrarExtensions.cs" />
+    <Compile Include="DynamicDbModelBuilder\DbModelBuilderExtensions.cs" />
+    <Compile Include="DynamicDbModelBuilder\EntityTypeConfigurationWrapper.cs" />
+    <Compile Include="DynamicDbModelBuilder\StructuralTypeConfigurationWrapper.cs" />
     <Compile Include="DynamicFactory\DynamicAction.cs" />
     <Compile Include="DynamicFactory\DynamicChangeSetPreparer.cs" />
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
