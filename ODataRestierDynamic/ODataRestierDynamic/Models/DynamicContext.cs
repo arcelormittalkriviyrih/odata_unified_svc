@@ -440,8 +440,10 @@ namespace ODataRestierDynamic.Models
 
 			var viewType = CreateType(dynamicClassFactory, view.Name, property);
 			var entity = modelBuilder.Entity(viewType);
+            var methodInfoMap = entity.TypeConfiguration.GetType().GetMethod("MapToStoredProcedures", new Type[] { });
+            methodInfoMap.Invoke(entity.TypeConfiguration, new object[] { });
 
-			return viewType;
+            return viewType;
 		}
 
 		/// <summary>	Adds the actions to model. </summary>
