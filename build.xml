@@ -20,9 +20,11 @@
                              DeployTarget=MSDeployPublish;
                              CreatePackageOnPublish=True;
                              AllowUntrustedCertificate=True;
-                             MSDeployPublishMethod=MsDepSvc;
+                             MSDeployPublishMethod=WMSvc;
 							 DeployIisAppPath=$(DeployIisAppPath);
-                             MSDeployServiceUrl=$(DeployServiceUrl);
+                             MSDeployServiceUrl=$(DeployServiceUrl):8172/msdeploy.axd;
+							 UserName=$(UserName);
+							 Password=$(Password);
                              SkipExtraFilesOnServer=False;"
              ContinueOnError="false" />
   </Target>
