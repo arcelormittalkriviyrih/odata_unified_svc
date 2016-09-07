@@ -275,7 +275,7 @@ namespace ODataRestierDynamic.Controllers
 			}
 			catch (InvalidByteRangeException exception)
 			{
-				DynamicLogger.Instance.WriteLoggerLogError("GetMediaResource", exception);
+				//DynamicLogger.Instance.WriteLoggerLogError("GetMediaResource", exception);
 				response.Dispose();
 				return Request.CreateErrorResponse(exception);
 			}
@@ -389,7 +389,7 @@ namespace ODataRestierDynamic.Controllers
 			}
 			catch (System.Exception exception)
 			{
-				DynamicLogger.Instance.WriteLoggerLogError("PostMediaResource", exception);
+				//DynamicLogger.Instance.WriteLoggerLogError("PostMediaResource", exception);
 				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exception);
 			}
 			finally
@@ -487,7 +487,7 @@ namespace ODataRestierDynamic.Controllers
 			}
 			catch (System.Exception exception)
 			{
-				DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
+				//DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
 			}
 
 			return previewId;
@@ -613,7 +613,7 @@ namespace ODataRestierDynamic.Controllers
 			}
 			catch (InvalidByteRangeException exception)
 			{
-				DynamicLogger.Instance.WriteLoggerLogError("GenerateTemplate", exception);
+				//DynamicLogger.Instance.WriteLoggerLogError("GenerateTemplate", exception);
 				response.Dispose();
 				return Request.CreateErrorResponse(exception);
 			}
