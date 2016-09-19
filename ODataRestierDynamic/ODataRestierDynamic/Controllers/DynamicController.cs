@@ -234,7 +234,7 @@ SELECT
             }
             catch (Exception ex)
             {
-                //DynamicLogger.Instance.WriteLoggerLogError("GetServiceInfo", ex);
+                DynamicLogger.Instance.WriteLoggerLogError("GetServiceInfo", ex);
             }
 
             #endregion
@@ -296,7 +296,7 @@ SELECT
             }
             catch (Exception exception)
             {
-                //DynamicLogger.Instance.WriteLoggerLogError("CallAction", exception);
+                DynamicLogger.Instance.WriteLoggerLogError("CallAction", exception);
                 throw exception;
             }
 
@@ -371,7 +371,7 @@ SELECT
             }
             catch (Exception exception)
             {
-                //DynamicLogger.Instance.WriteLoggerLogError("CallActionOutput", exception);
+                DynamicLogger.Instance.WriteLoggerLogError("CallActionOutput", exception);
                 throw exception;
             }
 

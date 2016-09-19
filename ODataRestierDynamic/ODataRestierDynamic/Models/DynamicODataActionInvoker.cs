@@ -108,7 +108,7 @@ namespace ODataRestierDynamic.Models
 			}
 			catch (Exception exception)
 			{
-				//DynamicLogger.Instance.WriteLoggerLogError("InvokeActionAsync", exception);
+				DynamicLogger.Instance.WriteLoggerLogError("InvokeActionAsync", exception);
 				throw exception;
 			}
 
@@ -175,7 +175,7 @@ namespace ODataRestierDynamic.Models
 			}
 			catch (Exception exception)
 			{
-				//DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
 				throw exception;
 			}
 
