@@ -61,7 +61,7 @@ namespace ODataRestierDynamic.Controllers.Tests
             }
             else
             {
-                NetworkCredential networkCredential = System.Net.CredentialCache.DefaultNetworkCredentials;
+                ICredentials networkCredential = CredentialCache.DefaultCredentials; //System.Net.CredentialCache.DefaultNetworkCredentials;
 #if DEBUG
                 networkCredential = new NetworkCredential("atokar", "qcAL0ZEV", "ask-ad");
 #endif
