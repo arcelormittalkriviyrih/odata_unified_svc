@@ -14,12 +14,16 @@ using System.Net;
 using System.IO;
 using System.Web.Http.Controllers;
 using System.Web.OData.Routing;
+using System.Configuration;
+
 namespace ODataRestierDynamic.Controllers.Tests
 {
 	[TestClass()]
 	public class MediaDataControllerTests
 	{
 		private HttpClient client;
+
+        private string testServiceURL = null;
 
         public void FixEfProviderServicesProblem()
         {
@@ -33,20 +37,43 @@ namespace ODataRestierDynamic.Controllers.Tests
 
         public MediaDataControllerTests()
 		{
-			var configuration = new HttpConfiguration();
-			Task<System.Web.OData.Routing.ODataRoute> odataRoute = configuration.MapRestierRoute<DynamicApi>("DynamicApi", "DynamicApi");
-			odataRoute.Wait();
-			odataRoute.Result.PathRouteConstraint.RoutingConventions.Add(new ODataRestierDynamic.DynamicFactory.MediadataRoutingConvention());
+            if (ConfigurationManager.AppSettings["TestServiceURL"] != null)
+            {
+                testServiceURL = ConfigurationManager.AppSettings["TestServiceURL"];
+            }
 
-			// Register an Action selector that can include template parameters in the name
-			IHttpActionSelector actionSelectorService = configuration.Services.GetActionSelector();
-			configuration.Services.Replace(typeof(IHttpActionSelector), new DynamicODataActionSelector(actionSelectorService));
-			// Register an Action invoker that can include template parameters in the name
-			IHttpActionInvoker actionInvokerService = configuration.Services.GetActionInvoker();
-			configuration.Services.Replace(typeof(IHttpActionInvoker), new DynamicODataActionInvoker(actionInvokerService));
+            if (string.IsNullOrEmpty(testServiceURL))
+            {
+                testServiceURL = DynamicControllerTests.cDefaultBaseURL;
+                var configuration = new HttpConfiguration();
+                Task<System.Web.OData.Routing.ODataRoute> odataRoute = configuration.MapRestierRoute<DynamicApi>("DynamicApi", "DynamicApi");
+                odataRoute.Wait();
+                odataRoute.Result.PathRouteConstraint.RoutingConventions.Add(new ODataRestierDynamic.DynamicFactory.MediadataRoutingConvention());
 
-			client = new HttpClient(new HttpServer(configuration));
-		}
+                // Register an Action selector that can include template parameters in the name
+                IHttpActionSelector actionSelectorService = configuration.Services.GetActionSelector();
+                configuration.Services.Replace(typeof(IHttpActionSelector), new DynamicODataActionSelector(actionSelectorService));
+                // Register an Action invoker that can include template parameters in the name
+                IHttpActionInvoker actionInvokerService = configuration.Services.GetActionInvoker();
+                configuration.Services.Replace(typeof(IHttpActionInvoker), new DynamicODataActionInvoker(actionInvokerService));
+
+                client = new HttpClient(new HttpServer(configuration));
+            }
+            else
+            {
+                NetworkCredential networkCredential = System.Net.CredentialCache.DefaultNetworkCredentials;
+#if DEBUG
+                networkCredential = new NetworkCredential("atokar", "qcAL0ZEV", "ask-ad");
+#endif
+                var handler = new HttpClientHandler { Credentials = networkCredential };
+                client = new HttpClient(handler);
+            }
+
+            if (!testServiceURL.EndsWith("/"))
+            {
+                testServiceURL += "/";
+            }
+        }
 
 		[TestMethod()]
 		public async Task PostGetDeleteMediaResourceTest()
@@ -62,7 +89,7 @@ namespace ODataRestierDynamic.Controllers.Tests
 				form.Add(new StringContent("Test"), "Status");
 				form.Add(new StringContent(Guid.NewGuid().ToString()), "Name");
 				form.Add(new ByteArrayContent(fileByteArray, 0, fileByteArray.Length), "Data", "test.xls");
-				HttpResponseMessage response = await client.PostAsync("http://host/DynamicApi/Files(" + id + ")/$value", form);
+				HttpResponseMessage response = await client.PostAsync(testServiceURL + "Files(" + id + ")/$value", form);
 				Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
 				var result = response.Headers.GetValues("ID").First();
 				id = int.Parse(result);
@@ -70,7 +97,7 @@ namespace ODataRestierDynamic.Controllers.Tests
 
 			//Get Media Resource
 			{
-				var request = new HttpRequestMessage(HttpMethod.Get, "http://host/DynamicApi/Files(" + id + ")/$value");
+				var request = new HttpRequestMessage(HttpMethod.Get, testServiceURL + "Files(" + id + ")/$value");
 				request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json;odata.metadata=full"));
 				HttpResponseMessage response = await client.SendAsync(request);
 				Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -80,7 +107,7 @@ namespace ODataRestierDynamic.Controllers.Tests
 
 			//Delete Media Resource
 			{
-				var requestDelete = new HttpRequestMessage(HttpMethod.Delete, "http://host/DynamicApi/Files(" + id + ")");
+				var requestDelete = new HttpRequestMessage(HttpMethod.Delete, testServiceURL + "Files(" + id + ")");
 				requestDelete.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
 				HttpResponseMessage responseDelete = await client.SendAsync(requestDelete);
 				Assert.AreEqual(HttpStatusCode.NoContent, responseDelete.StatusCode);
