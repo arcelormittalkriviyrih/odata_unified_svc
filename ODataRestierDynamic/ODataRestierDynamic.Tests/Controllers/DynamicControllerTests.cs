@@ -52,11 +52,7 @@ namespace ODataRestierDynamic.Controllers.Tests
             }
             else
             {
-                ICredentials networkCredential = CredentialCache.DefaultCredentials;//System.Net.CredentialCache.DefaultNetworkCredentials;
-#if DEBUG
-                networkCredential = new NetworkCredential("atokar", "qcAL0ZEV", "ask-ad");
-#endif
-                var handler = new HttpClientHandler { Credentials = networkCredential };
+                var handler = new HttpClientHandler { UseDefaultCredentials = true };
                 client = new HttpClient(handler);
             }
 
@@ -107,23 +103,42 @@ namespace ODataRestierDynamic.Controllers.Tests
         }
 
         [TestMethod()]
-        public async Task PostDeleteTest()
+        public void PostDeleteTest()
         {
             var anonymousTestParent = new { ID = 0, f_nvarchar = "test_f_nvarchar", f_datetimeoffset = "1970-01-01T02:00:00.000Z", f_bit = true, f_date = "2016-05-30", f_real = 1.3 };
-            string payload = JsonConvert.SerializeObject(anonymousTestParent);
-            var requestPost = new HttpRequestMessage(HttpMethod.Post, testServiceURL + "TestParent")
-            {
-                Content = new StringContent(payload, Encoding.UTF8, "application/json")
-            };
 
-            HttpResponseMessage responsePost = await client.SendAsync(requestPost);
-            var resultPost = await responsePost.Content.ReadAsStringAsync();
-            anonymousTestParent = JsonConvert.DeserializeAnonymousType(resultPost, anonymousTestParent);
-            Assert.AreEqual(HttpStatusCode.Created, responsePost.StatusCode);
+            var url = new Uri(testServiceURL + "TestParent");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            string payload = JsonConvert.SerializeObject(anonymousTestParent);
+            byte[] body = Encoding.UTF8.GetBytes(payload);
+            request.Method = "POST";
+            request.ContentLength = body.Length;
+            request.ContentType = "application/json";
+            request.UseDefaultCredentials = true;
+
+            using (System.IO.Stream stream = request.GetRequestStream())
+            {
+                stream.Write(body, 0, body.Length);
+                stream.Close();
+            }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                var encoding = ASCIIEncoding.ASCII;
+                using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+                {
+                    string responseText = reader.ReadToEnd();
+                    anonymousTestParent = JsonConvert.DeserializeAnonymousType(responseText, anonymousTestParent);
+                }
+
+                Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+                response.Close();
+            }
 
             var requestDelete = new HttpRequestMessage(HttpMethod.Delete, testServiceURL + "TestParent(" + anonymousTestParent.ID + ")");
             requestDelete.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
-            HttpResponseMessage responseDelete = await client.SendAsync(requestDelete);
+            HttpResponseMessage responseDelete = client.SendAsync(requestDelete).Result;
             Assert.AreEqual(HttpStatusCode.NoContent, responseDelete.StatusCode);
         }
 
@@ -133,29 +148,67 @@ namespace ODataRestierDynamic.Controllers.Tests
             //Post Parent
             var anonymousTestParent = new { ID = 0, f_nvarchar = "test_f_nvarchar", f_datetimeoffset = "1970-01-01T02:00:00.000Z", f_bit = true, f_date = "2016-05-30", f_real = 1.3 };
             {
+                var url = new Uri(testServiceURL + "TestParent");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
                 string payload = JsonConvert.SerializeObject(anonymousTestParent);
-                var requestPost = new HttpRequestMessage(HttpMethod.Post, testServiceURL + "TestParent")
+                byte[] body = Encoding.UTF8.GetBytes(payload);
+                request.Method = "POST";
+                request.ContentLength = body.Length;
+                request.ContentType = "application/json";
+                request.UseDefaultCredentials = true;
+
+                using (System.IO.Stream stream = request.GetRequestStream())
                 {
-                    Content = new StringContent(payload, Encoding.UTF8, "application/json")
-                };
-                HttpResponseMessage responsePost = await client.SendAsync(requestPost);
-                var resultPost = await responsePost.Content.ReadAsStringAsync();
-                anonymousTestParent = JsonConvert.DeserializeAnonymousType(resultPost, anonymousTestParent);
-                Assert.AreEqual(HttpStatusCode.Created, responsePost.StatusCode);
+                    stream.Write(body, 0, body.Length);
+                    stream.Close();
+                }
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    var encoding = ASCIIEncoding.ASCII;
+                    using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+                    {
+                        string responseText = reader.ReadToEnd();
+                        anonymousTestParent = JsonConvert.DeserializeAnonymousType(responseText, anonymousTestParent);
+                    }
+
+                    Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+                    response.Close();
+                }
             }
 
             //Post Child
             var anonymousTestChild = new { ID = 0, f_nvarchar = "test_f_nvarchar", f_datetimeoffset = "1970-01-01T02:00:00.000Z", f_bit = true, f_date = "2016-05-30", f_real = 1.3, TestParentID = anonymousTestParent.ID };
             {
+                var url = new Uri(testServiceURL + "TestChild");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
                 string payload = JsonConvert.SerializeObject(anonymousTestChild);
-                var requestPost = new HttpRequestMessage(HttpMethod.Post, testServiceURL + "TestChild")
+                byte[] body = Encoding.UTF8.GetBytes(payload);
+                request.Method = "POST";
+                request.ContentLength = body.Length;
+                request.ContentType = "application/json";
+                request.UseDefaultCredentials = true;
+
+                using (System.IO.Stream stream = request.GetRequestStream())
                 {
-                    Content = new StringContent(payload, Encoding.UTF8, "application/json")
-                };
-                HttpResponseMessage responsePost = await client.SendAsync(requestPost);
-                var resultPost = await responsePost.Content.ReadAsStringAsync();
-                anonymousTestChild = JsonConvert.DeserializeAnonymousType(resultPost, anonymousTestChild);
-                Assert.AreEqual(HttpStatusCode.Created, responsePost.StatusCode);
+                    stream.Write(body, 0, body.Length);
+                    stream.Close();
+                }
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    var encoding = ASCIIEncoding.ASCII;
+                    using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+                    {
+                        string responseText = reader.ReadToEnd();
+                        anonymousTestChild = JsonConvert.DeserializeAnonymousType(responseText, anonymousTestChild);
+                    }
+
+                    Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+                    response.Close();
+                }
             }
 
             //Get Parent
@@ -205,16 +258,40 @@ namespace ODataRestierDynamic.Controllers.Tests
             var request = new HttpRequestMessage(HttpMethod.Post, testServiceURL + "KLHKLJHFKLJKLEJK");
             request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
             HttpResponseMessage response = await client.PostAsync(testServiceURL + "KLHKLJHFKLJKLEJK", request.Content);
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotAcceptable, response.StatusCode);
         }
 
         [TestMethod()]
-        public async Task PostActionImportShouldReturnOK()
+        public void PostActionImportShouldReturnOK()
         {
+            var url = new Uri(testServiceURL + "ins_TestParent");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
             var anonymousTestParent = new { f_nvarchar = "PostActionImportShouldReturnOK", f_datetimeoffset = "1970-01-01T02:00:00.000Z", f_date = "2016-05-30", f_real = 1.3, f_bit = true };
             string payload = JsonConvert.SerializeObject(anonymousTestParent);
-            HttpResponseMessage response = await client.PostAsync(testServiceURL + "ins_TestParent", new StringContent(payload, Encoding.UTF8, "application/json"));
-            Assert.AreEqual(HttpStatusCode.NotImplemented, response.StatusCode);
+            byte[] body = Encoding.UTF8.GetBytes(payload);
+            request.Method = "POST";
+            request.ContentLength = body.Length;
+            request.ContentType = "application/json";
+            request.UseDefaultCredentials = true;
+
+            using (System.IO.Stream stream = request.GetRequestStream())
+            {
+                stream.Write(body, 0, body.Length);
+                stream.Close();
+            }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                var encoding = ASCIIEncoding.ASCII;
+                using (var reader = new System.IO.StreamReader(response.GetResponseStream(), encoding))
+                {
+                    string responseText = reader.ReadToEnd();
+                }
+
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                response.Close();
+            }
         }
     }
 }

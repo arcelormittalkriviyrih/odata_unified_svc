@@ -61,11 +61,7 @@ namespace ODataRestierDynamic.Controllers.Tests
             }
             else
             {
-                ICredentials networkCredential = CredentialCache.DefaultCredentials; //System.Net.CredentialCache.DefaultNetworkCredentials;
-#if DEBUG
-                networkCredential = new NetworkCredential("atokar", "qcAL0ZEV", "ask-ad");
-#endif
-                var handler = new HttpClientHandler { Credentials = networkCredential };
+                var handler = new HttpClientHandler { UseDefaultCredentials = true };
                 client = new HttpClient(handler);
             }
 
@@ -76,7 +72,7 @@ namespace ODataRestierDynamic.Controllers.Tests
         }
 
 		[TestMethod()]
-		public async Task PostGetDeleteMediaResourceTest()
+		public void PostGetDeleteMediaResourceTest()
 		{
 			int id = -1;
 			var fileByteArray = ODataRestierDynamic.Tests.Properties.Resources.test;
@@ -89,19 +85,19 @@ namespace ODataRestierDynamic.Controllers.Tests
 				form.Add(new StringContent("Test"), "Status");
 				form.Add(new StringContent(Guid.NewGuid().ToString()), "Name");
 				form.Add(new ByteArrayContent(fileByteArray, 0, fileByteArray.Length), "Data", "test.xls");
-				HttpResponseMessage response = await client.PostAsync(testServiceURL + "Files(" + id + ")/$value", form);
+				HttpResponseMessage response = client.PostAsync(testServiceURL + "Files(" + id + ")/$value", form).Result;
 				Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
 				var result = response.Headers.GetValues("ID").First();
 				id = int.Parse(result);
-			}
+            }
 
 			//Get Media Resource
 			{
 				var request = new HttpRequestMessage(HttpMethod.Get, testServiceURL + "Files(" + id + ")/$value");
 				request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json;odata.metadata=full"));
-				HttpResponseMessage response = await client.SendAsync(request);
+				HttpResponseMessage response = client.SendAsync(request).Result;
 				Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-				var result = await response.Content.ReadAsByteArrayAsync();
+				var result = response.Content.ReadAsByteArrayAsync().Result;
 				Assert.IsTrue(result.SequenceEqual(fileByteArray));
 			}
 
@@ -109,7 +105,7 @@ namespace ODataRestierDynamic.Controllers.Tests
 			{
 				var requestDelete = new HttpRequestMessage(HttpMethod.Delete, testServiceURL + "Files(" + id + ")");
 				requestDelete.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
-				HttpResponseMessage responseDelete = await client.SendAsync(requestDelete);
+				HttpResponseMessage responseDelete = client.SendAsync(requestDelete).Result;
 				Assert.AreEqual(HttpStatusCode.NoContent, responseDelete.StatusCode);
 			}
 		}
