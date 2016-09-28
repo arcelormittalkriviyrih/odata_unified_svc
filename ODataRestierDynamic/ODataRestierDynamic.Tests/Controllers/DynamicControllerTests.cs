@@ -56,6 +56,9 @@ namespace ODataRestierDynamic.Controllers.Tests
                 client = new HttpClient(handler);
             }
 
+            if (client != null)
+                client.Timeout = TimeSpan.FromMinutes(10);
+
             if (!testServiceURL.EndsWith("/"))
             {
                 testServiceURL += "/";
