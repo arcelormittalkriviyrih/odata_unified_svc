@@ -188,22 +188,6 @@ namespace ODataRestierDynamic.Controllers
 		}
 
 		/// <summary>
-		/// Gets the content type for the specified entity.
-		/// </summary>
-		/// <param name="entity">The <see cref="Image">image</see> whose stream to get the content type for.</param>
-		/// <returns>The <see cref="MediaTypeHeaderValue">content type</see> of the stream associated with the <see cref="Image">image</see>.</returns>
-		private MediaTypeHeaderValue GetContentTypeForStream(string mediaType, string mediaName)
-		{
-			return new MediaTypeHeaderValue(mediaType)
-			{
-				Parameters =
-                {
-                    new NameValueHeaderValue("name", string.Format(CultureInfo.InvariantCulture, "\"{0}\"", mediaName))
-                }
-			};
-		}
-
-		/// <summary>
 		/// Gets a media resource for an entity with the specified key.
 		/// </summary>
 		/// <param name="key">The key of the entity to retrieve the media resource for.</param>
@@ -228,18 +212,18 @@ namespace ODataRestierDynamic.Controllers
 				return this.Request.CreateResponse(HttpStatusCode.NotFound);
 
 			var mediaType = new MediaTypeHeaderValue("application/octet-stream");
-
-			// there should never be a stream without a corresponding entity, but if it somehow happens,
-			// defensively use 'application/octet-stream' will represents any generic, binary stream
-			if (entity != null)
+            string mediaNameStr = "value";
+            // there should never be a stream without a corresponding entity, but if it somehow happens,
+            // defensively use 'application/octet-stream' will represents any generic, binary stream
+            if (entity != null)
 			{
 				var fileNamePropInfo = entity.GetType().GetProperty("FileName");
-				var mediaNameStr = fileNamePropInfo.GetValue(entity) as string;
+				mediaNameStr = fileNamePropInfo.GetValue(entity) as string;
 				//File.WriteAllBytes(@"D:\TestMediaData\test010101.xls", bytes);
 				var mimeTypePropInfo = entity.GetType().GetProperty("MIMEType");
 				string mediaTypeStr = mimeTypePropInfo.GetValue(entity) as string;
-				mediaType = this.GetContentTypeForStream(mediaTypeStr, mediaNameStr);
-			}
+                mediaType = new MediaTypeHeaderValue(mediaTypeStr);
+            }
 
 			// get the range and stream media type
 			var range = this.Request.Headers.Range;
@@ -258,9 +242,12 @@ namespace ODataRestierDynamic.Controllers
 
 				response.Headers.AcceptRanges.Add("bytes");
 				response.Content = new StreamContent(stream);
-				response.Content.Headers.ContentType = mediaType;
+                response.Content.Headers.ContentType = mediaType;
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                mediaNameStr = System.Web.HttpUtility.UrlEncode(mediaNameStr);
+                response.Content.Headers.ContentDisposition.FileName = mediaNameStr;
 
-				return response;
+                return response;
 			}
 
 			var partialStream = EnsureStreamCanSeek(stream);
@@ -577,7 +564,8 @@ namespace ODataRestierDynamic.Controllers
 			#endregion
 
 			var mediaNameStr = "Template.xlsx";
-			var mediaType = this.GetContentTypeForStream("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", mediaNameStr);
+            var mediaTypeStr = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var mediaType = new MediaTypeHeaderValue(mediaTypeStr);
 
 			// get the range and stream media type
 			var range = this.Request.Headers.Range;
@@ -597,8 +585,11 @@ namespace ODataRestierDynamic.Controllers
 				response.Headers.AcceptRanges.Add("bytes");
 				response.Content = new StreamContent(stream);
 				response.Content.Headers.ContentType = mediaType;
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                mediaNameStr = System.Web.HttpUtility.UrlEncode(mediaNameStr);
+                response.Content.Headers.ContentDisposition.FileName = mediaNameStr;
 
-				return response;
+                return response;
 			}
 
 			var partialStream = EnsureStreamCanSeek(stream);
