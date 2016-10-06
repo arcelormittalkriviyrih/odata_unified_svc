@@ -242,11 +242,19 @@ namespace ODataRestierDynamic.Log
         /// </summary>
         private static void AdjustSystemEventSource()
         {
-            if (!EventLog.SourceExists(m_SystemEventLogName))
+            try
             {
-                EventSourceCreationData lvData = new EventSourceCreationData(m_SystemEventSourceName, m_SystemEventLogName);
-                EventLog.CreateEventSource(lvData);
+                if (!EventLog.SourceExists(m_SystemEventLogName))
+                {
+                    EventSourceCreationData lvData = new EventSourceCreationData(m_SystemEventSourceName, m_SystemEventLogName);
+                    EventLog.CreateEventSource(lvData);
+                }
             }
+            catch (Exception eventLogexception)
+            {
+                Logger.Error("AdjustSystemEventSource", eventLogexception);
+            }
+
         }
 
         #region vpEventLog
