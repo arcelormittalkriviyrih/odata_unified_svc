@@ -51,9 +51,9 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="properties">	. </param>
 		///
 		/// <returns>	The new dynamic type. </returns>
-		public Type CreateDynamicType<T>(string name, Dictionary<string, DynamicPropertyData> properties) where T : DynamicEntity
+		public Type CreateDynamicType<T>(string schema, string name, Dictionary<string, DynamicPropertyData> properties) where T : DynamicEntity
 		{
-			var tb = CreateDynamicTypeBuilder<T>(name, properties);
+			var tb = CreateDynamicTypeBuilder<T>(schema, name, properties);
 			return tb.CreateType();
 		}
 
@@ -200,7 +200,7 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <param name="properties">	. </param>
 		///
 		/// <returns>	The new dynamic type builder. </returns>
-		public TypeBuilder CreateDynamicTypeBuilder<T>(string name, Dictionary<string, DynamicPropertyData> properties)
+		public TypeBuilder CreateDynamicTypeBuilder<T>(string schema, string name, Dictionary<string, DynamicPropertyData> properties)
 			where T : DynamicEntity
 		{
 			if (_assemblyBuilder == null)
@@ -218,7 +218,7 @@ namespace ODataRestierDynamic.DynamicFactory
 															| TypeAttributes.Serializable
 															| TypeAttributes.BeforeFieldInit, typeof(T));
 
-			AddTableAttribute(typeBuilder, name);
+			AddTableAttribute(typeBuilder, schema, name);
 
 			if (properties != null && properties.Count > 0)
 			{
@@ -246,11 +246,14 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <summary>	Adds a table attribute. </summary>
 		///
 		/// <param name="name">	. </param>
-		public void AddTableAttribute(TypeBuilder typeBuilder, string name)
+		public void AddTableAttribute(TypeBuilder typeBuilder, string schema, string name)
 		{
 			Type attrType = typeof(TableAttribute);
-			typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(new[] { typeof(string) }),
-				new object[] { name }));
+			typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(attrType.GetConstructor(
+				new[] { typeof(string) }),
+				new object[] { name },
+				new PropertyInfo[] { attrType.GetProperty("Schema") },
+				new object[] { schema }));
 		}
 
 		/// <summary>	Creates the properties. </summary>

@@ -138,7 +138,7 @@ namespace ODataRestierDynamic.Models
                 #region Read Schema and Add to Model
 
                 // https://www.nuget.org/packages/DatabaseSchemaReader/
-                using (var dbReader = new DatabaseReader(cConnectionStringSettings.ConnectionString, cConnectionStringSettings.ProviderName, DynamicContext.cDefaultSchemaName))
+                using (var dbReader = new DatabaseReader(cConnectionStringSettings.ConnectionString, cConnectionStringSettings.ProviderName))
                 {
                     var schema = dbReader.ReadAll();
                     var dynamicClassFactory = new DynamicClassFactory();
@@ -232,13 +232,13 @@ namespace ODataRestierDynamic.Models
                                 foreignRows.ForEach(p => ((FieldPropertyData)p.Data).IsPrimaryKey = true);
                             }
 
-                            var tableTypeBuilder = CreateTypeBuilder(dynamicClassFactory, table.Name, null);
+                            var tableTypeBuilder = CreateTypeBuilder(dynamicClassFactory, table.SchemaOwner, table.Name, null);
                             tableBuildHelper.TypeBuilder = tableTypeBuilder;
                             tableBuildHelperList.Add(tableBuildHelper);
                         }
                         catch (Exception exception)
                         {
-                            DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
+                            DynamicLogger.Instance.WriteLoggerLogError(string.Format("CreateModel: table '{0}'", table.Name), exception);
                         }
                     }
 
@@ -301,7 +301,7 @@ namespace ODataRestierDynamic.Models
                             }
                             catch (Exception exception)
                             {
-                                DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
+                                DynamicLogger.Instance.WriteLoggerLogError(string.Format("CreateModel: foreignKey '{0}'", foreignKey.Name), exception);
                             }
                         }
 
@@ -322,7 +322,7 @@ namespace ODataRestierDynamic.Models
                             }
                             catch (Exception exception)
                             {
-                                DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
+                                DynamicLogger.Instance.WriteLoggerLogError(string.Format("CreateModel: property '{0}'", property.Name), exception);
                             }
                         }
 
@@ -352,7 +352,7 @@ namespace ODataRestierDynamic.Models
                         }
                         catch (Exception exception)
                         {
-                            DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
+                            DynamicLogger.Instance.WriteLoggerLogError(string.Format("CreateModel: view '{0}'", view.Name), exception);
                         }
                     }
 
@@ -491,8 +491,9 @@ namespace ODataRestierDynamic.Models
                 foreignRows.ForEach(p => ((FieldPropertyData)p).IsPrimaryKey = true);
             }
 
-            var viewType = CreateType(dynamicClassFactory, view.Name, property);
+            var viewType = CreateType(dynamicClassFactory, view.SchemaOwner, view.Name, property);
             var entity = modelBuilder.Entity(viewType);
+            modelBuilder.HasDefaultSchema("Ordering");
             var methodInfoMap = entity.TypeConfiguration.GetType().GetMethod("MapToStoredProcedures", new Type[] { });
             methodInfoMap.Invoke(entity.TypeConfiguration, new object[] { });
 
@@ -542,7 +543,7 @@ namespace ODataRestierDynamic.Models
                 }
                 catch (Exception exception)
                 {
-                    DynamicLogger.Instance.WriteLoggerLogError("AddActionsToModel", exception);
+                    DynamicLogger.Instance.WriteLoggerLogError(string.Format("AddActionsToModel: function '{0}'", function.Name), exception);
                 }
             }
 
@@ -573,7 +574,7 @@ namespace ODataRestierDynamic.Models
                 }
                 catch (Exception exception)
                 {
-                    DynamicLogger.Instance.WriteLoggerLogError("AddActionsToModel", exception);
+                    DynamicLogger.Instance.WriteLoggerLogError(string.Format("AddActionsToModel: procedure '{0}'", procedure.Name), exception);
                 }
             }
 
@@ -678,9 +679,9 @@ namespace ODataRestierDynamic.Models
         /// <param name="property">			  	The property. </param>
         ///
         /// <returns>	The new type. </returns>
-        private static Type CreateType(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, DynamicPropertyData> property)
+        private static Type CreateType(DynamicClassFactory dynamicClassFactory, string schema, string name, Dictionary<string, DynamicPropertyData> property)
         {
-            var dynamicType = dynamicClassFactory.CreateDynamicType<DynamicEntity>(name, property);
+            var dynamicType = dynamicClassFactory.CreateDynamicType<DynamicEntity>(schema, name, property);
             return dynamicType;
         }
 
@@ -691,9 +692,9 @@ namespace ODataRestierDynamic.Models
         /// <param name="property">			  	The property. </param>
         ///
         /// <returns>	The new type builder. </returns>
-        private static TypeBuilder CreateTypeBuilder(DynamicClassFactory dynamicClassFactory, string name, Dictionary<string, DynamicPropertyData> property)
+        private static TypeBuilder CreateTypeBuilder(DynamicClassFactory dynamicClassFactory, string schema, string name, Dictionary<string, DynamicPropertyData> property)
         {
-            var dynamicTypeBuilder = dynamicClassFactory.CreateDynamicTypeBuilder<DynamicEntity>(name, property);
+            var dynamicTypeBuilder = dynamicClassFactory.CreateDynamicTypeBuilder<DynamicEntity>(schema, name, property);
             return dynamicTypeBuilder;
         }
 

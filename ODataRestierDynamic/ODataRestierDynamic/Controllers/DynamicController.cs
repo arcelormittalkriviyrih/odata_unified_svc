@@ -73,7 +73,7 @@ namespace ODataRestierDynamic.Controllers
             List<DynamicMetadataObject> result = new List<DynamicMetadataObject>();
 
             // https://www.nuget.org/packages/DatabaseSchemaReader/
-            using (var dbReader = new DatabaseReader(DynamicContext.cConnectionStringSettings.ConnectionString, DynamicContext.cConnectionStringSettings.ProviderName, DynamicContext.cDefaultSchemaName))
+            using (var dbReader = new DatabaseReader(DynamicContext.cConnectionStringSettings.ConnectionString, DynamicContext.cConnectionStringSettings.ProviderName))
             {
                 var schema = dbReader.ReadAll();
 
@@ -255,7 +255,7 @@ SELECT
             if (!DbContext.DynamicActionMethods.ContainsKey(name))
                 return NotFound().ExecuteAsync(cancellationToken);
 
-            bool hasOutputParams = DbContext.DynamicActionMethods[name].Params.Where(p => p.isOut).Count() > 0;
+            bool hasOutputParams = DbContext.DynamicActionMethods[name].Params != null && DbContext.DynamicActionMethods[name].Params.Where(p => p.isOut).Count() > 0;
             if (hasOutputParams)
                 return CallActionOutput(name, parameters);
             else
@@ -289,8 +289,11 @@ SELECT
                     }
                 }
 
+                string schemaName = DynamicContext.cDefaultSchemaName;
+                if (DbContext.DynamicActionMethods.ContainsKey(name))
+                    schemaName = DbContext.DynamicActionMethods[name].Schema;
                 //EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
-                string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
+                string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", schemaName, name, string.Join(", ", parameterNames));
                 var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
                 result = objContext.ExecuteStoreCommand(commandText, paramList.ToArray());
             }
@@ -349,8 +352,11 @@ SELECT
                     }
                 }
 
+                string schemaName = DynamicContext.cDefaultSchemaName;
+                if (DbContext.DynamicActionMethods.ContainsKey(name))
+                    schemaName = DbContext.DynamicActionMethods[name].Schema;
                 //EXECUTE {schema}[{functionName}]({string.Join(", ", parameterNames)})
-                string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", DynamicContext.cDefaultSchemaName, name, string.Join(", ", parameterNames));
+                string commandText = string.Format(@"EXECUTE [{0}].[{1}] {2}", schemaName, name, string.Join(", ", parameterNames));
                 var objContext = ((IObjectContextAdapter)DbContext).ObjectContext;
                 var paramArray = paramList.ToArray();
                 returnActionType.Return = await objContext.ExecuteStoreCommandAsync(commandText, paramArray);

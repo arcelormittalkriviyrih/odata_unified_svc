@@ -55,7 +55,7 @@ namespace ODataRestierDynamic.DynamicFactory
 				}
 				catch (Exception exception)
 				{
-					DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
+					DynamicLogger.Instance.WriteLoggerLogError("GetModelAsync", exception);
 					throw exception;
 				}
 			}
