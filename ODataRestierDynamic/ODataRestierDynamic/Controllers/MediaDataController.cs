@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.OData.Core;
 using ODataRestierDynamic.DynamicFactory;
+using ODataRestierDynamic.Helpers;
 using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
 using System;
@@ -12,6 +13,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -98,14 +100,14 @@ namespace ODataRestierDynamic.Controllers
         }
 
         /// <summary>	Gets template entities. </summary>
-        ///
+        /// <param name="entityName">The name of the entity to retrieve.</param>
         /// <returns>	The template entities. </returns>
-        private async Task<IQueryable<DynamicEntity>> GetTemplateEntities()
+        private async Task<IQueryable<DynamicEntity>> GetNamedEntities(string entityName)
         {
             IQueryable<DynamicEntity> templateEntities = null;
 
             Type relevantType = null;
-            var task = Task.Run(() => DbContext.TryGetRelevantType(cTemplateEntityName, out relevantType));
+            var task = Task.Run(() => DbContext.TryGetRelevantType(entityName, out relevantType));
             var typeFound = await task;
 
             if (typeFound)
@@ -123,14 +125,15 @@ namespace ODataRestierDynamic.Controllers
         /// <summary>
         /// Returns a single entity by its key.
         /// </summary>
+        /// <param name="entityName">The name of the entity to retrieve.</param>
         /// <param name="key">The key of the entity to retrieve.</param>
         /// <returns>A <see cref="Task{T}">task</see> representing the asynchronous operation to retrieve an DynamicEntity</see>.</returns>
-        private async Task<DynamicEntity> GetEntityByKeyAsync(int key)
+        private async Task<DynamicEntity> GetEntityByKeyAsync(string entityName, int key)
         {
             DynamicEntity entity = null;
 
             Type relevantType = null;
-            var task = Task.Run(() => DbContext.TryGetRelevantType(cFilesEntityName, out relevantType));
+            var task = Task.Run(() => DbContext.TryGetRelevantType(entityName, out relevantType));
             var typeFound = await task;
 
             if (typeFound)
@@ -207,7 +210,7 @@ namespace ODataRestierDynamic.Controllers
             Contract.Ensures(Contract.Result<Task<HttpResponseMessage>>() != null);
 
             // look up the entity
-            var entity = await this.GetEntityByKeyAsync(key);
+            var entity = await this.GetEntityByKeyAsync(cFilesEntityName, key);
             if (entity == null)
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
 
@@ -311,7 +314,7 @@ namespace ODataRestierDynamic.Controllers
                 await Request.Content.ReadAsMultipartAsync(provider);
 
                 // Look up the entity
-                DynamicEntity entity = await this.GetEntityByKeyAsync(key);
+                DynamicEntity entity = await this.GetEntityByKeyAsync(cFilesEntityName, key);
                 if (entity == null)
                 {
                     entity = await this.CreateNewEntity();
@@ -438,7 +441,7 @@ namespace ODataRestierDynamic.Controllers
                 }
 
                 // Look up the entity
-                DynamicEntity entity = await this.GetEntityByKeyAsync(previewId);
+                DynamicEntity entity = await this.GetEntityByKeyAsync(cFilesEntityName, previewId);
                 if (entity == null)
                 {
                     entity = await this.CreateNewEntity();
@@ -498,7 +501,7 @@ namespace ODataRestierDynamic.Controllers
             Contract.Ensures(Contract.Result<Task<HttpResponseMessage>>() != null);
 
             // get template entities
-            var templateEntities = await this.GetTemplateEntities();
+            var templateEntities = await this.GetNamedEntities(cTemplateEntityName);
             if (templateEntities == null)
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
 
@@ -728,5 +731,191 @@ namespace ODataRestierDynamic.Controllers
 
             return stylesheet;
         }
+
+
+        #region Excel Preview
+
+        /// <summary>	Name of the print properties entity. </summary>
+        private const string cPrintPropertiesEntityName = "v_PrintProperties";
+
+        /// <summary>	Name of the print file entity. </summary>
+        private const string cPrintFileEntityName = "v_PrintFile";
+
+        /// <summary>
+        /// Dynamic Expression build method
+        /// </summary>
+        /// <typeparam name="DynamicEntity"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="property">dynamic property</param>
+        /// <param name="value">equal value</param>
+        /// <returns></returns>
+        private static Expression Expression<DynamicEntity, TValue>(PropertyInfo property, TValue value)
+        {
+            var param = System.Linq.Expressions.Expression.Parameter(property.DeclaringType);
+            var body = System.Linq.Expressions.Expression.Equal(System.Linq.Expressions.Expression.Property(param, property), System.Linq.Expressions.Expression.Constant(value, typeof(int?)));
+
+            var expressionType = typeof(Func<,>).MakeGenericType(property.DeclaringType, typeof(bool));
+            var lambdaExpression = System.Linq.Expressions.Expression.Lambda(expressionType, body, param);
+
+            return lambdaExpression;
+        }
+
+        /// <summary>
+        /// Dynamic Where Expression Query method
+        /// </summary>
+        /// <param name="query">db set</param>
+        /// <param name="where">expression</param>
+        /// <param name="type">dynamic type</param>
+        /// <returns></returns>
+        private static IQueryable Where(IQueryable query, Expression where, Type type)
+        {
+            MethodInfo whereMethod = ExpressionHelperMethods.QueryableWhereGeneric.MakeGenericMethod(type);
+            return whereMethod.Invoke(null, new object[] { query, where }) as IQueryable;
+        }
+
+        /// <summary>
+        /// An Action that handles HTTP GET requests) generates an Excel Preview.
+        /// </summary>
+        /// <param name="materialLotID"></param>
+        /// <returns>Excel Preview</returns>
+        [HttpGet]
+        public async Task<System.Net.Http.HttpResponseMessage> GenerateExcelPreview(int materialLotID)
+        {
+            Contract.Ensures(Contract.Result<Task<HttpResponseMessage>>() != null);
+
+            // get print property entities
+            var printPropertyEntities = await this.GetNamedEntities(cPrintPropertiesEntityName);
+            if (printPropertyEntities == null)
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+            Type printPropertyType = printPropertyEntities.GetType().GetGenericArguments()[0];
+            //Type relevantType = null;
+            //DbContext.TryGetRelevantType(cPrintPropertiesEntityName, out relevantType);
+            var expressionPP = Expression<DynamicEntity, int>(printPropertyType.GetProperty("MaterialLotID"), materialLotID);
+            var materialLotPPEntities = Where(printPropertyEntities, expressionPP, printPropertyType);
+
+            // get print file entities
+            var printFileEntities = await this.GetNamedEntities(cPrintFileEntityName);
+            if (printFileEntities == null)
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            //if (((IQueryable<DynamicEntity>)printFileEntities).Count() == 0)
+            //    return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+            Type printFileType = printFileEntities.GetType().GetGenericArguments()[0];
+            var expressionPF = Expression<DynamicEntity, int>(printFileType.GetProperty("MaterialLotID"), materialLotID);
+            var materialLotPFEntities = Where(printFileEntities, expressionPF, printFileType);
+
+            if (((IQueryable<DynamicEntity>)materialLotPFEntities).Count() == 0)
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+            // get the media resource stream from the entity
+            DynamicEntity printFileObj = ((IQueryable<DynamicEntity>)materialLotPFEntities).First();
+            var dataPropInfo = printFileObj.GetType().GetProperty("Data");
+            var templateBytes = dataPropInfo.GetValue(printFileObj) as byte[];
+            if (templateBytes == null)
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+            string fileSaveLocation = Path.GetTempFileName();
+            File.WriteAllBytes(fileSaveLocation, templateBytes);
+
+            #region Excel Work
+
+            List<PrintPropertiesValue> printPropertyValues = new List<PrintPropertiesValue>();
+            foreach (var item in materialLotPPEntities)
+            {
+                var typeProperty = item.GetType().GetProperty("TypeProperty");
+                var codeProperty = item.GetType().GetProperty("PropertyCode");
+                var valueProperty = item.GetType().GetProperty("Value");
+
+                string typePropertyValue = typeProperty.GetValue(item) as string;
+                string codePropertyValue = codeProperty.GetValue(item) as string;
+                string valuePropertyValue = valueProperty.GetValue(item) as string;
+
+                PrintPropertiesValue printPropertiesValue = new PrintPropertiesValue();
+                printPropertiesValue.TypeProperty = typePropertyValue;
+                printPropertiesValue.PropertyCode = codePropertyValue;
+                printPropertiesValue.Value = valuePropertyValue;
+
+                printPropertyValues.Add(printPropertiesValue);
+            }
+
+            LabelTemplate labelTemplate = new LabelTemplate(fileSaveLocation);
+            labelTemplate.FillParamValues(printPropertyValues);
+
+            #endregion
+
+            #region PNG Generation
+
+            var namePropInfo = printFileObj.GetType().GetProperty("Name");
+            var nameValue = namePropInfo.GetValue(printFileObj) as string;
+
+            string outputFileName = Path.Combine(Path.GetTempPath(), nameValue + ".png");
+            xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
+
+            if(File.Exists(fileSaveLocation))
+                File.Delete(fileSaveLocation);
+
+            #endregion
+
+            var bytes = File.ReadAllBytes(outputFileName);
+            File.Delete(outputFileName);
+            var stream = new MemoryStream(bytes);
+            if (stream == null)
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+
+            var mediaNameStr = Path.GetFileName(outputFileName);
+            var mediaTypeStr = "image/png";
+            var mediaType = new MediaTypeHeaderValue(mediaTypeStr);
+
+            // get the range and stream media type
+            var range = this.Request.Headers.Range;
+            HttpResponseMessage response;
+
+            if (range == null)
+            {
+                // if the range header is present but null, then the header value must be invalid
+                if (this.Request.Headers.Contains("Range"))
+                {
+                    return this.Request.CreateErrorResponse(HttpStatusCode.RequestedRangeNotSatisfiable, "GenerateExcelPreview");
+                }
+
+                // if no range was requested, return the entire stream
+                response = this.Request.CreateResponse(HttpStatusCode.OK);
+
+                response.Headers.AcceptRanges.Add("bytes");
+                response.Content = new StreamContent(stream);
+                response.Content.Headers.ContentType = mediaType;
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                mediaNameStr = System.Web.HttpUtility.UrlEncode(mediaNameStr);
+                response.Content.Headers.ContentDisposition.FileName = mediaNameStr;
+
+                return response;
+            }
+
+            var partialStream = EnsureStreamCanSeek(stream);
+
+            response = this.Request.CreateResponse(HttpStatusCode.PartialContent);
+            response.Headers.AcceptRanges.Add("bytes");
+
+            try
+            {
+                // return the requested range(s)
+                response.Content = new ByteRangeStreamContent(partialStream, range, mediaType);
+            }
+            catch (InvalidByteRangeException exception)
+            {
+                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
+                response.Dispose();
+                return Request.CreateErrorResponse(exception);
+            }
+
+            // change status code if the entire stream was requested
+            if (response.Content.Headers.ContentLength.Value == partialStream.Length)
+                response.StatusCode = HttpStatusCode.OK;
+
+            return response;
+        }
+
+        #endregion
     }
 }

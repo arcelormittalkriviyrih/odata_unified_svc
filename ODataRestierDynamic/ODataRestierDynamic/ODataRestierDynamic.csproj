@@ -48,6 +48,10 @@
       <HintPath>..\packages\DatabaseSchemaReader.1.5.0.5\lib\net45\DatabaseSchemaReader.dll</HintPath>
       <Private>True</Private>
     </Reference>
+	<Reference Include="DataMatrix.net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataMatrix.net.0.4.2\lib\20\DataMatrix.net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenXMLSDK-MOT.2.6.0.0\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
@@ -180,6 +184,9 @@
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
     <Compile Include="DynamicFactory\MediadataRoutingConvention.cs" />
+	<Compile Include="Helpers\ExpressionHelperMethods.cs" />
+    <Compile Include="Helpers\ExpressionHelpers.cs" />
+    <Compile Include="Helpers\LabelTemplate.cs" />
     <Compile Include="Helpers\ModelBuildHelper.cs" />
     <Compile Include="Models\DynamicExceptionHandler .cs" />
     <Compile Include="Models\DynamicMetadataObject.cs" />
