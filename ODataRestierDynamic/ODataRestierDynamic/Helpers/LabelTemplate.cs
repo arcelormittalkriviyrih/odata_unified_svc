@@ -24,6 +24,11 @@ namespace ODataRestierDynamic.Helpers
         /// </summary>
         private const string cReplaceImageSearchNameName = "ReplaceImageSearchName";
 
+        /// <summary>
+        /// The Name in Excel that should be visible in preview image (starts with).
+        /// </summary>
+        private const string cHiddenDimensionsBackgroundName = "HiddenDimensionsBackgroundName";
+
         private SpreadsheetDocument spreadSheet = null;
         private WorkbookPart workbookPart = null;
         private Sheet worksheetParams = null;
@@ -204,6 +209,9 @@ namespace ODataRestierDynamic.Helpers
                     }
                 }
             }
+
+            this.ProcessHiddenDimensionsBackground();
+
             worksheetPartParams.Worksheet.Save();
             //defective converting? RecalcRefCellValues();
             workbookPart.Workbook.CalculationProperties.ForceFullCalculation = true;
@@ -296,6 +304,33 @@ namespace ODataRestierDynamic.Helpers
             //Clear temp image file
             if (File.Exists(tempImageFileName))
                 File.Delete(tempImageFileName);
+        }
+
+        /// <summary>
+        /// Make Image in Excel visible in preview image.
+        /// </summary>
+        private void ProcessHiddenDimensionsBackground()
+        {
+            string hiddenDimensionsBackgroundImageSearchName = System.Configuration.ConfigurationManager.AppSettings[cHiddenDimensionsBackgroundName];
+            if (worksheetPartParams != null && worksheetPartParams.DrawingsPart != null && worksheetPartParams.DrawingsPart.WorksheetDrawing != null)
+            {
+                foreach (var element in worksheetPartParams.DrawingsPart.WorksheetDrawing.Elements<TwoCellAnchor>())
+                {
+                    foreach (var picture in element.Elements<DocumentFormat.OpenXml.Drawing.Spreadsheet.Picture>())
+                    {
+                        foreach (var picProp in picture.Elements<DocumentFormat.OpenXml.Drawing.Spreadsheet.NonVisualPictureProperties>())
+                        {
+                            foreach (var drawProp in picProp.Elements<DocumentFormat.OpenXml.Drawing.Spreadsheet.NonVisualDrawingProperties>())
+                            {
+                                if (drawProp.Name.Value.StartsWith(hiddenDimensionsBackgroundImageSearchName, true, System.Globalization.CultureInfo.InvariantCulture))
+                                {
+                                    drawProp.Hidden = new BooleanValue(false);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
