@@ -486,7 +486,7 @@ namespace ODataRestierDynamic.Controllers
             }
             catch (System.Exception exception)
             {
-                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
+                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview ("+ formData + "): "+ exception.ToString());
             }
 
             return previewId;
@@ -904,7 +904,7 @@ namespace ODataRestierDynamic.Controllers
             }
             catch (InvalidByteRangeException exception)
             {
-                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview", exception);
+                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview (materialLotID="+ materialLotID+"): "+ exception.ToString());
                 response.Dispose();
                 return Request.CreateErrorResponse(exception);
             }
