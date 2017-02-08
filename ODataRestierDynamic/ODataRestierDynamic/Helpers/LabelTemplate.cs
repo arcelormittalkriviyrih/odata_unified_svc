@@ -312,9 +312,11 @@ namespace ODataRestierDynamic.Helpers
         private void ProcessHiddenDimensionsBackground()
         {
             string hiddenDimensionsBackgroundImageSearchName = System.Configuration.ConfigurationManager.AppSettings[cHiddenDimensionsBackgroundName];
-            if (worksheetPartParams != null && worksheetPartParams.DrawingsPart != null && worksheetPartParams.DrawingsPart.WorksheetDrawing != null)
+            Sheet sheet1 = workbookPart.Workbook.Descendants<Sheet>().First(s => (s.Id == "rId1"));
+            WorksheetPart wsPart1 = (WorksheetPart)(workbookPart.GetPartById(sheet1.Id));
+            if (wsPart1 != null && wsPart1.DrawingsPart != null && wsPart1.DrawingsPart.WorksheetDrawing != null)
             {
-                foreach (var element in worksheetPartParams.DrawingsPart.WorksheetDrawing.Elements<TwoCellAnchor>())
+                foreach (var element in wsPart1.DrawingsPart.WorksheetDrawing.Elements<TwoCellAnchor>())
                 {
                     foreach (var picture in element.Elements<DocumentFormat.OpenXml.Drawing.Spreadsheet.Picture>())
                     {
