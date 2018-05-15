@@ -853,7 +853,16 @@ namespace ODataRestierDynamic.Controllers
             var nameValue = namePropInfo.GetValue(printFileObj) as string;
 
             string outputFileName = Path.Combine(Path.GetTempPath(), nameValue + ".png");
-            xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
+            try
+            {                
+                xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
+            }
+            catch (Exception exception)
+            {
+                DynamicLogger.Instance.WriteLoggerLogError("GenerateExcelPreview (materialLotID=" + materialLotID + ")", exception);               
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exception);
+            }
+            
 
             if(File.Exists(fileSaveLocation))
                 File.Delete(fileSaveLocation);
