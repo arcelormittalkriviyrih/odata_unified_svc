@@ -1,7 +1,6 @@
-﻿using DocumentFormat.OpenXml;
+﻿using Aspose.Cells.Rendering;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.OData.Core;
 using ODataRestierDynamic.DynamicFactory;
 using ODataRestierDynamic.Helpers;
 using ODataRestierDynamic.Log;
@@ -10,7 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics.Contracts;
-using System.Globalization;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
+using Font = DocumentFormat.OpenXml.Spreadsheet.Font;
 
 namespace ODataRestierDynamic.Controllers
 {
@@ -58,10 +59,10 @@ namespace ODataRestierDynamic.Controllers
         private const string cExcelPreviewFileType = "Excel preview";
 
         /// <summary> Excel preview temp path. </summary>
-        private static string m_ExcelPreviewTempPath = ConfigurationManager.AppSettings["ExcelPreviewTempPath"];
+        private static readonly string m_ExcelPreviewTempPath = ConfigurationManager.AppSettings["ExcelPreviewTempPath"];
 
         /// <summary> Excel template sheet password. </summary>
-        private static string m_ExcelTemplateSheetPassword = ConfigurationManager.AppSettings["ExcelTemplateSheetPassword"];
+        private static readonly string m_ExcelTemplateSheetPassword = ConfigurationManager.AppSettings["ExcelTemplateSheetPassword"];
 
         /// <summary> Excel template sheet one name. </summary>
         private static string m_ExcelTemplateSheetOneName = ConfigurationManager.AppSettings["ExcelTemplateSheetOneName"];
@@ -216,8 +217,7 @@ namespace ODataRestierDynamic.Controllers
 
             // get the media resource stream from the entity
             var dataPropInfo = entity.GetType().GetProperty("Data");
-            var bytes = dataPropInfo.GetValue(entity) as byte[];
-            if (bytes == null)
+            if (!(dataPropInfo.GetValue(entity) is byte[] bytes))
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
             var stream = new MemoryStream(bytes);
             if (stream == null)
@@ -419,7 +419,9 @@ namespace ODataRestierDynamic.Controllers
                 string fileNameGuid = formData.AllKeys.Contains(cFieldFileName) ? Path.GetFileNameWithoutExtension(formData[cFieldFileName]) : Path.GetRandomFileName();
                 string outputFileName = Path.Combine(m_ExcelPreviewTempPath, fileNameGuid + ".png");
 
-                xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
+                //xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
+
+                ConvertToPngAspose(file.LocalFileName, outputFileName);
 
                 //var startInfo = new System.Diagnostics.ProcessStartInfo(m_GenerateExcelPreviewUtilityName);
                 //startInfo.UseShellExecute = false;
@@ -495,6 +497,109 @@ namespace ODataRestierDynamic.Controllers
             return previewId;
         }
 
+        private static void ConvertToPngAspose(string xlsFileName, string outputFileName)
+        {
+            try
+            {
+                Aspose.Cells.License lvLicense = new Aspose.Cells.License();
+                lvLicense.SetLicense("Aspose.Cells.lic");
+            }
+            catch (Exception ex)
+            {
+                DynamicLogger.Instance.WriteLoggerLogError("Aspose.Cells License Error:", ex);
+            }
+
+            // Open a template excel file
+            Aspose.Cells.Workbook book = new Aspose.Cells.Workbook(xlsFileName);
+            book.CalculateFormula();
+
+            int dpi = 300;
+            // Get the first worksheet.
+            Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+
+            // Define ImageOrPrintOptions
+            ImageOrPrintOptions imgOptions = new ImageOrPrintOptions
+            {
+                // Specify the image format
+                ImageType = Aspose.Cells.Drawing.ImageType.Png,
+                OnlyArea = true,
+                //OnePagePerSheet = true,
+                //IsCellAutoFit = true,
+                HorizontalResolution = dpi,
+                VerticalResolution = dpi
+            };
+
+            // Render the sheet with respect to specified image/print options
+            SheetRender sr = new SheetRender(sheet, imgOptions);
+            // Render the image for the sheet
+            Bitmap bitmap = sr.ToImage(0);
+
+            using (Image croppedImage = AutoCrop(bitmap))
+            {
+                croppedImage.Save(outputFileName);
+            }
+        }
+
+        private static Image AutoCrop(Bitmap bmp)
+        {
+            if (Image.GetPixelFormatSize(bmp.PixelFormat) != 32)
+                throw new InvalidOperationException("Autocrop currently only supports 32 bits per pixel images.");
+
+            // Initialize variables
+            var cropColor = System.Drawing.Color.White;
+
+            var bottom = 0;
+            var left = bmp.Width; // Set the left crop point to the width so that the logic below will set the left value to the first non crop color pixel it comes across.
+            var right = 0;
+            var top = bmp.Height; // Set the top crop point to the height so that the logic below will set the top value to the first non crop color pixel it comes across.
+
+            var bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, bmp.PixelFormat);
+
+            unsafe
+            {
+                var dataPtr = (byte*)bmpData.Scan0;
+
+                for (var y = 0; y < bmp.Height; y++)
+                {
+                    for (var x = 0; x < bmp.Width; x++)
+                    {
+                        var rgbPtr = dataPtr + (x * 4);
+
+                        var b = rgbPtr[0];
+                        var g = rgbPtr[1];
+                        var r = rgbPtr[2];
+                        var a = rgbPtr[3];
+
+                        // If any of the pixel RGBA values don't match and the crop color is not transparent, or if the crop color is transparent and the pixel A value is not transparent
+                        if ((cropColor.A > 0 && (b != cropColor.B || g != cropColor.G || r != cropColor.R || a != cropColor.A)) || (cropColor.A == 0 && a != 0))
+                        {
+                            if (x < left)
+                                left = x;
+
+                            if (x >= right)
+                                right = x + 1;
+
+                            if (y < top)
+                                top = y;
+
+                            if (y >= bottom)
+                                bottom = y + 1;
+                        }
+                    }
+
+                    dataPtr += bmpData.Stride;
+                }
+            }
+
+            bmp.UnlockBits(bmpData);
+
+            if (left < right && top < bottom)
+                //return bmp.Clone(new Rectangle(left, top, right - left, bottom - top), bmp.PixelFormat);
+                return bmp.Clone(new Rectangle(/*left*/0, /*top*/0, right, bottom), bmp.PixelFormat);
+
+            return null; // Entire image should be cropped, so just return null
+        }
+
         /// <summary>	(An Action that handles HTTP GET requests) generates a template. </summary>
         ///
         /// <returns>	The template. </returns>
@@ -518,8 +623,10 @@ namespace ODataRestierDynamic.Controllers
                 WorkbookStylesPart stylesPart = workbookPart.AddNewPart<WorkbookStylesPart>();
                 stylesPart.Stylesheet = CreateStylesheet();
                 stylesPart.Stylesheet.Save();
-                workbook.WorkbookPart.Workbook = new DocumentFormat.OpenXml.Spreadsheet.Workbook();
-                workbook.WorkbookPart.Workbook.Sheets = new DocumentFormat.OpenXml.Spreadsheet.Sheets();
+                workbook.WorkbookPart.Workbook = new Workbook
+                {
+                    Sheets = new Sheets()
+                };
 
                 #region Sheet 1
 
@@ -556,16 +663,18 @@ namespace ODataRestierDynamic.Controllers
                 SheetData sheetData2 = new SheetData();
 
                 // the data for sheet 2
-                DocumentFormat.OpenXml.Spreadsheet.Row headerRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+                Row headerRow = new Row();
                 List<String> columns = new List<string>();
                 foreach (PropertyInfo column in properties)
                 {
                     columns.Add(column.Name);
 
-                    DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
-                    cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
-                    cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(column.Name);
-                    cell.StyleIndex = Convert.ToUInt32(1);
+                    Cell cell = new Cell
+                    {
+                        DataType = CellValues.String,
+                        CellValue = new CellValue(column.Name),
+                        StyleIndex = Convert.ToUInt32(1)
+                    };
                     headerRow.AppendChild(cell);
                 }
 
@@ -573,13 +682,15 @@ namespace ODataRestierDynamic.Controllers
 
                 foreach (var entity in templateEntities)
                 {
-                    DocumentFormat.OpenXml.Spreadsheet.Row newRow = new DocumentFormat.OpenXml.Spreadsheet.Row();
+                    Row newRow = new Row();
                     foreach (string col in columns)
                     {
-                        DocumentFormat.OpenXml.Spreadsheet.Cell cell = new DocumentFormat.OpenXml.Spreadsheet.Cell();
-                        cell.DataType = DocumentFormat.OpenXml.Spreadsheet.CellValues.String;
+                        Cell cell = new Cell
+                        {
+                            DataType = CellValues.String
+                        };
                         object value = templateEntities.ElementType.GetProperty(col).GetValue(entity);
-                        cell.CellValue = new DocumentFormat.OpenXml.Spreadsheet.CellValue(value == null ? string.Empty : value.ToString());
+                        cell.CellValue = new CellValue(value == null ? string.Empty : value.ToString());
                         newRow.AppendChild(cell);
                     }
 
@@ -814,8 +925,7 @@ namespace ODataRestierDynamic.Controllers
             // get the media resource stream from the entity
             DynamicEntity printFileObj = ((IQueryable<DynamicEntity>)materialLotPFEntities).First();
             var dataPropInfo = printFileObj.GetType().GetProperty("Data");
-            var templateBytes = dataPropInfo.GetValue(printFileObj) as byte[];
-            if (templateBytes == null)
+            if (!(dataPropInfo.GetValue(printFileObj) is byte[] templateBytes))
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
 
             string fileSaveLocation = Path.GetTempFileName();
@@ -834,10 +944,12 @@ namespace ODataRestierDynamic.Controllers
                 string codePropertyValue = codeProperty.GetValue(item) as string;
                 string valuePropertyValue = valueProperty.GetValue(item) as string;
 
-                PrintPropertiesValue printPropertiesValue = new PrintPropertiesValue();
-                printPropertiesValue.TypeProperty = typePropertyValue;
-                printPropertiesValue.PropertyCode = codePropertyValue;
-                printPropertiesValue.Value = valuePropertyValue;
+                PrintPropertiesValue printPropertiesValue = new PrintPropertiesValue
+                {
+                    TypeProperty = typePropertyValue,
+                    PropertyCode = codePropertyValue,
+                    Value = valuePropertyValue
+                };
 
                 printPropertyValues.Add(printPropertiesValue);
             }
@@ -854,8 +966,9 @@ namespace ODataRestierDynamic.Controllers
 
             string outputFileName = Path.Combine(Path.GetTempPath(), nameValue + ".png");
             try
-            {                
-                xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
+            {
+                ConvertToPngAspose(fileSaveLocation, outputFileName);
+                //xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
             }
             catch (Exception exception)
             {

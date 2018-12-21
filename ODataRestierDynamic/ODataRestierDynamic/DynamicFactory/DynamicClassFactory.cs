@@ -22,7 +22,7 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <summary>	The module builder. </summary>
 		private ModuleBuilder _moduleBuilder;
 		/// <summary>	Name of the assembly. </summary>
-		private string _assemblyName;
+		private readonly string _assemblyName;
 
 		/// <summary>	The default namespace. </summary>
 		public const string cDefaultNamespace = "ODataRestierDynamic.Models";

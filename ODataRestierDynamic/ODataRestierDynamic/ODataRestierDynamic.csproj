@@ -25,6 +25,8 @@
     <SccProvider>SAK</SccProvider>
     <OutputPath>bin\</OutputPath>
     <DeployManagedRuntimeVersion>v4.0</DeployManagedRuntimeVersion>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,13 +45,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=18.12.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.18.12.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="DatabaseSchemaReader, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DatabaseSchemaReader.1.5.0.5\lib\net45\DatabaseSchemaReader.dll</HintPath>
       <Private>True</Private>
     </Reference>
-	<Reference Include="DataMatrix.net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DataMatrix.net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataMatrix.net.0.4.2\lib\20\DataMatrix.net.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -101,18 +108,6 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-        <Reference Include="Spire.Common, Version=1.2.788.14040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.8.3.0\lib\net40\Spire.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.License, Version=1.3.6.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.8.3.0\lib\net40\Spire.License.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Pdf, Version=4.3.6.14040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.8.3.0\lib\net40\Spire.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.XLS, Version=8.3.0.61040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.XLS.8.3.0\lib\net40\Spire.XLS.dll</HintPath>
-    </Reference>
     <Reference Include="System.IO" />
     <Reference Include="System.IO.Packaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenXMLSDK-MOT.2.6.0.0\lib\System.IO.Packaging.dll</HintPath>
@@ -142,9 +137,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-        <Reference Include="xlsConverter, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xlsConverter.1.0.0.5\lib\net45\xlsConverter.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -179,7 +171,7 @@
     <Compile Include="DynamicFactory\DynamicClassFactory.cs" />
     <Compile Include="DynamicFactory\DynamicEntity.cs" />
     <Compile Include="DynamicFactory\MediadataRoutingConvention.cs" />
-	<Compile Include="Helpers\ExpressionHelperMethods.cs" />
+    <Compile Include="Helpers\ExpressionHelperMethods.cs" />
     <Compile Include="Helpers\ExpressionHelpers.cs" />
     <Compile Include="Helpers\LabelTemplate.cs" />
     <Compile Include="Helpers\ModelBuildHelper.cs" />

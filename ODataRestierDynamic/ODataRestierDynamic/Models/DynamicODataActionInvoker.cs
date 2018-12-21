@@ -63,29 +63,32 @@ namespace ODataRestierDynamic.Models
 							var actionMethodName = routeData.Values["action"] as string;
 							if (actionMethodName == cPostActionName)
 							{
-								var actionPathSegment = odataPath.Segments.Last() as UnboundActionPathSegment;
-								if (actionPathSegment != null)
-								{
-									Stream stream = request.Content.ReadAsStreamAsync().Result;
-									ODataMessageWrapper message = new ODataMessageWrapper(stream);
-									message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
-									ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
-									ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
-									ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
+                                if (odataPath.Segments.Last() is UnboundActionPathSegment actionPathSegment)
+                                {
+                                    Stream stream = request.Content.ReadAsStreamAsync().Result;
+                                    ODataMessageWrapper message = new ODataMessageWrapper(stream);
+                                    message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
+                                    ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
+                                    ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
+                                    ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
 
-									var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
-									dynamicController.ControllerContext = controllerContext;
-									result = dynamicController.CallAction(actionPathSegment.ActionName, payload, cancellationToken);
-								}
-							}
+                                    var dynamicController = new Controllers.DynamicController
+                                    {
+                                        ControllerContext = controllerContext
+                                    };
+                                    result = dynamicController.CallAction(actionPathSegment.ActionName, payload, cancellationToken);
+                                }
+                            }
 
 							if (odataPath != null && odataPath.Segments.Count == 3 && 
-								odataPath.Segments[0].ToString() == ODataRestierDynamic.Controllers.MediaDataController.cFilesEntityName && 
+								odataPath.Segments[0].ToString() == Controllers.MediaDataController.cFilesEntityName && 
 								odataPath.Segments.Last() is ValuePathSegment)
 							{
-								var mediaDataController = new ODataRestierDynamic.Controllers.MediaDataController();
-								mediaDataController.ControllerContext = controllerContext;
-								var keyValuePathSegment = odataPath.Segments.First(x => x is KeyValuePathSegment);
+                                var mediaDataController = new Controllers.MediaDataController
+                                {
+                                    ControllerContext = controllerContext
+                                };
+                                var keyValuePathSegment = odataPath.Segments.First(x => x is KeyValuePathSegment);
 								int key = int.Parse(((KeyValuePathSegment)keyValuePathSegment).Value);
 
 								if (actionMethodName.Equals(System.Net.WebRequestMethods.Http.Get, StringComparison.InvariantCultureIgnoreCase))
@@ -109,7 +112,7 @@ namespace ODataRestierDynamic.Models
 			catch (Exception exception)
 			{
 				DynamicLogger.Instance.WriteLoggerLogError("InvokeActionAsync", exception);
-				throw exception;
+				throw;
 			}
 
 			return result;
@@ -176,7 +179,7 @@ namespace ODataRestierDynamic.Models
 			catch (Exception exception)
 			{
 				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
-				throw exception;
+				throw;
 			}
 
 			return payload;

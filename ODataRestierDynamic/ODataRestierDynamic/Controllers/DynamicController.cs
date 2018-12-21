@@ -139,7 +139,7 @@ select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTIN
                 {
                     // this will query your database and return the result to your datatable
                     dataAdapter.Fill(dataTable);
-                    connection.Close();
+                    //connection.Close();
                 }
 
                 foreach (DataRow row in dataTable.Rows)
@@ -229,7 +229,7 @@ SELECT
                         }
                     }
                     reader.Close();
-                    connection.Close();
+                    //connection.Close();
                 }
             }
             catch (Exception ex)
@@ -284,7 +284,7 @@ SELECT
                     foreach (var item in parameters)
                     {
                         string paramName = string.Format("{0}_param", item.Key.ToLower());
-                        paramList.Add(new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value));
+                        paramList.Add(new SqlParameter(paramName, item.Value ?? DBNull.Value));
                         parameterNames.Add(string.Format("@{0} = @{1}", item.Key, paramName));
                     }
                 }
@@ -300,7 +300,7 @@ SELECT
             catch (Exception exception)
             {
                 DynamicLogger.Instance.WriteLoggerLogError("CallAction", exception);
-                throw exception;
+                throw;
             }
 
             return Ok(result);
@@ -321,9 +321,11 @@ SELECT
 
             try
             {
-                ActionResult returnActionType = new ActionResult();
-                returnActionType.Name = name;
-                returnActionType.ActionParameters = new List<ActionParameter>();
+                ActionResult returnActionType = new ActionResult
+                {
+                    Name = name,
+                    ActionParameters = new List<ActionParameter>()
+                };
 
                 var actionMethod = DbContext.DynamicActionMethods[name];
 
@@ -334,7 +336,7 @@ SELECT
                     foreach (var item in parameters)
                     {
                         string paramName = string.Format("{0}_param", item.Key.ToLower());
-                        var sqlParameter = new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value);
+                        var sqlParameter = new SqlParameter(paramName, item.Value ?? DBNull.Value);
                         var paramInfo = actionMethod.Params.First(p => p.Name == ("@" + item.Key));
                         if (paramInfo.isOut)
                         {
