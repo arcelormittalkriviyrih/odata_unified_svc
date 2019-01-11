@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http.Controllers;
 
 namespace ODataRestierDynamic.Models
 {
-	/// <summary>
-	/// Contains the logic for selecting an action method.
-	/// </summary>
-	public class DynamicODataActionSelector : IHttpActionSelector
+    /// <summary>
+    /// Contains the logic for selecting an action method.
+    /// </summary>
+    public class DynamicODataActionSelector : IHttpActionSelector
 	{
 		/// <summary>
 		/// The inner controller selector to call

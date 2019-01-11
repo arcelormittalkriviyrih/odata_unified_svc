@@ -1,30 +1,14 @@
-﻿using DatabaseSchemaReader;
-using DatabaseSchemaReader.DataSchema;
-using Microsoft.OData.Edm;
-using Microsoft.Restier.EntityFramework;
+﻿using Microsoft.Restier.EntityFramework;
 using Microsoft.Restier.Core;
 using ODataRestierDynamic.DynamicFactory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
 using Microsoft.Restier.Core.Model;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.OData.Edm.Library;
 using Microsoft.Restier.Core.Query;
-using System.Linq.Expressions;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using MagicDbModelBuilder;
 using Microsoft.Restier.Core.Submit;
 
 namespace ODataRestierDynamic.Models
 {
-	/// <summary>	Class API for dynamically odata communication with DB. </summary>
-	public class DynamicApi : DbApi<DynamicContext>
+    /// <summary>	Class API for dynamically odata communication with DB. </summary>
+    public class DynamicApi : DbApi<DynamicContext>
 	{
 		#region Fields
 

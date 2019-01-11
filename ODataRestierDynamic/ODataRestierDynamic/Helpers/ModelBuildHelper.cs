@@ -1,14 +1,11 @@
 ﻿using ODataRestierDynamic.DynamicFactory;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
-using System.Web;
 
 namespace ODataRestierDynamic.Helpers
 {
-	/// <summary>	A table build helper. </summary>
-	public class TableBuildHelper
+    /// <summary>	A table build helper. </summary>
+    public class TableBuildHelper
 	{
 		/// <summary>	Gets or sets the name. </summary>
 		///

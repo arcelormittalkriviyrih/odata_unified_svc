@@ -1,6 +1,5 @@
 ﻿using Microsoft.Restier.Core.Model;
 using ODataRestierDynamic.CustomAttributes;
-using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,12 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	A dynamic class factory. </summary>
-	public class DynamicClassFactory
+    /// <summary>	A dynamic class factory. </summary>
+    public class DynamicClassFactory
 	{
 		/// <summary>	The application domain. </summary>
 		private AppDomain _appDomain;

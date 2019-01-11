@@ -7,17 +7,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Hook for change set preparer./ </summary>
-	public class DynamicChangeSetPreparer : IChangeSetPreparer, IDelegateHookHandler<IChangeSetPreparer>
+    /// <summary>	Hook for change set preparer./ </summary>
+    public class DynamicChangeSetPreparer : IChangeSetPreparer, IDelegateHookHandler<IChangeSetPreparer>
 	{
 		/// <summary>	Gets or sets the inner handler. </summary>
 		///

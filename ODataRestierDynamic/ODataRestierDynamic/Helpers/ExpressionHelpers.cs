@@ -4,10 +4,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web.OData.Formatter;
-using System.Web.OData.Query.Expressions;
 using Microsoft.OData.Core.UriParser;
-using Microsoft.OData.Edm;
 using System;
 
 namespace ODataRestierDynamic.Helpers

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ODataRestierDynamic.Models
+﻿namespace ODataRestierDynamic.Models
 {
     /// <summary>	Class for dynamic info service object. </summary>
     public class DynamicServiceInfoObject

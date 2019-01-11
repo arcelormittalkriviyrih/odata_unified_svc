@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Data.Entity.ModelConfiguration.Configuration;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace MagicDbModelBuilder
 {

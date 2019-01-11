@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	A dynamic method data. For generating by DynamicClassFactory. </summary>
-	public class DynamicMethodData
+    /// <summary>	A dynamic method data. For generating by DynamicClassFactory. </summary>
+    public class DynamicMethodData
 	{
 		/// <summary>	Gets or sets options for controlling the operation. </summary>
 		///

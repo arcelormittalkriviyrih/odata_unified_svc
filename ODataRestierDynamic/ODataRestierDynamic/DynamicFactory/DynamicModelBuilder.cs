@@ -1,6 +1,4 @@
-﻿using DatabaseSchemaReader;
-using DatabaseSchemaReader.DataSchema;
-using Microsoft.OData.Edm;
+﻿using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Library;
 using Microsoft.OData.Edm.Library.Expressions;
 using Microsoft.Restier.Core;
@@ -9,18 +7,15 @@ using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Hook for building DB model dynamically. </summary>
-	public class DynamicModelBuilder : IModelBuilder, IDelegateHookHandler<IModelBuilder>
+    /// <summary>	Hook for building DB model dynamically. </summary>
+    public class DynamicModelBuilder : IModelBuilder, IDelegateHookHandler<IModelBuilder>
 	{
 		/// <summary>	Gets or sets the inner handler. </summary>
 		///

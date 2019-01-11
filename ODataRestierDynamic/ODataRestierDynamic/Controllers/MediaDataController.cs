@@ -1,4 +1,4 @@
-﻿using Aspose.Cells.Rendering;
+﻿//using Aspose.Cells.Rendering;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using ODataRestierDynamic.DynamicFactory;
@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics.Contracts;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -419,9 +417,9 @@ namespace ODataRestierDynamic.Controllers
                 string fileNameGuid = formData.AllKeys.Contains(cFieldFileName) ? Path.GetFileNameWithoutExtension(formData[cFieldFileName]) : Path.GetRandomFileName();
                 string outputFileName = Path.Combine(m_ExcelPreviewTempPath, fileNameGuid + ".png");
 
-                //xlsConverter.Program.Convert(file.LocalFileName, outputFileName);
+                xlsConverter.Program.ConvertNoRotate(file.LocalFileName, outputFileName);
 
-                ConvertToPngAspose(file.LocalFileName, outputFileName);
+                //ConvertToPngAspose(file.LocalFileName, outputFileName);
 
                 //var startInfo = new System.Diagnostics.ProcessStartInfo(m_GenerateExcelPreviewUtilityName);
                 //startInfo.UseShellExecute = false;
@@ -497,108 +495,112 @@ namespace ODataRestierDynamic.Controllers
             return previewId;
         }
 
-        private static void ConvertToPngAspose(string xlsFileName, string outputFileName)
-        {
-            try
-            {
-                Aspose.Cells.License lvLicense = new Aspose.Cells.License();
-                lvLicense.SetLicense("Aspose.Cells.lic");
-            }
-            catch (Exception ex)
-            {
-                DynamicLogger.Instance.WriteLoggerLogError("Aspose.Cells License Error:", ex);
-            }
+        #region Aspose workflow
 
-            // Open a template excel file
-            Aspose.Cells.Workbook book = new Aspose.Cells.Workbook(xlsFileName);
-            book.CalculateFormula();
+        //private static void ConvertToPngAspose(string xlsFileName, string outputFileName)
+        //{
+        //    try
+        //    {
+        //        Aspose.Cells.License lvLicense = new Aspose.Cells.License();
+        //        lvLicense.SetLicense("Aspose.Cells.lic");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        DynamicLogger.Instance.WriteLoggerLogError("Aspose.Cells License Error:", ex);
+        //    }
 
-            int dpi = 300;
-            // Get the first worksheet.
-            Aspose.Cells.Worksheet sheet = book.Worksheets[0];
+        //    // Open a template excel file
+        //    Aspose.Cells.Workbook book = new Aspose.Cells.Workbook(xlsFileName);
+        //    book.CalculateFormula();
 
-            // Define ImageOrPrintOptions
-            ImageOrPrintOptions imgOptions = new ImageOrPrintOptions
-            {
-                // Specify the image format
-                ImageType = Aspose.Cells.Drawing.ImageType.Png,
-                OnlyArea = true,
-                //OnePagePerSheet = true,
-                //IsCellAutoFit = true,
-                HorizontalResolution = dpi,
-                VerticalResolution = dpi
-            };
+        //    int dpi = 300;
+        //    // Get the first worksheet.
+        //    Aspose.Cells.Worksheet sheet = book.Worksheets[0];
 
-            // Render the sheet with respect to specified image/print options
-            SheetRender sr = new SheetRender(sheet, imgOptions);
-            // Render the image for the sheet
-            Bitmap bitmap = sr.ToImage(0);
+        //    // Define ImageOrPrintOptions
+        //    ImageOrPrintOptions imgOptions = new ImageOrPrintOptions
+        //    {
+        //        // Specify the image format
+        //        ImageType = Aspose.Cells.Drawing.ImageType.Png,
+        //        OnlyArea = true,
+        //        //OnePagePerSheet = true,
+        //        //IsCellAutoFit = true,
+        //        HorizontalResolution = dpi,
+        //        VerticalResolution = dpi
+        //    };
 
-            using (Image croppedImage = AutoCrop(bitmap))
-            {
-                croppedImage.Save(outputFileName);
-            }
-        }
+        //    // Render the sheet with respect to specified image/print options
+        //    SheetRender sr = new SheetRender(sheet, imgOptions);
+        //    // Render the image for the sheet
+        //    Bitmap bitmap = sr.ToImage(0);
 
-        private static Image AutoCrop(Bitmap bmp)
-        {
-            if (Image.GetPixelFormatSize(bmp.PixelFormat) != 32)
-                throw new InvalidOperationException("Autocrop currently only supports 32 bits per pixel images.");
+        //    using (Image croppedImage = AutoCrop(bitmap))
+        //    {
+        //        croppedImage.Save(outputFileName);
+        //    }
+        //}
 
-            // Initialize variables
-            var cropColor = System.Drawing.Color.White;
+        //private static Image AutoCrop(Bitmap bmp)
+        //{
+        //    if (Image.GetPixelFormatSize(bmp.PixelFormat) != 32)
+        //        throw new InvalidOperationException("Autocrop currently only supports 32 bits per pixel images.");
 
-            var bottom = 0;
-            var left = bmp.Width; // Set the left crop point to the width so that the logic below will set the left value to the first non crop color pixel it comes across.
-            var right = 0;
-            var top = bmp.Height; // Set the top crop point to the height so that the logic below will set the top value to the first non crop color pixel it comes across.
+        //    // Initialize variables
+        //    var cropColor = System.Drawing.Color.White;
 
-            var bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, bmp.PixelFormat);
+        //    var bottom = 0;
+        //    var left = bmp.Width; // Set the left crop point to the width so that the logic below will set the left value to the first non crop color pixel it comes across.
+        //    var right = 0;
+        //    var top = bmp.Height; // Set the top crop point to the height so that the logic below will set the top value to the first non crop color pixel it comes across.
 
-            unsafe
-            {
-                var dataPtr = (byte*)bmpData.Scan0;
+        //    var bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, bmp.PixelFormat);
 
-                for (var y = 0; y < bmp.Height; y++)
-                {
-                    for (var x = 0; x < bmp.Width; x++)
-                    {
-                        var rgbPtr = dataPtr + (x * 4);
+        //    unsafe
+        //    {
+        //        var dataPtr = (byte*)bmpData.Scan0;
 
-                        var b = rgbPtr[0];
-                        var g = rgbPtr[1];
-                        var r = rgbPtr[2];
-                        var a = rgbPtr[3];
+        //        for (var y = 0; y < bmp.Height; y++)
+        //        {
+        //            for (var x = 0; x < bmp.Width; x++)
+        //            {
+        //                var rgbPtr = dataPtr + (x * 4);
 
-                        // If any of the pixel RGBA values don't match and the crop color is not transparent, or if the crop color is transparent and the pixel A value is not transparent
-                        if ((cropColor.A > 0 && (b != cropColor.B || g != cropColor.G || r != cropColor.R || a != cropColor.A)) || (cropColor.A == 0 && a != 0))
-                        {
-                            if (x < left)
-                                left = x;
+        //                var b = rgbPtr[0];
+        //                var g = rgbPtr[1];
+        //                var r = rgbPtr[2];
+        //                var a = rgbPtr[3];
 
-                            if (x >= right)
-                                right = x + 1;
+        //                // If any of the pixel RGBA values don't match and the crop color is not transparent, or if the crop color is transparent and the pixel A value is not transparent
+        //                if ((cropColor.A > 0 && (b != cropColor.B || g != cropColor.G || r != cropColor.R || a != cropColor.A)) || (cropColor.A == 0 && a != 0))
+        //                {
+        //                    if (x < left)
+        //                        left = x;
 
-                            if (y < top)
-                                top = y;
+        //                    if (x >= right)
+        //                        right = x + 1;
 
-                            if (y >= bottom)
-                                bottom = y + 1;
-                        }
-                    }
+        //                    if (y < top)
+        //                        top = y;
 
-                    dataPtr += bmpData.Stride;
-                }
-            }
+        //                    if (y >= bottom)
+        //                        bottom = y + 1;
+        //                }
+        //            }
 
-            bmp.UnlockBits(bmpData);
+        //            dataPtr += bmpData.Stride;
+        //        }
+        //    }
 
-            if (left < right && top < bottom)
-                //return bmp.Clone(new Rectangle(left, top, right - left, bottom - top), bmp.PixelFormat);
-                return bmp.Clone(new Rectangle(/*left*/0, /*top*/0, right, bottom), bmp.PixelFormat);
+        //    bmp.UnlockBits(bmpData);
 
-            return null; // Entire image should be cropped, so just return null
-        }
+        //    if (left < right && top < bottom)
+        //        //return bmp.Clone(new Rectangle(left, top, right - left, bottom - top), bmp.PixelFormat);
+        //        return bmp.Clone(new Rectangle(/*left*/0, /*top*/0, right, bottom), bmp.PixelFormat);
+
+        //    return null; // Entire image should be cropped, so just return null
+        //} 
+
+        #endregion
 
         /// <summary>	(An Action that handles HTTP GET requests) generates a template. </summary>
         ///
@@ -967,8 +969,8 @@ namespace ODataRestierDynamic.Controllers
             string outputFileName = Path.Combine(Path.GetTempPath(), nameValue + ".png");
             try
             {
-                ConvertToPngAspose(fileSaveLocation, outputFileName);
-                //xlsConverter.Program.Convert(fileSaveLocation, outputFileName);
+                //ConvertToPngAspose(fileSaveLocation, outputFileName);
+                xlsConverter.Program.ConvertNoRotate(fileSaveLocation, outputFileName);
             }
             catch (Exception exception)
             {
