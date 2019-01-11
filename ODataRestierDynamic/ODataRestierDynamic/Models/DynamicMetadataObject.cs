@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace ODataRestierDynamic.Models
 {
-	/// <summary>	Values that represent database object types. </summary>
-	public enum DBObjectType
+    /// <summary>	Values that represent database object types. </summary>
+    public enum DBObjectType
 	{
 		/// <summary>	An enum constant representing the table option. </summary>
 		Table,

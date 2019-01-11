@@ -15,7 +15,7 @@ using System.Web;
 namespace ODataRestierDynamic.Log
 {
     /// <summary>	A dynamic logger. </summary>
-    public class DynamicLogger
+    public class DynamicLogger : IDisposable
     {
         #region Consts
 
@@ -54,7 +54,7 @@ namespace ODataRestierDynamic.Log
         /// It must be static to syncronize access
         /// from different web instances
         /// </summary>
-        private static object m_LockLogObject = new object();
+        private static readonly object m_LockLogObject = new object();
 
         #endregion
 
@@ -63,12 +63,12 @@ namespace ODataRestierDynamic.Log
         /// <summary>
         /// Path to log file from configuration
         /// </summary>
-        private static string m_LogFilePath = ConfigurationManager.AppSettings["LogFilePath"];
+        private static readonly string m_LogFilePath = ConfigurationManager.AppSettings["LogFilePath"];
 
         /// <summary>
         /// Flag for enable write log to file.
         /// </summary>
-        private static bool m_EnableWriteLogToFile = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToFile"]);
+        private static readonly bool m_EnableWriteLogToFile = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToFile"]);
 
         /// <summary>
         /// Returns path to log file for this web service
@@ -149,7 +149,7 @@ namespace ODataRestierDynamic.Log
             {
                 try
                 {
-                    vpEventLog.WriteEntry(text + "\n" + StackTraceException(exception), eventLogEntryType);
+                    EventLogMember.WriteEntry(text + "\n" + StackTraceException(exception), eventLogEntryType);
                 }
                 catch (Exception eventLogexception)
                 {
@@ -225,17 +225,17 @@ namespace ODataRestierDynamic.Log
         /// <summary>
         /// Log event viewer group name
         /// </summary>
-        private static string m_SystemEventSourceName = ConfigurationManager.AppSettings["SystemEventSourceName"];
+        private static readonly string m_SystemEventSourceName = ConfigurationManager.AppSettings["SystemEventSourceName"];
 
         /// <summary>
         /// Log event viewer name
         /// </summary>
-        private static string m_SystemEventLogName = ConfigurationManager.AppSettings["SystemEventLogName"];
+        private static readonly string m_SystemEventLogName = ConfigurationManager.AppSettings["SystemEventLogName"];
 
         /// <summary>
         /// Flag for enable write log to Event Viewer.
         /// </summary>
-        private static bool m_EnableWriteLogToEventViewer = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToEventViewer"]);
+        private static readonly bool m_EnableWriteLogToEventViewer = bool.Parse(ConfigurationManager.AppSettings["EnableWriteLogToEventViewer"]);
 
         /// <summary>
         /// Creates the system event source of the service if it does not exist.
@@ -267,7 +267,7 @@ namespace ODataRestierDynamic.Log
         /// <summary>
         /// Gets the event log which is used by the service.
         /// </summary>
-        public EventLog vpEventLog
+        public EventLog EventLogMember
         {
             get
             {
@@ -275,9 +275,11 @@ namespace ODataRestierDynamic.Log
                 {
                     if (m_EventLog == null)
                     {
-                        m_EventLog = new EventLog();
-                        m_EventLog.Source = m_SystemEventSourceName;
-                        m_EventLog.Log = m_SystemEventLogName;
+                        m_EventLog = new EventLog
+                        {
+                            Source = m_SystemEventSourceName,
+                            Log = m_SystemEventLogName
+                        };
 
                         //WI-139
                         WindowsIdentity identity = WindowsIdentity.GetCurrent();
@@ -303,7 +305,7 @@ namespace ODataRestierDynamic.Log
         /// <summary>
         /// The value of the Logger property.
         /// </summary>
-        private static ILog m_Logger = LogManager.GetLogger(typeof(DynamicLogger));
+        private static readonly ILog m_Logger = LogManager.GetLogger(typeof(DynamicLogger));
 
         /// <summary>
         /// Gets the object which is used to write logs.
@@ -367,16 +369,17 @@ namespace ODataRestierDynamic.Log
 
             #endregion
 
-            RollingFileAppender lvFileAppender = new RollingFileAppender();
+            RollingFileAppender lvFileAppender = new RollingFileAppender
+            {
+                File = logFilePath,
 
-            lvFileAppender.File = logFilePath;
+                Layout = new PatternLayout(cLogFileLayoutPattern),
+                AppendToFile = true,
+                MaximumFileSize = cMaxLogFileSize,
+                MaxSizeRollBackups = cMaxSizeRollBackups,
 
-            lvFileAppender.Layout = new PatternLayout(cLogFileLayoutPattern);
-            lvFileAppender.AppendToFile = true;
-            lvFileAppender.MaximumFileSize = cMaxLogFileSize;
-            lvFileAppender.MaxSizeRollBackups = cMaxSizeRollBackups;
-
-            lvFileAppender.Threshold = Level.Debug;
+                Threshold = Level.Debug
+            };
 
             lvFileAppender.ActivateOptions();
 
@@ -386,5 +389,20 @@ namespace ODataRestierDynamic.Log
         #endregion
 
         #endregion
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (m_EventLog != null)
+                    m_EventLog.Dispose();
+            }
+        }
     }
 }

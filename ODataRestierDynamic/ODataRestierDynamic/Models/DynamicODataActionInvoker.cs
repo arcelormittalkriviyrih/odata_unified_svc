@@ -4,24 +4,23 @@ using Microsoft.Restier.WebApi;
 using ODataRestierDynamic.Log;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.OData;
 using System.Web.OData.Extensions;
 using System.Web.OData.Formatter.Deserialization;
 using System.Web.OData.Routing;
+using xlsConverter.DynamicActions;
 
 namespace ODataRestierDynamic.Models
 {
-	/// <summary>
-	/// Contains method that is used to invoke HTTP operation.
-	/// </summary>
-	public class DynamicODataActionInvoker : IHttpActionInvoker
+    /// <summary>
+    /// Contains method that is used to invoke HTTP operation.
+    /// </summary>
+    public class DynamicODataActionInvoker : IHttpActionInvoker, IDynamicActions
 	{
 		internal const string cPostActionName = "PostAction";
 
@@ -54,7 +53,6 @@ namespace ODataRestierDynamic.Models
 					if (controllerContext.Controller is RestierController)
 					{
 						var request = controllerContext.Request;
-						IEdmModel model = request.ODataProperties().Model;
 						ODataPath odataPath = request.ODataProperties().Path;
 						var routeData = controllerContext.RouteData;
 
@@ -63,29 +61,33 @@ namespace ODataRestierDynamic.Models
 							var actionMethodName = routeData.Values["action"] as string;
 							if (actionMethodName == cPostActionName)
 							{
-								var actionPathSegment = odataPath.Segments.Last() as UnboundActionPathSegment;
-								if (actionPathSegment != null)
-								{
-									Stream stream = request.Content.ReadAsStreamAsync().Result;
-									ODataMessageWrapper message = new ODataMessageWrapper(stream);
-									message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
-									ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
-									ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
-									ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
+                                if (odataPath.Segments.Last() is UnboundActionPathSegment actionPathSegment)
+                                {
+                                    IEdmModel model = request.ODataProperties().Model;
+                                    Stream stream = request.Content.ReadAsStreamAsync().Result;
+                                    ODataMessageWrapper message = new ODataMessageWrapper(stream);
+                                    message.SetHeader("Content-Type", request.Content.Headers.ContentType.MediaType);
+                                    ODataMessageReader reader = new ODataMessageReader(message as IODataRequestMessage, new ODataMessageReaderSettings(), model);
+                                    ODataDeserializerContext readContext = new ODataDeserializerContext { Path = odataPath, Model = model };
+                                    ODataActionParameters payload = ReadParams(reader, actionPathSegment.Action.Operation, readContext);
 
-									var dynamicController = new ODataRestierDynamic.Controllers.DynamicController();
-									dynamicController.ControllerContext = controllerContext;
-									result = dynamicController.CallAction(actionPathSegment.ActionName, payload, cancellationToken);
-								}
-							}
+                                    var dynamicController = new Controllers.DynamicController
+                                    {
+                                        ControllerContext = controllerContext
+                                    };
+                                    result = dynamicController.CallAction(actionPathSegment.ActionName, payload, cancellationToken);
+                                }
+                            }
 
 							if (odataPath != null && odataPath.Segments.Count == 3 && 
-								odataPath.Segments[0].ToString() == ODataRestierDynamic.Controllers.MediaDataController.cFilesEntityName && 
+								odataPath.Segments[0].ToString() == Controllers.MediaDataController.cFilesEntityName && 
 								odataPath.Segments.Last() is ValuePathSegment)
 							{
-								var mediaDataController = new ODataRestierDynamic.Controllers.MediaDataController();
-								mediaDataController.ControllerContext = controllerContext;
-								var keyValuePathSegment = odataPath.Segments.First(x => x is KeyValuePathSegment);
+                                var mediaDataController = new Controllers.MediaDataController
+                                {
+                                    ControllerContext = controllerContext
+                                };
+                                var keyValuePathSegment = odataPath.Segments.First(x => x is KeyValuePathSegment);
 								int key = int.Parse(((KeyValuePathSegment)keyValuePathSegment).Value);
 
 								if (actionMethodName.Equals(System.Net.WebRequestMethods.Http.Get, StringComparison.InvariantCultureIgnoreCase))
@@ -97,7 +99,7 @@ namespace ODataRestierDynamic.Models
 									result = mediaDataController.PostMediaResource(key);
 								}
 							}
-						}
+                        }
 					}
 
 					if (result == null)
@@ -109,22 +111,31 @@ namespace ODataRestierDynamic.Models
 			catch (Exception exception)
 			{
 				DynamicLogger.Instance.WriteLoggerLogError("InvokeActionAsync", exception);
-				throw exception;
+				throw;
 			}
 
 			return result;
 		}
 
-		/// <summary>
-		/// Reads Parameter names and values provided by a client in a POST request to invoke a particular Action.
-		/// </summary>
-		/// <param name="messageReader">Reader used to read all OData payloads (entries, feeds, metadata documents, service documents, etc.).</param>
-		/// <param name="action">Represents an EDM operation.</param>
-		/// <param name="readContext">
-		/// Encapsulates the state and settings that get passed to System.Web.OData.Formatter.Deserialization.ODataDeserializer from the System.Web.OData.Formatter.ODataMediaTypeFormatter.
-		/// </param>
-		/// <returns>ActionPayload holds the Parameter names and values provided by a client in a POST request to invoke a particular Action.</returns>
-		private ODataActionParameters ReadParams(ODataMessageReader messageReader, IEdmOperation action, ODataDeserializerContext readContext)
+        public System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> GetDynamicData(HttpControllerContext controllerContext, string entitySetName, System.Threading.CancellationToken cancellationToken)
+        {
+            var dynamicController = new Controllers.DynamicController
+            {
+                ControllerContext = controllerContext
+            };
+            return dynamicController.GetDynamicData(entitySetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads Parameter names and values provided by a client in a POST request to invoke a particular Action.
+        /// </summary>
+        /// <param name="messageReader">Reader used to read all OData payloads (entries, feeds, metadata documents, service documents, etc.).</param>
+        /// <param name="action">Represents an EDM operation.</param>
+        /// <param name="readContext">
+        /// Encapsulates the state and settings that get passed to System.Web.OData.Formatter.Deserialization.ODataDeserializer from the System.Web.OData.Formatter.ODataMediaTypeFormatter.
+        /// </param>
+        /// <returns>ActionPayload holds the Parameter names and values provided by a client in a POST request to invoke a particular Action.</returns>
+        private ODataActionParameters ReadParams(ODataMessageReader messageReader, IEdmOperation action, ODataDeserializerContext readContext)
 		{
 			// Create the correct resource type;
 			ODataActionParameters payload = new ODataActionParameters();
@@ -176,7 +187,7 @@ namespace ODataRestierDynamic.Models
 			catch (Exception exception)
 			{
 				DynamicLogger.Instance.WriteLoggerLogError("ReadParams", exception);
-				throw exception;
+				throw;
 			}
 
 			return payload;

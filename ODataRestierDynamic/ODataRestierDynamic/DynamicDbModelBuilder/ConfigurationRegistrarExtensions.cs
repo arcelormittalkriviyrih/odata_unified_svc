@@ -4,7 +4,6 @@ using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace MagicDbModelBuilder
 {

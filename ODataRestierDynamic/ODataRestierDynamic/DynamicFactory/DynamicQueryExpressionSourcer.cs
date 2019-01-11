@@ -1,15 +1,12 @@
 ﻿using Microsoft.Restier.Core.Query;
 using ODataRestierDynamic.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Hook for query expression source dynamically. </summary>
-	public class DynamicQueryExpressionSourcer : IQueryExpressionSourcer, IDelegateHookHandler<IQueryExpressionSourcer>
+    /// <summary>	Hook for query expression source dynamically. </summary>
+    public class DynamicQueryExpressionSourcer : IQueryExpressionSourcer, IDelegateHookHandler<IQueryExpressionSourcer>
 	{
 		/// <summary>	Gets or sets the inner handler. </summary>
 		///

@@ -2,14 +2,11 @@
 using Microsoft.Restier.Core.Model;
 using ODataRestierDynamic.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Hook for building DB model mapping dynamically. </summary>
-	public class DynamicModelMapper : IModelMapper, IDelegateHookHandler<IModelMapper>
+    /// <summary>	Hook for building DB model mapping dynamically. </summary>
+    public class DynamicModelMapper : IModelMapper, IDelegateHookHandler<IModelMapper>
 	{
 		/// <summary>	Gets or sets the inner handler. </summary>
 		///

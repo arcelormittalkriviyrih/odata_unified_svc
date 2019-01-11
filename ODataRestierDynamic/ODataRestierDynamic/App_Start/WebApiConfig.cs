@@ -53,7 +53,7 @@ namespace ODataRestierDynamic
 		/// <param name="server">	The server. </param>
 		public static async void RegisterDynamic(HttpConfiguration config, HttpServer server)
 		{
-			System.Web.OData.Routing.ODataRoute odataRoute = await config.MapRestierRoute<DynamicApi>(
+			ODataRoute odataRoute = await config.MapRestierRoute<DynamicApi>(
 				"DynamicApi", "api/Dynamic",
 				new RestierBatchHandler(server));
 
@@ -70,6 +70,9 @@ namespace ODataRestierDynamic
 			// Register an Exception handler that can include template parameters in the name
 			IExceptionHandler exceptionHandler = config.Services.GetExceptionHandler();
 			config.Services.Replace(typeof(IExceptionHandler), new DynamicExceptionHandler(exceptionHandler));
+
+            // Register for Dynamic Actions
+            xlsConverter.Program.ConfigureDynamicActions(config);
 		}
 	}
 }

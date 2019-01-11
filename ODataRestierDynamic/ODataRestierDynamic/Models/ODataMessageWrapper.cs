@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Web;
-using System.Runtime;
 
 namespace ODataRestierDynamic.Models
 {
-	/// <summary>	Wrapper for Interface for synchronous OData request messages. </summary>
-	internal class ODataMessageWrapper : IODataRequestMessage
+    /// <summary>	Wrapper for Interface for synchronous OData request messages. </summary>
+    internal class ODataMessageWrapper : IODataRequestMessage
 	{
 		/// <summary>	Stream of params provided by a client in a POST request. </summary>
 		private Stream _stream;

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Base class for dynamic property data. Needed for dynamic object factory. </summary>
-	public abstract class DynamicPropertyData
+    /// <summary>	Base class for dynamic property data. Needed for dynamic object factory. </summary>
+    public abstract class DynamicPropertyData
 	{
 		/// <summary>	Gets or sets the type. </summary>
 		///

@@ -1,18 +1,15 @@
 ﻿using Microsoft.Restier.WebApi;
 using ODataRestierDynamic.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.OData.Routing.Conventions;
 using System.Web.OData.Routing;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	A media data routing convention. </summary>
-	internal class MediadataRoutingConvention : IODataRoutingConvention
+    /// <summary>	A media data routing convention. </summary>
+    internal class MediadataRoutingConvention : IODataRoutingConvention
 	{
 		/// <summary>	Default constructor. </summary>
 		public MediadataRoutingConvention()

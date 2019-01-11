@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Microsoft.Restier.WebApi;
 using ODataRestierDynamic.Models;
 using System.Web.OData;
 using System.Web.OData.Routing;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Controllers;
 using System.Net.Http;
-using System.Threading;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Text;
 using DatabaseSchemaReader;
-using ODataRestierDynamic.DynamicFactory;
 using ODataRestierDynamic.Log;
 using System.Net;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ODataRestierDynamic.Actions;
 using System.Data;
@@ -139,7 +133,7 @@ select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTIN
                 {
                     // this will query your database and return the result to your datatable
                     dataAdapter.Fill(dataTable);
-                    connection.Close();
+                    //connection.Close();
                 }
 
                 foreach (DataRow row in dataTable.Rows)
@@ -159,7 +153,7 @@ select SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, ROUTINE_CATALOG, ROUTIN
         /// <summary>	Gets service info. </summary>
         ///
         /// <returns>	A dynamic service info object. </returns>
-		[HttpGet]
+        [HttpGet]
         [ODataRoute("GetServiceInfo")]
         public DynamicServiceInfoObject GetServiceInfo()
         {
@@ -229,7 +223,7 @@ SELECT
                         }
                     }
                     reader.Close();
-                    connection.Close();
+                    //connection.Close();
                 }
             }
             catch (Exception ex)
@@ -284,7 +278,7 @@ SELECT
                     foreach (var item in parameters)
                     {
                         string paramName = string.Format("{0}_param", item.Key.ToLower());
-                        paramList.Add(new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value));
+                        paramList.Add(new SqlParameter(paramName, item.Value ?? DBNull.Value));
                         parameterNames.Add(string.Format("@{0} = @{1}", item.Key, paramName));
                     }
                 }
@@ -300,7 +294,7 @@ SELECT
             catch (Exception exception)
             {
                 DynamicLogger.Instance.WriteLoggerLogError("CallAction", exception);
-                throw exception;
+                throw;
             }
 
             return Ok(result);
@@ -321,9 +315,11 @@ SELECT
 
             try
             {
-                ActionResult returnActionType = new ActionResult();
-                returnActionType.Name = name;
-                returnActionType.ActionParameters = new List<ActionParameter>();
+                ActionResult returnActionType = new ActionResult
+                {
+                    Name = name,
+                    ActionParameters = new List<ActionParameter>()
+                };
 
                 var actionMethod = DbContext.DynamicActionMethods[name];
 
@@ -334,7 +330,7 @@ SELECT
                     foreach (var item in parameters)
                     {
                         string paramName = string.Format("{0}_param", item.Key.ToLower());
-                        var sqlParameter = new SqlParameter(paramName, item.Value == null ? DBNull.Value : item.Value);
+                        var sqlParameter = new SqlParameter(paramName, item.Value ?? DBNull.Value);
                         var paramInfo = actionMethod.Params.First(p => p.Name == ("@" + item.Key));
                         if (paramInfo.isOut)
                         {
@@ -382,6 +378,37 @@ SELECT
             }
 
             return response;
+        }
+
+        public async Task<HttpResponseMessage> GetDynamicData(string entitySetName, System.Threading.CancellationToken cancellationToken)
+        {
+            Type entityType = DbContext.GetModelType(entitySetName);
+            object entity = Activator.CreateInstance(entityType);
+
+            var properties = entityType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(ø => ø.CanRead && ø.CanWrite)
+            .Where(ø => ø.PropertyType == typeof(string))
+            .Where(ø => ø.GetGetMethod(true).IsPublic)
+            .Where(ø => ø.GetSetMethod(true).IsPublic);
+
+            foreach (var property in properties)
+            {
+                if(property.Name.ToLower() != "propertytype")
+                    property.SetValue(entity, "testing");
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(1.0));
+
+            Array entityArray = Array.CreateInstance(entityType, 1);
+            entityArray.SetValue(entity, 0);
+
+            HttpConfiguration configuartion = Request.GetConfiguration();
+            var contentNegotiationResult = configuartion.Services.GetContentNegotiator().Negotiate(entityType, Request, configuartion.Formatters);
+            ObjectContent objectContent = new ObjectContent(entityArray.GetType(), entityArray, contentNegotiationResult.Formatter, contentNegotiationResult.MediaType);
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
+            httpResponseMessage.Content = objectContent;
+
+            return httpResponseMessage;
         }
 
         /// <summary>	Disposes the API and the controller. </summary>

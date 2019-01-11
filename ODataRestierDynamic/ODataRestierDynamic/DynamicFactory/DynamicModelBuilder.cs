@@ -1,6 +1,4 @@
-﻿using DatabaseSchemaReader;
-using DatabaseSchemaReader.DataSchema;
-using Microsoft.OData.Edm;
+﻿using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Library;
 using Microsoft.OData.Edm.Library.Expressions;
 using Microsoft.Restier.Core;
@@ -9,18 +7,15 @@ using ODataRestierDynamic.Log;
 using ODataRestierDynamic.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace ODataRestierDynamic.DynamicFactory
 {
-	/// <summary>	Hook for building DB model dynamically. </summary>
-	public class DynamicModelBuilder : IModelBuilder, IDelegateHookHandler<IModelBuilder>
+    /// <summary>	Hook for building DB model dynamically. </summary>
+    public class DynamicModelBuilder : IModelBuilder, IDelegateHookHandler<IModelBuilder>
 	{
 		/// <summary>	Gets or sets the inner handler. </summary>
 		///
@@ -113,13 +108,12 @@ namespace ODataRestierDynamic.DynamicFactory
 				return false;
 			}
 
-			Type parameterType;
-			if (!firstParameter.ParameterType.TryGetElementType(out parameterType))
-			{
-				parameterType = firstParameter.ParameterType;
-			}
+            if (!firstParameter.ParameterType.TryGetElementType(out Type parameterType))
+            {
+                parameterType = firstParameter.ParameterType;
+            }
 
-			if (!GetTypeReference(parameterType, model).IsEntity())
+            if (!GetTypeReference(parameterType, model).IsEntity())
 			{
 				return false;
 			}
@@ -158,19 +152,17 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <returns>	The type reference. </returns>
 		private static IEdmTypeReference GetTypeReference(Type type, IEdmModel model)
 		{
-			Type elementType;
-			if (type.TryGetElementType(out elementType))
-			{
-				return EdmCoreModel.GetCollection(GetTypeReference(elementType, model));
-			}
+            if (type.TryGetElementType(out Type elementType))
+            {
+                return EdmCoreModel.GetCollection(GetTypeReference(elementType, model));
+            }
 
-			IEdmEntityType entityType;
-			if (TryGetEntityType(model, type, out entityType))
-			{
-				return new EdmEntityTypeReference(entityType, true);
-			}
+            if (TryGetEntityType(model, type, out IEdmEntityType entityType))
+            {
+                return new EdmEntityTypeReference(entityType, true);
+            }
 
-			return GetPrimitiveTypeReference(type);
+            return GetPrimitiveTypeReference(type);
 		}
 
 		/// <summary>	Gets primitive type reference. </summary>
@@ -180,11 +172,10 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <returns>	The primitive type reference. </returns>
 		public static EdmTypeReference GetPrimitiveTypeReference(Type type)
 		{
-			// Only handle primitive type right now
-			bool isNullable;
-			EdmPrimitiveTypeKind? primitiveTypeKind = GetPrimitiveTypeKind(type, out isNullable);
+            // Only handle primitive type right now
+            EdmPrimitiveTypeKind? primitiveTypeKind = GetPrimitiveTypeKind(type, out bool isNullable);
 
-			if (!primitiveTypeKind.HasValue)
+            if (!primitiveTypeKind.HasValue)
 			{
 				return null;
 			}
@@ -358,13 +349,12 @@ namespace ODataRestierDynamic.DynamicFactory
 		/// <returns>	The found declared entity set by type reference. </returns>
 		private static IEdmEntitySet FindDeclaredEntitySetByTypeReference(IEdmModel model, IEdmTypeReference typeReference)
 		{
-			IEdmTypeReference elementTypeReference;
-			if (!TryGetElementTypeReference(typeReference, out elementTypeReference))
-			{
-				elementTypeReference = typeReference;
-			}
+            if (!TryGetElementTypeReference(typeReference, out IEdmTypeReference elementTypeReference))
+            {
+                elementTypeReference = typeReference;
+            }
 
-			if (!elementTypeReference.IsEntity())
+            if (!elementTypeReference.IsEntity())
 			{
 				return null;
 			}
@@ -431,10 +421,9 @@ namespace ODataRestierDynamic.DynamicFactory
 			{
 				var returnTypeReference = GetReturnTypeReference(actionInfo.Method.ReturnType, model);
 
-				ParameterInfo bindingParameter;
-				bool isBound = TryGetBindingParameter(actionInfo.Method, model, out bindingParameter);
+                bool isBound = TryGetBindingParameter(actionInfo.Method, model, out ParameterInfo bindingParameter);
 
-				var action = new EdmAction(
+                var action = new EdmAction(
 					actionInfo.Namespace,
 					actionInfo.Name,
 					returnTypeReference,

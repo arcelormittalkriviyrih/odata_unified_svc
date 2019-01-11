@@ -1,25 +1,17 @@
 using System;
 using System.Data.Entity;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Collections.Generic;
 using MagicDbModelBuilder;
 using System.Data.Entity.Infrastructure;
-using System.Web.OData.Builder;
 using System.Reflection;
 using DatabaseSchemaReader;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using ODataRestierDynamic.DynamicFactory;
-using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
 using System.Configuration;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Core.Objects;
 using EntityFramework.Functions;
 using ODataRestierDynamic.Log;
-using System.Data.Entity.ModelConfiguration.Configuration;
-using System.Linq.Expressions;
-using System.Runtime.Serialization;
 using ODataRestierDynamic.CustomAttributes;
 using DatabaseSchemaReader.DataSchema;
 using System.Reflection.Emit;
@@ -151,9 +143,11 @@ namespace ODataRestierDynamic.Models
                     {
                         try
                         {
-                            var tableBuildHelper = new TableBuildHelper();
-                            tableBuildHelper.Name = table.Name;
-                            tableBuildHelper.Properties = new List<TablePropertyBuildHelper>();
+                            var tableBuildHelper = new TableBuildHelper
+                            {
+                                Name = table.Name,
+                                Properties = new List<TablePropertyBuildHelper>()
+                            };
 
                             #region Field properties
 
@@ -216,9 +210,11 @@ namespace ODataRestierDynamic.Models
                                     while (table.Name == name || tableBuildHelper.Properties.Exists(p => p.Name == name))
                                         name = name + "1";
 
-                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper();
-                                    tablePropertyBuildHelper.Name = name;
-                                    tablePropertyBuildHelper.Data = fieldPropertyData;
+                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper
+                                    {
+                                        Name = name,
+                                        Data = fieldPropertyData
+                                    };
                                     tableBuildHelper.Properties.Add(tablePropertyBuildHelper);
                                 }
                             }
@@ -269,9 +265,11 @@ namespace ODataRestierDynamic.Models
                                         propName = propName + "1";
                                     }
 
-                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper();
-                                    tablePropertyBuildHelper.Name = propName;
-                                    tablePropertyBuildHelper.Data = foreignKeyPropertyData;
+                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper
+                                    {
+                                        Name = propName,
+                                        Data = foreignKeyPropertyData
+                                    };
                                     tableBuildHelper.Properties.Add(tablePropertyBuildHelper);
                                 }
 
@@ -293,9 +291,11 @@ namespace ODataRestierDynamic.Models
                                         propName = propName + "1";
                                     }
 
-                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper();
-                                    tablePropertyBuildHelper.Name = propName;
-                                    tablePropertyBuildHelper.Data = inversePropertyData;
+                                    var tablePropertyBuildHelper = new TablePropertyBuildHelper
+                                    {
+                                        Name = propName,
+                                        Data = inversePropertyData
+                                    };
                                     fkTableBuildHelper.Properties.Add(tablePropertyBuildHelper);
                                 }
                             }
@@ -406,7 +406,7 @@ namespace ODataRestierDynamic.Models
             catch (Exception exception)
             {
                 DynamicLogger.Instance.WriteLoggerLogError("CreateModel", exception);
-                throw exception;
+                throw;
             }
 
             return compiledDatabaseModel;
@@ -519,10 +519,12 @@ namespace ODataRestierDynamic.Models
                 {
                     if (function.ReturnType != null)
                     {
-                        var dynamicMethodData = new DynamicMethodData();
-                        dynamicMethodData.FunctionType = FunctionType.ModelDefinedFunction;
-                        dynamicMethodData.ReturnType = typeof(Int32);
-                        dynamicMethodData.Schema = function.SchemaOwner;
+                        var dynamicMethodData = new DynamicMethodData
+                        {
+                            FunctionType = FunctionType.ModelDefinedFunction,
+                            ReturnType = typeof(Int32),
+                            Schema = function.SchemaOwner
+                        };
                         if (function.Arguments.Count > 0)
                         {
                             dynamicMethodData.Params = new DynamicParameterData[function.Arguments.Count];
@@ -551,10 +553,12 @@ namespace ODataRestierDynamic.Models
             {
                 try
                 {
-                    var dynamicMethodData = new DynamicMethodData();
-                    dynamicMethodData.FunctionType = FunctionType.ModelDefinedFunction;
-                    dynamicMethodData.ReturnType = typeof(Int32);
-                    dynamicMethodData.Schema = procedure.SchemaOwner;
+                    var dynamicMethodData = new DynamicMethodData
+                    {
+                        FunctionType = FunctionType.ModelDefinedFunction,
+                        ReturnType = typeof(Int32),
+                        Schema = procedure.SchemaOwner
+                    };
                     if (procedure.Arguments.Count > 0)
                     {
                         dynamicMethodData.Params = new DynamicParameterData[procedure.Arguments.Count];
